@@ -16,9 +16,10 @@ gh repo edit "$repository" \
   --enable-issues \
   --enable-projects \
   --enable-squash-merge \
+  --enable-merge-commit=false \
+  --enable-rebase-merge=false \
   --delete-branch-on-merge \
-  --disable-merge-commit \
-  --disable-rebase-merge
+  --squash-merge-commit-message pr-title
 
 while IFS='|' read -r name color description; do
   gh label create "$name" --repo "$repository" --color "$color" \
@@ -86,4 +87,3 @@ gh api --method PUT "repos/${repository}/branches/main/protection" \
 
 echo "Configured https://github.com/${repository}"
 echo "Project ${project_number}: ${project_title}"
-
