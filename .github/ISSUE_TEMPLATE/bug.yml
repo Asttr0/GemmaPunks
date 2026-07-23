@@ -1,0 +1,45 @@
+name: Bug report
+description: A reproducible defect in the demo or product
+title: "[Bug] "
+labels:
+  - "type:bug"
+body:
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact
+      description: What user or demo step is blocked?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected versus actual
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Logs or screenshots
+      description: Remove secrets and private documents.
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - P0 — demo blocker or incorrect financial result
+        - P1 — important but recoverable
+        - P2 — post-hackathon
+    validations:
+      required: true
+

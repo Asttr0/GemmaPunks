@@ -1,0 +1,22 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "procurement_needs",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "stockout_at", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "supplier_catalog_items",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "product_id", "order": "ASCENDING" },
+        { "fieldPath": "unit_price_mad", "order": "ASCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
+

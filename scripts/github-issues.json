@@ -1,0 +1,102 @@
+[
+  {
+    "title": "Initialize monorepo and development commands",
+    "labels": ["priority:p0", "area:devops", "type:chore"],
+    "body": "## Objective\nMake the React/FastAPI/Firebase scaffold reproducible for all five members.\n\n## Owner role\nLead and integration\n\n## Acceptance criteria\n- [ ] `make install` prepares web and API dependencies.\n- [ ] `make web` and `make api` start documented local services.\n- [ ] The neutral skeleton works without cloud credentials.\n- [ ] `.env.example` contains every required variable and no secrets.\n\n## Depends on\nNone\n\n## Demo evidence\nAttach terminal output and links to both local health screens."
+  },
+  {
+    "title": "Configure CI and protected main workflow",
+    "labels": ["priority:p0", "area:devops", "type:chore"],
+    "body": "## Objective\nMake every merge reviewable and keep `main` demo-ready.\n\n## Owner role\nLead and integration\n\n## Acceptance criteria\n- [ ] Frontend and backend checks run on each PR.\n- [ ] Issue #6 adds Contract CI after the first contract is frozen.\n- [ ] One approval, resolved conversations, passing checks, and linear history are required.\n- [ ] Force pushes/deletion are blocked and squash merge is enabled.\n\n## Depends on\n#1\n\n## Demo evidence\nLink one PR where all required checks pass."
+  },
+  {
+    "title": "Configure shared deployment environments",
+    "labels": ["priority:p0", "area:devops", "type:chore"],
+    "body": "## Objective\nExpose stable shared web and API environments early.\n\n## Owner role\nLead and integration\n\n## Acceptance criteria\n- [ ] Vercel web placeholder is reachable.\n- [ ] Railway API `/health` is reachable.\n- [ ] Production CORS/environment values are documented.\n- [ ] No service-account material appears in source or logs.\n\n## Depends on\n#1\n\n## Demo evidence\nAdd both deployment links and health output."
+  },
+  {
+    "title": "Create Firebase project, emulators, and environment template",
+    "labels": ["priority:p0", "area:data", "area:backend", "type:chore"],
+    "body": "## Objective\nProvide Auth, Firestore, and Storage for local and shared development.\n\n## Owner role\nBackend and Firebase\n\n## Acceptance criteria\n- [ ] Shared Firebase project and web app exist.\n- [ ] Auth, Firestore, and Storage are enabled.\n- [ ] Local emulators start from `firebase.json`.\n- [ ] Web/API connect through documented environment variables.\n\n## Depends on\n#1\n\n## Demo evidence\nAttach Emulator UI and shared project screenshots without secrets."
+  },
+  {
+    "title": "Implement Firestore model, rules, indexes, and seed baseline",
+    "labels": ["priority:p0", "area:data", "area:backend", "type:feature"],
+    "body": "## Objective\nCreate the minimum organization-isolated data foundation.\n\n## Owner role\nBackend and Firebase\n\n## Acceptance criteria\n- [ ] P0 collection paths and indexes exist.\n- [ ] Firestore/Storage rules deny cross-organization access.\n- [ ] Client writes to confirmed business records are denied.\n- [ ] Synthetic data loads into an empty emulator/project.\n\n## Depends on\n#4\n\n## Demo evidence\nAttach emulator rule-test output and seeded collection screenshot."
+  },
+  {
+    "title": "Freeze OpenAPI request and response examples",
+    "labels": ["priority:p0", "area:backend", "area:frontend", "type:chore"],
+    "body": "## Objective\nGive frontend and backend one typed P0 contract.\n\n## Owner role\nLead and integration + Backend and Firebase\n\n## Acceptance criteria\n- [ ] Every P0 endpoint has validated schemas and examples.\n- [ ] OpenAPI JSON is generated from FastAPI.\n- [ ] TypeScript types are generated from OpenAPI.\n- [ ] Contract drift fails CI.\n\n## Depends on\n#5\n\n## Demo evidence\nLink generated artifacts and passing Contract CI."
+  },
+  {
+    "title": "Build merchant dashboard shell",
+    "labels": ["priority:p0", "area:frontend", "type:feature"],
+    "body": "## Objective\nShow a useful merchant situation and next action from seeded data.\n\n## Owner role\nMerchant Experience\n\n## Acceptance criteria\n- [ ] KPIs, inventory health, and one stockout alert render.\n- [ ] All currency includes MAD.\n- [ ] Layout works at 375 px and desktop widths.\n- [ ] Loading, empty, and error states exist.\n\n## Depends on\n#6\n\n## Demo evidence\nAttach mobile and desktop screenshots."
+  },
+  {
+    "title": "Build evidence upload and draft review",
+    "labels": ["priority:p0", "area:frontend", "area:ai", "type:feature"],
+    "body": "## Objective\nLet a merchant turn evidence into a reviewable, never-auto-confirmed draft.\n\n## Owner role\nMerchant Experience\n\n## Acceptance criteria\n- [ ] Supported file validation is visible.\n- [ ] Extracted lines, confidence, and clarification are reviewable.\n- [ ] User can edit, discard, or confirm.\n- [ ] Inventory cannot change before confirmation.\n\n## Depends on\n#6\n\n## Demo evidence\nRecord upload through explicit confirmation."
+  },
+  {
+    "title": "Build supplier dashboard shell",
+    "labels": ["priority:p0", "area:frontend", "type:feature"],
+    "body": "## Objective\nShow qualified demand and offers without leaking merchant finances.\n\n## Owner role\nSupplier Experience\n\n## Acceptance criteria\n- [ ] Catalog, qualified demand, active offers, and revenue render.\n- [ ] No merchant identity, exact sales, cash, or private data appears.\n- [ ] Layout works at 375 px and desktop widths.\n- [ ] Loading, empty, and error states exist.\n\n## Depends on\n#6\n\n## Demo evidence\nAttach mobile and desktop screenshots."
+  },
+  {
+    "title": "Build collective-order decision interface",
+    "labels": ["priority:p0", "area:frontend", "type:feature"],
+    "body": "## Objective\nMake savings, conditions, and human consent clear to both sides.\n\n## Owner role\nSupplier Experience\n\n## Acceptance criteria\n- [ ] Merchant sees own quantity, prices, delivery share, savings, conditions, and deadline.\n- [ ] Join and approve are separate actions.\n- [ ] Supplier sees only consolidated opportunity data.\n- [ ] Success and recovery feedback are visible.\n\n## Depends on\n#6\n\n## Demo evidence\nRecord merchant approval and supplier update."
+  },
+  {
+    "title": "Implement ingestion API and review lifecycle",
+    "labels": ["priority:p0", "area:backend", "area:ai", "type:feature"],
+    "body": "## Objective\nPersist evidence and validated extraction drafts safely.\n\n## Owner role\nBackend and Firebase\n\n## Acceptance criteria\n- [ ] Valid upload creates document, job, and draft records.\n- [ ] File type/size and model output validation are enforced.\n- [ ] Draft is organization-scoped and auditable.\n- [ ] Confirmation atomically creates records/movements exactly once.\n\n## Depends on\n#5\n\n## API\n`POST /api/v1/ingestions`, `POST /api/v1/ingestions/{id}/confirm`\n\n## Demo evidence\nAttach API test output."
+  },
+  {
+    "title": "Implement transaction, inventory, and dashboard APIs",
+    "labels": ["priority:p0", "area:backend", "area:data", "type:feature"],
+    "body": "## Objective\nMake confirmed evidence update authoritative business views.\n\n## Owner role\nBackend and Firebase\n\n## Acceptance criteria\n- [ ] Confirmed transaction changes stock/dashboard exactly once.\n- [ ] Every query uses verified Firebase membership and organization scope.\n- [ ] Retry/idempotency tests pass.\n- [ ] Cross-organization tests prove denial.\n\n## Depends on\n#5\n\n## Demo evidence\nAttach tests and before/after responses."
+  },
+  {
+    "title": "Define AI provider interface and deterministic fixtures",
+    "labels": ["priority:p0", "area:ai", "type:feature"],
+    "body": "## Objective\nUnblock every team member and guarantee demo recovery.\n\n## Owner role\nGemma and Procurement\n\n## Acceptance criteria\n- [ ] Fixture and hosted providers implement one typed interface.\n- [ ] Fixture yields approved line items and clarification.\n- [ ] Output passes the same Pydantic validation as live output.\n- [ ] Agent run and tool-call timeline are recorded.\n\n## Depends on\n#6\n\n## Demo evidence\nAttach provider contract tests."
+  },
+  {
+    "title": "Integrate Gemma multimodal extraction",
+    "labels": ["priority:p0", "area:ai", "type:feature"],
+    "body": "## Objective\nExtract a validated draft from the known receipt and Darija/French audio.\n\n## Owner role\nGemma and Procurement\n\n## Acceptance criteria\n- [ ] Receipt and voice fixtures produce expected draft fields.\n- [ ] Ambiguity produces one concise clarification.\n- [ ] Prompt forbids authoritative writes and invented totals.\n- [ ] Timeout/failure switches safely to fixture recovery.\n\n## Depends on\n#13\n\n## Demo evidence\nAttach sanitized run output for both inputs."
+  },
+  {
+    "title": "Implement deterministic stockout forecast",
+    "labels": ["priority:p0", "area:ai", "area:backend", "type:feature"],
+    "body": "## Objective\nTurn confirmed inventory history into the demo purchasing need.\n\n## Owner role\nGemma and Procurement + Backend and Firebase\n\n## Acceptance criteria\n- [ ] Oil produces a four-day warning and 20-unit need.\n- [ ] Zero/negative demand and insufficient history are tested.\n- [ ] Calculation is deterministic and currency-free.\n- [ ] Explanation cites real inputs and uncertainty.\n\n## Depends on\n#12\n\n## Demo evidence\nAttach unit tests and seeded API response."
+  },
+  {
+    "title": "Implement supplier matching and offer comparison",
+    "labels": ["priority:p0", "area:ai", "area:backend", "type:feature"],
+    "body": "## Objective\nCompare three offers with transparent deterministic criteria.\n\n## Owner role\nGemma and Procurement + Backend and Firebase\n\n## Acceptance criteria\n- [ ] Three seeded offers rank by landed cost and constraints.\n- [ ] MOQ, delivery, cash, and margin tradeoffs are exposed.\n- [ ] Explanation matches actual ranking inputs.\n- [ ] Tie and unaffordable-offer behavior is tested.\n\n## Depends on\n#12\n\n## Demo evidence\nAttach ranking tests and response."
+  },
+  {
+    "title": "Implement collective-order matching",
+    "labels": ["priority:p0", "area:ai", "area:backend", "type:feature"],
+    "body": "## Objective\nCombine compatible demand without exposing private merchant records.\n\n## Owner role\nGemma and Procurement + Backend and Firebase\n\n## Acceptance criteria\n- [ ] 20 + 35 units create one 55-unit proposal.\n- [ ] Product saving is 70 MAD; delivery saving 30 MAD; total 100 MAD.\n- [ ] Participants approve independently.\n- [ ] Supplier sees aggregated demand only.\n\n## Depends on\n#15, #16\n\n## Demo evidence\nAttach calculation/privacy tests and proposal response."
+  },
+  {
+    "title": "Connect complete vertical demo path",
+    "labels": ["priority:p0", "area:demo", "type:feature"],
+    "body": "## Objective\nMake the full merchant-to-supplier story work in the shared deployment.\n\n## Owner role\nLead and integration + all\n\n## Acceptance criteria\n- [ ] All 16 demo steps complete from a clean seed.\n- [ ] Agent/tool timeline is visible.\n- [ ] Firebase authorization remains enforced.\n- [ ] Failed live AI can continue via fixture mode.\n\n## Depends on\n#7–#17\n\n## Demo evidence\nAttach one uninterrupted recording."
+  },
+  {
+    "title": "Seed and reset deterministic demo scenario",
+    "labels": ["priority:p0", "area:data", "area:demo", "type:chore"],
+    "body": "## Objective\nReturn every demo account and total to a known state safely.\n\n## Owner role\nBackend and Firebase + Gemma and Procurement\n\n## Acceptance criteria\n- [ ] One command resets emulator/shared demo data.\n- [ ] Command refuses an unexpected Firebase project by default.\n- [ ] Merchant/supplier accounts and all totals match the script.\n- [ ] Reset is documented and rehearsed.\n\n## Depends on\n#12–#17\n\n## Demo evidence\nShow two identical runs after separate resets."
+  },
+  {
+    "title": "Write, rehearse, and back up final demo",
+    "labels": ["priority:p0", "area:demo", "type:chore"],
+    "body": "## Objective\nMake delivery reliable even if network, AI, or presenter fails.\n\n## Owner role\nLead and integration + all\n\n## Acceptance criteria\n- [ ] Demo succeeds five consecutive times within the time limit.\n- [ ] Main and backup presenters have the script and recovery cues.\n- [ ] Offline video and final-state screenshots are available.\n- [ ] Stable version is tagged `demo-v1` after freeze.\n\n## Depends on\n#18, #19\n\n## Demo evidence\nAttach rehearsal log and backup asset locations."
+  }
+]

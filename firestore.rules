@@ -1,0 +1,39 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function belongsTo(orgId) {
+      return signedIn() && request.auth.token.organization_id == orgId;
+    }
+
+    function isSupplier() {
+      return signedIn() && request.auth.token.role in ['supplier', 'admin'];
+    }
+
+    match /organizations/{orgId} {
+      allow read: if belongsTo(orgId);
+      allow write: if false;
+
+      match /{collection}/{documentId} {
+        allow read: if belongsTo(orgId);
+        allow write: if false;
+      }
+    }
+
+    // Contains product, quantity, coarse area, and deadline only—never merchant
+    // identity, revenue, cash, sales history, or exact coordinates.
+    match /supplier_opportunities/{opportunityId} {
+      allow read: if isSupplier();
+      allow write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+

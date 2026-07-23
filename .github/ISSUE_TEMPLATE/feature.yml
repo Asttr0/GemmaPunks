@@ -1,0 +1,49 @@
+name: P0/P1 feature
+description: A scoped product or engineering deliverable
+title: "[Feature] "
+labels:
+  - "type:feature"
+body:
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective
+      description: What user or demo outcome does this issue unlock?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Use a testable checklist.
+      value: |
+        - [ ]
+        - [ ]
+        - [ ]
+    validations:
+      required: true
+  - type: input
+    id: api
+    attributes:
+      label: API or contract
+      description: Endpoint, schema, event, or "N/A".
+    validations:
+      required: true
+  - type: textarea
+    id: demo
+    attributes:
+      label: Demo evidence
+      description: Screenshot, test steps, or recording required before Done.
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - P0 — live demo cannot work without it
+        - P1 — only after P0 is stable
+        - P2 — post-hackathon
+    validations:
+      required: true
+

@@ -1,0 +1,6 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security concern
+    url: https://github.com/Asttr0/GemmaPunks/security/advisories/new
+    about: Report a vulnerability privately. Never post secrets or merchant data.
+

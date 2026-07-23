@@ -1,0 +1,16 @@
+*                                                   @Asttr0
+/apps/web/src/features/merchant/                    @Asttr0
+/apps/web/src/features/supplier/                    @Asttr0
+/apps/web/src/components/                           @Asttr0
+/apps/api/                                          @Asttr0
+/apps/api/app/modules/ai/                           @Asttr0
+/apps/api/app/modules/procurement/                  @Asttr0
+/packages/contracts/                                @Asttr0
+/firebase.json                                      @Asttr0
+/firestore.rules                                    @Asttr0
+/storage.rules                                      @Asttr0
+/infra/                                             @Asttr0
+/.github/                                           @Asttr0
+
+# Replace @Asttr0 on feature areas when the four teammates' usernames are known.
+
