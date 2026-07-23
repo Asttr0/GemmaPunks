@@ -115,10 +115,31 @@ if [[ -z "$project_number" ]]; then
     --single-select-options "Backlog,Ready,In Progress,In Review,Demo QA,Done" >/dev/null
 fi
 gh project link "$project_number" --owner "$owner" --repo "$repo_name"
+gh project edit "$project_number" --owner "$owner" --visibility PUBLIC \
+  --description "Three-day P0 execution board for the MIZAN Souq hackathon demo." \
+  --readme "Use the Workflow field: Backlog → Ready → In Progress → In Review → Demo QA → Done. Every item has one owner and must work in the shared deployment before Done." >/dev/null
+
+project_id="$(
+  gh project view "$project_number" --owner "$owner" --format json --jq '.id'
+)"
+workflow_field_id="$(
+  gh project field-list "$project_number" --owner "$owner" --format json \
+    --jq '.fields[] | select(.name == "Workflow") | .id'
+)"
+backlog_option_id="$(
+  gh project field-list "$project_number" --owner "$owner" --format json \
+    --jq '.fields[] | select(.name == "Workflow") | .options[] | select(.name == "Backlog") | .id'
+)"
 
 gh issue list --repo "$repository" --state open --limit 100 --json url --jq '.[].url' |
   while IFS= read -r issue_url; do
-    gh project item-add "$project_number" --owner "$owner" --url "$issue_url" >/dev/null
+    item_id="$(
+      gh project item-add "$project_number" --owner "$owner" --url "$issue_url" \
+        --format json --jq '.id'
+    )"
+    gh project item-edit --id "$item_id" --project-id "$project_id" \
+      --field-id "$workflow_field_id" \
+      --single-select-option-id "$backlog_option_id" >/dev/null
   done
 
 gh api --method PUT "repos/${repository}/branches/main/protection" \
