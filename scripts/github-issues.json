@@ -7,7 +7,7 @@
   {
     "title": "Configure CI and protected main workflow",
     "labels": ["priority:p0", "area:devops", "type:chore"],
-    "body": "## Objective\nMake every merge reviewable and keep `main` demo-ready.\n\n## Owner role\nLead and integration\n\n## Acceptance criteria\n- [ ] Frontend and backend checks run on each PR.\n- [ ] Issue #6 adds Contract CI after the first contract is frozen.\n- [ ] One approval, resolved conversations, passing checks, and linear history are required.\n- [ ] Force pushes/deletion are blocked and squash merge is enabled.\n\n## Depends on\n#1\n\n## Demo evidence\nLink one PR where all required checks pass."
+    "body": "## Objective\nMake every merge reviewable and keep `main` demo-ready.\n\n## Owner role\nLead and integration\n\n## Acceptance criteria\n- [ ] Frontend and backend checks run on each PR.\n- [ ] The “Freeze OpenAPI request and response examples” issue adds Contract CI after the first contract is frozen.\n- [ ] One approval, resolved conversations, passing checks, and linear history are required.\n- [ ] Force pushes/deletion are blocked and squash merge is enabled.\n\n## Depends on\n#1\n\n## Demo evidence\nLink one PR where all required checks pass."
   },
   {
     "title": "Configure shared deployment environments",

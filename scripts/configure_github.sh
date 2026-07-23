@@ -48,16 +48,56 @@ if ! gh api "repos/${repository}/milestones" --paginate --jq '.[].title' |
     -f due_on="2026-07-26T22:59:59Z" >/dev/null
 fi
 
+declare -a issue_numbers
+logical_id=0
 while IFS= read -r issue; do
+  logical_id=$((logical_id + 1))
   title="$(jq -r '.title' <<<"$issue")"
-  if gh issue list --repo "$repository" --state all --limit 100 \
-    --json title --jq '.[].title' | rg -Fxq "$title"; then
-    continue
-  fi
   body="$(jq -r '.body' <<<"$issue")"
   labels="$(jq -r '.labels | join(",")' <<<"$issue")"
-  gh issue create --repo "$repository" --title "$title" --body "$body" \
-    --label "$labels" --milestone "Hackathon MVP" >/dev/null
+
+  if [[ "$body" == *"#7–#17"* ]]; then
+    dependency_list=""
+    for dependency_id in $(seq 7 17); do
+      dependency_list+="__ISSUE_${dependency_id}__, "
+    done
+    body="${body//#7–#17/${dependency_list%, }}"
+  fi
+  if [[ "$body" == *"#12–#17"* ]]; then
+    dependency_list=""
+    for dependency_id in $(seq 12 17); do
+      dependency_list+="__ISSUE_${dependency_id}__, "
+    done
+    body="${body//#12–#17/${dependency_list%, }}"
+  fi
+  for dependency_id in $(seq 20 -1 1); do
+    if [[ -n "${issue_numbers[$dependency_id]:-}" ]]; then
+      body="${body//#${dependency_id}/__ISSUE_${dependency_id}__}"
+    fi
+  done
+  for dependency_id in $(seq 1 20); do
+    if [[ -n "${issue_numbers[$dependency_id]:-}" ]]; then
+      body="${body//__ISSUE_${dependency_id}__/#${issue_numbers[$dependency_id]}}"
+    fi
+  done
+
+  existing_number="$(
+    gh issue list --repo "$repository" --state all --limit 100 --json number,title \
+      --jq ".[] | select(.title == \"$title\") | .number" |
+      head -n 1
+  )"
+  if [[ -n "$existing_number" ]]; then
+    issue_numbers[$logical_id]="$existing_number"
+    gh issue edit "$existing_number" --repo "$repository" --body "$body" \
+      --add-label "$labels" --milestone "Hackathon MVP" >/dev/null
+    continue
+  fi
+
+  created_url="$(
+    gh issue create --repo "$repository" --title "$title" --body "$body" \
+      --label "$labels" --milestone "Hackathon MVP"
+  )"
+  issue_numbers[$logical_id]="${created_url##*/}"
 done < <(jq -c '.[]' "$script_dir/github-issues.json")
 
 project_number="$(
