@@ -216,6 +216,11 @@ exact offer and savings fields needed by the UI.
 **Purpose:** Build the trusted API between the frontend, Firebase data, and
 Taha’s AI/procurement work.
 
+Before starting, read
+[docs/anas-backend-handoff.md](docs/anas-backend-handoff.md). It contains the
+MCD, request flows, initial payloads, state transitions, and exact implementation
+order for issues #18 and #19.
+
 Asttr0 owns Firebase setup, Firestore structure, indexes, and security rules.
 Anas owns the FastAPI behavior that safely uses that Firebase environment.
 
