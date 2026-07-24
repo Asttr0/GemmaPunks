@@ -1,5 +1,10 @@
 # P0 API contract
 
+Anas should start with
+[the backend handoff](anas-backend-handoff.md), which contains the MCD,
+authentication and confirmation sequences, initial payload examples, state
+transitions, and implementation order for issues #18 and #19.
+
 This is the proposed P0 endpoint inventory. Issue #6 freezes schemas, examples,
 OpenAPI output, and generated TypeScript types before frontend/backend feature
 work begins. No product endpoints are implemented in the initial scaffold.
