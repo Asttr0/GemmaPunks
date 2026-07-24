@@ -16,6 +16,7 @@ flowchart TB
 
     subgraph API["FastAPI modular backend"]
       Business["Business APIs"]
+      Upload["Temporary evidence handling"]
       Agent["Gemma provider and tool loop"]
       Rules["Deterministic financial and procurement tools"]
     end
@@ -23,17 +24,16 @@ flowchart TB
     subgraph Firebase["Firebase"]
       Auth["Authentication"]
       Firestore["Cloud Firestore"]
-      Storage["Cloud Storage"]
     end
 
     Merchant --> Business
     Supplier --> Business
     Review --> Business
     FirebaseClient --> Auth
-    FirebaseClient --> Storage
     Business --> Auth
     Business --> Firestore
-    Business --> Storage
+    Business --> Upload
+    Upload --> Agent
     Business --> Agent
     Agent --> Rules
     Rules --> Firestore
@@ -49,7 +49,8 @@ flowchart TB
 - Deterministic Python calculates totals, margins, affordability, stockout
   forecasts, rankings, and savings.
 - Firestore stores confirmed records, drafts, approvals, and audit history.
-- Cloud Storage stores evidence below organization-scoped paths.
+- FastAPI validates evidence, processes it temporarily, and discards the file
+  after extraction; Firestore keeps its metadata and audit status.
 - Humans confirm financial records and approve group-order participation.
 
 ## Firestore topology
@@ -83,4 +84,3 @@ opportunities contain aggregated demand only.
 `FixtureProvider` implements the same interface as `GemmaApiProvider`. The demo
 can switch to deterministic fixture output with `AI_PROVIDER=fixture`; financial
 and procurement calculations never change provider.
-

@@ -14,8 +14,7 @@ class Settings(BaseSettings):
     app_name: str = "MIZAN Souq API"
     app_env: str = "development"
     app_cors_origins: str = "http://localhost:5173"
-    firebase_project_id: str = "gemmapunks-demo"
-    firebase_storage_bucket: str | None = None
+    firebase_project_id: str = "demo-gemmapunks"
     ai_provider: str = "fixture"
     gemini_api_key: str | None = None
     max_upload_mb: int = Field(default=10, ge=1, le=25)
