@@ -157,6 +157,12 @@ Taha immediately when a required field is missing from the contract.
 **Purpose:** Turn messy evidence into a safe draft, then turn inventory data
 into clear purchasing recommendations.
 
+Before starting, read
+[docs/taha-ai-procurement-handoff.md](docs/taha-ai-procurement-handoff.md).
+It explains the provider and fixture in plain language, freezes the handoff
+with Anas, documents every calculation, and gives the exact implementation and
+test order for issues #21–#25.
+
 **Exact tasks:**
 
 1. **#21 — Real AI plus reliable backup:** create one extraction entry point
