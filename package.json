@@ -10,9 +10,13 @@
     "build": "npm --workspace apps/web run build",
     "lint": "npm --workspace apps/web run lint",
     "test": "npm --workspace apps/web run test",
-    "format": "npm --workspace apps/web run format"
+    "format": "npm --workspace apps/web run format",
+    "firebase:emulators": "firebase emulators:start --project demo-gemmapunks --only auth,firestore"
   },
   "engines": {
     "node": ">=20"
+  },
+  "devDependencies": {
+    "firebase-tools": "^15.24.0"
   }
 }

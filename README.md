@@ -425,7 +425,7 @@ GemmaPunks uses a modular monolith:
 
 - `apps/web`: React + TypeScript + Vite
 - `apps/api`: FastAPI + Pydantic
-- Firebase Authentication, Cloud Firestore, and Cloud Storage
+- Firebase Authentication and Cloud Firestore
 - `packages/contracts`: the frozen OpenAPI contract and generated frontend types
 - `packages/demo-data`: synthetic demo inputs and expected results
 - `docs`: architecture, design standards, decisions, and demo documentation
