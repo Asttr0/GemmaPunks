@@ -605,6 +605,9 @@ Do not start these endpoints before upload, review, and confirmation work.
 
 ## 16. What Anas receives from Taha
 
+Taha's side of this handoff is documented in
+[the AI and procurement guide](taha-ai-procurement-handoff.md).
+
 Anas calls one function:
 
 ```text
