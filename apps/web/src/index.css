@@ -2,8 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --background: #F8FAFC;
+    --surface: #FFFFFF;
+    --surface-subtle: #F1F5F9;
+    --foreground: #0F172A;
+    --foreground-muted: #475569;
+    --border: #CBD5E1;
+    --border-strong: #94A3B8;
+    --primary: #0077B6;
+    --primary-hover: #03045E;
+    --primary-subtle: #CAF0F8;
+    --ai: #6D28D9;
+    --ai-subtle: #F5F3FF;
+    --success: #047857;
+    --success-subtle: #ECFDF5;
+    --warning: #B45309;
+    --warning-subtle: #FFFBEB;
+    --danger: #B91C1C;
+    --danger-subtle: #FEF2F2;
+    --info: #0369A1;
+    --info-subtle: #F0F9FF;
+    --focus: #0077B6;
+    --radius: 0.5rem;
+    --font-sans: "Inter", "Noto Sans Arabic", system-ui, sans-serif;
+  }
+}
+
 :root {
-  color-scheme: dark;
+  color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
@@ -13,13 +41,14 @@
 }
 
 html {
-  background: #0f172a;
+  background: var(--background);
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100dvh;
+  font-family: var(--font-sans);
 }
 
 button,
@@ -54,4 +83,3 @@ a {
     animation-iteration-count: 1 !important;
   }
 }
-
