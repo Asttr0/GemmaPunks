@@ -1,6 +1,38 @@
 {
   "indexes": [
     {
+      "collectionGroup": "ingestion_jobs",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "created_at", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "extraction_drafts",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "created_at", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "transactions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "occurred_at", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "inventory_movements",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "product_id", "order": "ASCENDING" },
+        { "fieldPath": "occurred_at", "order": "DESCENDING" }
+      ]
+    },
+    {
       "collectionGroup": "procurement_needs",
       "queryScope": "COLLECTION",
       "fields": [
@@ -10,13 +42,58 @@
     },
     {
       "collectionGroup": "supplier_catalog_items",
-      "queryScope": "COLLECTION",
+      "queryScope": "COLLECTION_GROUP",
       "fields": [
         { "fieldPath": "product_id", "order": "ASCENDING" },
-        { "fieldPath": "unit_price_mad", "order": "ASCENDING" }
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "unit_price_centimes", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "procurement_needs",
+      "queryScope": "COLLECTION_GROUP",
+      "fields": [
+        { "fieldPath": "product_id", "order": "ASCENDING" },
+        { "fieldPath": "unit", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "coarse_area", "order": "ASCENDING" },
+        { "fieldPath": "needed_by", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "offers",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "procurement_need_id", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "landed_cost_centimes", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "agent_runs",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "created_at", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "group_orders",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "join_deadline", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "supplier_opportunities",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "status", "order": "ASCENDING" },
+        { "fieldPath": "product_id", "order": "ASCENDING" },
+        { "fieldPath": "needed_by", "order": "ASCENDING" }
       ]
     }
   ],
   "fieldOverrides": []
 }
-

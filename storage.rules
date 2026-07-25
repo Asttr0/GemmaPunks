@@ -2,24 +2,10 @@ rules_version = '2';
 
 service firebase.storage {
   match /b/{bucket}/o {
-    function belongsTo(orgId) {
-      return request.auth != null
-        && request.auth.token.organization_id == orgId;
-    }
-
-    match /organizations/{orgId}/evidence/{documentId}/{fileName} {
-      allow read: if belongsTo(orgId);
-      allow create: if belongsTo(orgId)
-        && request.resource.size < 10 * 1024 * 1024
-        && request.resource.contentType.matches(
-          'image/(jpeg|png)|application/pdf|audio/(wav|mpeg|mp4|x-m4a)'
-        );
-      allow update, delete: if false;
-    }
-
     match /{allPaths=**} {
+      // Cloud Storage is disabled for the Spark-plan hackathon build.
+      // FastAPI processes evidence temporarily and discards the binary.
       allow read, write: if false;
     }
   }
 }
-

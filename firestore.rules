@@ -6,21 +6,108 @@ service cloud.firestore {
       return request.auth != null;
     }
 
+    function claimedOrganizationId() {
+      return signedIn() && request.auth.token.organization_id is string
+        ? request.auth.token.organization_id
+        : '';
+    }
+
     function belongsTo(orgId) {
-      return signedIn() && request.auth.token.organization_id == orgId;
+      return signedIn() && claimedOrganizationId() == orgId;
     }
 
     function isSupplier() {
-      return signedIn() && request.auth.token.role in ['supplier', 'admin'];
+      let orgId = claimedOrganizationId();
+      return orgId != ''
+        && exists(/databases/$(database)/documents/organizations/$(orgId))
+        && get(
+          /databases/$(database)/documents/organizations/$(orgId)
+        ).data.type == 'SUPPLIER';
+    }
+
+    // A signed-in user can read only their own lightweight profile.
+    match /profiles/{userId} {
+      allow get: if signedIn() && request.auth.uid == userId;
+      allow list, create, update, delete: if false;
+    }
+
+    // Canonical product names and units are shared across the network.
+    match /products/{productId} {
+      allow read: if signedIn();
+      allow write: if false;
     }
 
     match /organizations/{orgId} {
-      allow read: if belongsTo(orgId);
+      allow get: if belongsTo(orgId);
+      allow list: if false;
       allow write: if false;
 
-      match /{collection}/{documentId} {
+      // A user can inspect their own membership, not the organization's roster.
+      match /memberships/{userId} {
+        allow get: if belongsTo(orgId) && request.auth.uid == userId;
+        allow list, create, update, delete: if false;
+      }
+
+      // These collections contain private organization data. Client reads are
+      // scoped by the organization claim. All writes remain server-only.
+      match /inventory_items/{documentId} {
         allow read: if belongsTo(orgId);
         allow write: if false;
+      }
+
+      match /documents/{documentId} {
+        allow read: if belongsTo(orgId);
+        allow write: if false;
+      }
+
+      match /ingestion_jobs/{documentId} {
+        allow read: if belongsTo(orgId);
+        allow write: if false;
+      }
+
+      match /extraction_drafts/{documentId} {
+        allow read: if belongsTo(orgId);
+        allow write: if false;
+      }
+
+      match /transactions/{documentId} {
+        allow read: if belongsTo(orgId);
+        allow write: if false;
+      }
+
+      match /inventory_movements/{documentId} {
+        allow read: if belongsTo(orgId);
+        allow write: if false;
+      }
+
+      match /supplier_catalog_items/{documentId} {
+        allow read: if belongsTo(orgId);
+        allow write: if false;
+      }
+
+      match /procurement_needs/{documentId} {
+        allow read: if belongsTo(orgId);
+        allow write: if false;
+      }
+
+      match /offers/{documentId} {
+        allow read: if belongsTo(orgId);
+        allow write: if false;
+      }
+
+      match /approvals/{documentId} {
+        allow read: if belongsTo(orgId);
+        allow write: if false;
+      }
+
+      match /agent_runs/{runId} {
+        allow read: if belongsTo(orgId);
+        allow write: if false;
+
+        match /tool_calls/{toolCallId} {
+          allow read: if belongsTo(orgId);
+          allow write: if false;
+        }
       }
     }
 
@@ -31,9 +118,18 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // Group orders span several organizations. Their stored documents contain
+    // participant identifiers, so clients receive filtered views from FastAPI.
+    match /group_orders/{groupOrderId} {
+      allow read, write: if false;
+
+      match /members/{memberId} {
+        allow read, write: if false;
+      }
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }
   }
 }
-
