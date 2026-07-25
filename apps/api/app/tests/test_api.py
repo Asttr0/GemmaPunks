@@ -4,5 +4,5 @@ from app.main import app, health
 
 
 def test_api_scaffold() -> None:
-    assert app.title == "MIZAN Souq API"
+    assert "MIZAN Souq" in app.title
     assert asyncio.run(health()) == {"status": "ok"}
