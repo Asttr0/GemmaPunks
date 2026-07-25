@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+from app.core.models import SupplierOpportunity
 
 
 class DashboardKPIs(BaseModel):
@@ -29,3 +30,22 @@ class DashboardResponse(BaseModel):
     inventory: InventorySummary
     alerts: list[DashboardAlert] = Field(default_factory=list)
     next_action: DashboardNextAction | None = None
+
+
+# Supplier Portal Schemas
+
+
+class SupplierDashboardKPIs(BaseModel):
+    active_catalog_items: int = 5
+    active_demand_opportunities: int = 2
+    total_potential_volume: float = 55.0
+    estimated_revenue_centimes: int = 101750
+
+
+class SupplierDashboardResponse(BaseModel):
+    kpis: SupplierDashboardKPIs
+    opportunities: list[SupplierOpportunity] = Field(default_factory=list)
+
+
+class SupplierOpportunityListResponse(BaseModel):
+    items: list[SupplierOpportunity]
