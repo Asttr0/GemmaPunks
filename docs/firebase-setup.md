@@ -3,12 +3,16 @@
 MIZAN Souq uses Firebase Authentication and Cloud Firestore. FastAPI uses the
 Firebase Admin SDK as the only authoritative business writer.
 
+Read [the complete database guide](database-guide.md) for the collection tree,
+field contracts, relationships, permissions, indexes, seed scenario, and
+teammate handoff.
+
 ## Local setup
 
 The repository already contains `firebase.json`, `.firebaserc`, Firestore
 indexes, and security-rule files. Do not run `firebase init` again.
 
-1. Install Node.js 20+ and Java 21+.
+1. Install Node.js 22+ and Java 21+.
 2. Run `npm install`.
 3. Copy `.env.example` to `.env`.
 4. Run `npm run firebase:emulators` or `make firebase`.
@@ -17,11 +21,11 @@ indexes, and security-rule files. Do not run `firebase init` again.
 Local development uses the safe fictional project ID `demo-gemmapunks`.
 Emulator data never reaches a real Firebase project.
 
-| Service | Local address |
-|---|---|
-| Emulator UI | <http://127.0.0.1:4000> |
-| Authentication | `127.0.0.1:9099` |
-| Firestore | `127.0.0.1:8082` |
+| Service        | Local address           |
+| -------------- | ----------------------- |
+| Emulator UI    | <http://127.0.0.1:4000> |
+| Authentication | `127.0.0.1:9099`        |
+| Firestore      | `127.0.0.1:8082`        |
 
 Firestore uses port `8082` because port `8080` is already used by another local
 project on the team lead's machine.
@@ -68,3 +72,15 @@ aggregated, privacy-filtered demand is copied to `supplier_opportunities`.
 The web client sends evidence to FastAPI and may read scoped Firestore records.
 Only FastAPI writes confirmed financial, inventory, procurement, approval,
 agent-run, and tool-call records.
+
+## Validate and seed
+
+```bash
+npm run firebase:validate-seed
+npm run firebase:test-rules
+npm run firebase:seed-emulator
+```
+
+The last command starts isolated Auth and Firestore emulators, loads the
+synthetic developer baseline, verifies key documents and custom claims, and
+then stops the emulators.
