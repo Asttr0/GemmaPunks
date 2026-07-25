@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FileText, Calendar, AlertTriangle, Eye } from "lucide-react";
+import { FileText, AlertTriangle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -100,61 +100,48 @@ export function ActiveOffersSection({
               <TableHead>Product</TableHead>
               <TableHead>Offer Price</TableHead>
               <TableHead>MOQ</TableHead>
-              <TableHead>Merchants Joined</TableHead>
-              <TableHead>Expires</TableHead>
               <TableHead>Status</TableHead>
               <TableHead />
             </TableRow>
           </TableHeader>
           <TableBody>
-            {offers.map((offer) => (
-              <TableRow key={offer.id}>
-                <TableCell className="font-medium">
-                  {offer.productName}
-                </TableCell>
-                <TableCell className="font-mono tabular-nums">
-                  {offer.offerPrice.toFixed(2)} MAD
-                </TableCell>
-                <TableCell>{offer.moq}</TableCell>
-                <TableCell>
-                  <div className="flex items-center gap-1">
-                    <Eye className="size-4 text-foreground-muted" />
-                    {offer.totalRaised}/{offer.moq} units
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <div className="flex items-center gap-1">
-                    <Calendar className="size-4 text-foreground-muted" />
-                    {new Date(offer.expiresAt).toLocaleDateString("en-GB", {
-                      day: "2-digit",
-                      month: "short",
-                    })}
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <Badge
-                    variant={
-                      offer.status === "accepted"
-                        ? "success"
-                        : offer.status === "expired"
-                          ? "danger"
-                          : "info"
-                    }
-                  >
-                    {offer.status === "accepted"
-                      ? "Accepted"
-                      : offer.status === "expired"
-                        ? "Expired"
-                        : "Active"}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <Button size="sm" variant="ghost">
-                    View
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
+            {offers.map((offer) => {
+              const priceMAD = (offer.unit_price_centimes / 100).toFixed(2);
+
+              return (
+                <TableRow key={offer.offer_id}>
+                  <TableCell className="font-medium">
+                    {offer.product_id}
+                  </TableCell>
+                  <TableCell className="font-mono tabular-nums">
+                    {priceMAD} MAD
+                  </TableCell>
+                  <TableCell>{offer.minimum_quantity}</TableCell>
+                  <TableCell>
+                    <Badge
+                      variant={
+                        offer.status === "AVAILABLE_NOW"
+                          ? "success"
+                          : offer.status === "REJECTED"
+                            ? "danger"
+                            : "info"
+                      }
+                    >
+                      {offer.status === "AVAILABLE_NOW"
+                        ? "Active"
+                        : offer.status === "REJECTED"
+                          ? "Rejected"
+                          : "Group only"}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Button size="sm" variant="ghost">
+                      View
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </CardContent>

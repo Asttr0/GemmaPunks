@@ -90,9 +90,11 @@ export function CatalogStockSection({
     );
   }
 
-  const outOfStockCount = items.filter((i) => i.stock === 0).length;
+  const outOfStockCount = items.filter((i) => i.available_quantity === 0).length;
   const lowStockCount = items.filter(
-    (i) => i.stock > 0 && i.stock < i.minStock,
+    (i) =>
+      i.available_quantity > 0 &&
+      i.available_quantity < i.minimum_quantity,
   ).length;
   const hasWarnings = outOfStockCount > 0 || lowStockCount > 0;
 
@@ -119,27 +121,33 @@ export function CatalogStockSection({
               <TableHead>SKU</TableHead>
               <TableHead>Category</TableHead>
               <TableHead className="text-right">Price</TableHead>
-              <TableHead className="text-right">Stock</TableHead>
+              <TableHead className="text-right">Available</TableHead>
               <TableHead>Status</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {items.map((item) => {
-              const isOutOfStock = item.stock === 0;
-              const isLowStock = item.stock > 0 && item.stock < item.minStock;
+              const isOutOfStock = item.available_quantity === 0;
+              const isLowStock =
+                item.available_quantity > 0 &&
+                item.available_quantity < item.minimum_quantity;
+
+              const priceMAD = (item.unit_price_centimes / 100).toFixed(2);
 
               return (
-                <TableRow key={item.id}>
-                  <TableCell className="font-medium">{item.name}</TableCell>
+                <TableRow key={item.catalog_item_id}>
+                  <TableCell className="font-medium">
+                    {item.product_id}
+                  </TableCell>
                   <TableCell className="text-foreground-muted">
-                    {item.sku}
+                    {item.supplier_sku}
                   </TableCell>
-                  <TableCell>{item.category}</TableCell>
+                  <TableCell>{item.service_areas?.[0] ?? "—"}</TableCell>
                   <TableCell className="text-right font-mono tabular-nums">
-                    {item.price.toFixed(2)} MAD
+                    {priceMAD} MAD
                   </TableCell>
                   <TableCell className="text-right font-mono tabular-nums">
-                    {item.stock.toLocaleString()} {item.unit}
+                    {item.available_quantity.toLocaleString()} {item.unit}
                   </TableCell>
                   <TableCell>
                     {isOutOfStock ? (

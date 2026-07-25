@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ShoppingBag, Users, Calendar, AlertTriangle } from "lucide-react";
+import { ShoppingBag, Users, AlertTriangle, Calendar } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { Timestamp } from "firebase/firestore";
 import type { Opportunity } from "./mocks/fixtures";
 
 interface OpportunitiesSectionProps {
@@ -26,7 +27,7 @@ export function OpportunitiesSection({
 }: OpportunitiesSectionProps) {
   if (isLoading) {
     return (
-      <Card>
+      <Card className="border-brand-200">
         <CardHeader>
           <CardTitle>Incoming Opportunities</CardTitle>
         </CardHeader>
@@ -46,7 +47,7 @@ export function OpportunitiesSection({
 
   if (error) {
     return (
-      <Card>
+      <Card className="border-brand-200">
         <CardHeader>
           <CardTitle>Incoming Opportunities</CardTitle>
         </CardHeader>
@@ -70,7 +71,7 @@ export function OpportunitiesSection({
 
   if (!opportunities || opportunities.length === 0) {
     return (
-      <Card>
+      <Card className="border-brand-200">
         <CardHeader>
           <CardTitle>Incoming Opportunities</CardTitle>
         </CardHeader>
@@ -102,52 +103,58 @@ export function OpportunitiesSection({
               <TableHead>Product</TableHead>
               <TableHead>Quantity</TableHead>
               <TableHead>Merchants</TableHead>
-              <TableHead>Est. Revenue</TableHead>
               <TableHead>Deadline</TableHead>
               <TableHead>Status</TableHead>
               <TableHead />
             </TableRow>
           </TableHeader>
           <TableBody>
-            {opportunities.map((opp) => (
-              <TableRow key={opp.id}>
-                <TableCell className="font-medium">{opp.productName}</TableCell>
-                <TableCell className="font-mono tabular-nums">
-                  {opp.totalQuantity.toLocaleString()} units
-                </TableCell>
-                <TableCell>
-                  <div className="flex items-center gap-1">
-                    <Users className="size-4 text-foreground-muted" />
-                    {opp.merchantCount}
-                  </div>
-                </TableCell>
-                <TableCell className="text-right font-mono tabular-nums">
-                  {opp.estimatedRevenue.toLocaleString()} MAD
-                </TableCell>
-                <TableCell>
-                  <div className="flex items-center gap-1">
-                    <Calendar className="size-4 text-foreground-muted" />
-                    {new Date(opp.deadline).toLocaleDateString("en-GB", {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    })}
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <Badge
-                    variant={opp.status === "ready" ? "success" : "warning"}
-                  >
-                    {opp.status === "ready" ? "Ready to quote" : "Pending"}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <Button size="sm" variant="outline">
-                    Create offer
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
+            {opportunities.map((opp) => {
+              const deadlineDate = opp.needed_by instanceof Timestamp
+                ? opp.needed_by.toDate()
+                : new Date(opp.needed_by as unknown as string | number);
+
+              return (
+                <TableRow key={opp.opportunity_id}>
+                  <TableCell className="font-medium">
+                    {opp.product_id}
+                  </TableCell>
+                  <TableCell className="font-mono tabular-nums">
+                    {opp.total_quantity.toLocaleString()} {opp.unit}
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-1">
+                      <Users className="size-4 text-foreground-muted" />
+                      {opp.merchant_count}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-1">
+                      <Calendar className="size-4 text-foreground-muted" />
+                      {deadlineDate.toLocaleDateString("en-GB", {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      })}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Badge
+                      variant={
+                        opp.status === "ACTIVE" ? "success" : "warning"
+                      }
+                    >
+                      {opp.status === "ACTIVE" ? "Ready to quote" : opp.status}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Button size="sm" variant="outline">
+                      Create offer
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </CardContent>

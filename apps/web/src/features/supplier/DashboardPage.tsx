@@ -3,26 +3,53 @@ import { AppLayout } from "@/components/shared/AppLayout";
 import { CatalogStockSection } from "./CatalogStockSection";
 import { OpportunitiesSection } from "./OpportunitiesSection";
 import { ActiveOffersSection } from "./ActiveOffersSection";
-import { mockDashboardData } from "./mocks/fixtures";
+import { useSupplierAuth } from "./useSupplierAuth";
+import { useCatalogItems, useOpportunities, useActiveOffers } from "./useFirestoreData";
 
 export function SupplierDashboard() {
-  const [data] = React.useState({
-    catalog: mockDashboardData.catalog,
-    opportunities: mockDashboardData.opportunities,
-    activeOffers: mockDashboardData.activeOffers,
-  });
+  const { organizationId, loading: authLoading, error: authError } = useSupplierAuth();
 
-  const [loadingStates] = React.useState({
-    catalog: false,
-    opportunities: false,
-    activeOffers: false,
-  });
+  const {
+    items: catalogItems,
+    loading: catalogLoading,
+    error: catalogError,
+  } = useCatalogItems(organizationId);
 
-  const [errors] = React.useState({
-    catalog: null,
-    opportunities: null,
-    activeOffers: null,
-  });
+  const {
+    opportunities,
+    loading: opportunitiesLoading,
+    error: opportunitiesError,
+  } = useOpportunities();
+
+  const {
+    offers: activeOffers,
+    loading: offersLoading,
+    error: offersError,
+  } = useActiveOffers(organizationId);
+
+  if (authLoading) {
+    return (
+      <div className="flex min-h-dvh items-center justify-center bg-background">
+        <p className="text-foreground-muted">Signing in...</p>
+      </div>
+    );
+  }
+
+  if (authError) {
+    return (
+      <div className="flex min-h-dvh items-center justify-center bg-background">
+        <p className="text-danger">Failed to initialize: {authError.message}</p>
+      </div>
+    );
+  }
+
+  if (!organizationId) {
+    return (
+      <div className="flex min-h-dvh items-center justify-center bg-background">
+        <p className="text-danger">No organization found</p>
+      </div>
+    );
+  }
 
   return (
     <AppLayout
@@ -32,21 +59,21 @@ export function SupplierDashboard() {
     >
       <div className="space-y-6">
         <OpportunitiesSection
-          opportunities={data.opportunities}
-          isLoading={loadingStates.opportunities}
-          error={errors.opportunities}
+          opportunities={opportunities}
+          isLoading={opportunitiesLoading}
+          error={opportunitiesError}
         />
 
         <CatalogStockSection
-          items={data.catalog}
-          isLoading={loadingStates.catalog}
-          error={errors.catalog}
+          items={catalogItems}
+          isLoading={catalogLoading}
+          error={catalogError}
         />
 
         <ActiveOffersSection
-          offers={data.activeOffers}
-          isLoading={loadingStates.activeOffers}
-          error={errors.activeOffers}
+          offers={activeOffers}
+          isLoading={offersLoading}
+          error={offersError}
         />
       </div>
     </AppLayout>
