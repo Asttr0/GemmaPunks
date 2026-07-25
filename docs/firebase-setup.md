@@ -73,6 +73,19 @@ The web client sends evidence to FastAPI and may read scoped Firestore records.
 Only FastAPI writes confirmed financial, inventory, procurement, approval,
 agent-run, and tool-call records.
 
+Account setup follows the same server-owned rule:
+
+```text
+Firebase Auth creates the user
+→ React sends the Firebase ID token to POST /api/v1/auth/signup
+→ FastAPI creates the profile, organization, and membership
+→ FastAPI applies organization_id and role custom claims
+→ React refreshes the ID token
+```
+
+The browser must not create profile, organization, or membership documents
+directly.
+
 ## Validate and seed
 
 ```bash

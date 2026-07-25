@@ -102,6 +102,20 @@ class DataStore:
             city="Berrechid",
             coarse_area="Berrechid Center",
         )
+        self.memberships[m_org] = [
+            Membership(
+                organization_id=m_org,
+                user_id="demo-merchant",
+                role="OWNER",
+            )
+        ]
+        self.memberships[s_org] = [
+            Membership(
+                organization_id=s_org,
+                user_id="demo-supplier",
+                role="OWNER",
+            )
+        ]
 
         # 2. Canonical Products
         oil_prod = CanonicalProduct(
