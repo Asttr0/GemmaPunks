@@ -161,9 +161,11 @@ should use when designing repository methods:
 ```text
 profiles/{user_id}
 
+products/{product_id}
+
 organizations/{organization_id}
   memberships/{user_id}
-  products/{product_id}
+  inventory_items/{product_id}
   documents/{document_id}
   ingestion_jobs/{ingestion_id}
   extraction_drafts/{draft_id}
@@ -186,6 +188,10 @@ The code calls a business an `organization`.
 
 Draft lines can be stored inside the draft document for the MVP. Transaction
 lines can also be stored inside the transaction document.
+
+The full field-level contract is in
+[the database guide](database-guide.md). That guide is the source of truth if a
+short example in this handoff is incomplete.
 
 ## 8. Important backend rules
 

@@ -397,7 +397,7 @@ data shapes.
 
 ## Start locally
 
-Requirements: Node.js 20+, npm 10+, Python 3.12+, and Java 21+ for the Firebase
+Requirements: Node.js 22+, npm 10+, Python 3.12+, and Java 21+ for the Firebase
 emulators.
 
 ```bash
@@ -450,6 +450,11 @@ business rules, coordinates AI tools, and accesses Firebase.
 
 Local development is emulator-first. The exact setup command and ports are kept
 in [docs/firebase-setup.md](docs/firebase-setup.md).
+
+The complete Firestore tree, field contracts, permissions, relationships,
+seeded values, and teammate handoffs are frozen in
+[docs/database-guide.md](docs/database-guide.md). Read it before adding a
+collection or changing a database field.
 
 The browser signs in through Firebase Authentication and sends its Firebase ID
 token to FastAPI over HTTPS. FastAPI verifies the token with the Firebase Admin

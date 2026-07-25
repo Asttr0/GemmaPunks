@@ -1,4 +1,4 @@
-.PHONY: dev web api firebase install lint test format
+.PHONY: dev web api firebase firebase-test firebase-seed install lint test format
 
 install:
 	npm install
@@ -16,6 +16,13 @@ api:
 
 firebase:
 	npm run firebase:emulators
+
+firebase-test:
+	npm run firebase:validate-seed
+	npm run firebase:test-rules
+
+firebase-seed:
+	npm run firebase:seed-emulator
 
 lint:
 	npm run lint
