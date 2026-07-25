@@ -113,6 +113,7 @@ def test_confirm_draft_and_idempotency():
     upload_res = upload_receipt()
     ingestion_id = upload_res["id"]
     draft = upload_res["draft"]
+    organization_id = upload_res["organization_id"]
 
     confirm_payload = {
         "draft_version": draft["version"],
@@ -121,10 +122,10 @@ def test_confirm_draft_and_idempotency():
     }
 
     idempotency_key = f"confirm-{ingestion_id}"
-    transactions_before = len(db_store.transactions.get("org01", {}))
-    movements_before = len(db_store.inventory_movements.get("org01", []))
-    approvals_before = len(db_store.approvals.get("org01", []))
-    stock_before = db_store.inventory_items.get("org01", {}).get("cooking_oil_1l")
+    transactions_before = len(db_store.transactions.get(organization_id, {}))
+    movements_before = len(db_store.inventory_movements.get(organization_id, []))
+    approvals_before = len(db_store.approvals.get(organization_id, []))
+    stock_before = db_store.inventory_items.get(organization_id, {}).get("cooking_oil_1l")
     oil_quantity_before = stock_before.quantity_on_hand if stock_before else 0
 
     confirm_res = client.post(
@@ -152,11 +153,11 @@ def test_confirm_draft_and_idempotency():
     )
     assert repeat_res.status_code == 200
     assert repeat_res.json() == confirm_data
-    assert len(db_store.transactions["org01"]) == transactions_before + 1
-    assert len(db_store.inventory_movements["org01"]) == movements_before + 2
-    assert len(db_store.approvals["org01"]) == approvals_before + 1
+    assert len(db_store.transactions[organization_id]) == transactions_before + 1
+    assert len(db_store.inventory_movements[organization_id]) == movements_before + 2
+    assert len(db_store.approvals[organization_id]) == approvals_before + 1
     assert (
-        db_store.inventory_items["org01"]["cooking_oil_1l"].quantity_on_hand
+        db_store.inventory_items[organization_id]["cooking_oil_1l"].quantity_on_hand
         == oil_quantity_before + 20
     )
 
