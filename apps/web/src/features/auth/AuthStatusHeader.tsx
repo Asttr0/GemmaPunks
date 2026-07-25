@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "./auth-context";
 import { AuthModal } from "./AuthModal";
-import { UserCheck, LogOut, LogIn, ShieldCheck, Building2, Store, Sparkles } from "lucide-react";
+import { LogOut, LogIn, Building2, Store, Sparkles } from "lucide-react";
 
 export const AuthStatusHeader: React.FC = () => {
   const { user, organizationId, orgType, role, signOut } = useAuth();

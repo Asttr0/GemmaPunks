@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { AuthProvider, useAuth } from "../features/auth/AuthContext";
+import { AuthProvider } from "../features/auth/AuthContext";
+import { useAuth } from "../features/auth/auth-context";
 import { AuthStatusHeader } from "../features/auth/AuthStatusHeader";
 import {
   Store,
@@ -9,13 +10,12 @@ import {
   Users,
   CheckCircle2,
   TrendingUp,
-  AlertTriangle,
   ArrowRight,
   ShieldCheck,
 } from "lucide-react";
 
 function MainDashboard() {
-  const { user, organizationId, orgType, role } = useAuth();
+  const { organizationId, orgType, role } = useAuth();
   const [activeTab, setActiveTab] = useState<"merchant" | "supplier" | "procurement">("merchant");
 
   return (

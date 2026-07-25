@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "./auth-context";
 import { LogIn, UserPlus, Store, Building2, AlertCircle, Sparkles, CheckCircle2 } from "lucide-react";
 
 interface AuthModalProps {
@@ -43,9 +43,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       setTimeout(() => {
         onClose();
       }, 1000);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Auth error:", err);
-      let msg = err.message || "An authentication error occurred.";
+      let msg = err instanceof Error ? err.message : "An authentication error occurred.";
       if (msg.includes("auth/invalid-credential") || msg.includes("auth/user-not-found")) {
         msg = "Invalid email or password. Please try again or use Demo accounts.";
       } else if (msg.includes("auth/email-already-in-use")) {
@@ -68,7 +68,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       setTimeout(() => {
         onClose();
       }, 800);
-    } catch (err: any) {
+    } catch {
       setError("Demo sign-in failed. Make sure Firebase Emulator or credentials are set.");
     } finally {
       setLoading(false);

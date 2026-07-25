@@ -1,40 +1,20 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
   updateProfile,
-  User,
 } from "firebase/auth";
+import type { User } from "firebase/auth";
 import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
 import { firebaseAuth, firestore } from "../../lib/firebase";
-
-export interface UserAuthContext {
-  user: User | null;
-  idToken: str | null;
-  organizationId: str;
-  role: "OWNER" | "MEMBER" | "ADMIN";
-  orgType: "MERCHANT" | "SUPPLIER";
-  loading: boolean;
-  signIn: (email: str, password: str) => Promise<void>;
-  signUp: (
-    email: str,
-    password: str,
-    displayName: str,
-    organizationName: str,
-    organizationType: "MERCHANT" | "SUPPLIER"
-  ) => Promise<void>;
-  signOut: () => Promise<void>;
-  demoSignIn: (role: "merchant" | "supplier") => Promise<void>;
-}
-
-const AuthContext = createContext<UserAuthContext | undefined>(undefined);
+import { AuthContext } from "./auth-context";
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [idToken, setIdToken] = useState<str | null>(null);
-  const [organizationId, setOrganizationId] = useState<str>("merchant-berrechid");
+  const [idToken, setIdToken] = useState<string | null>(null);
+  const [organizationId, setOrganizationId] = useState<string>("merchant-berrechid");
   const [role, setRole] = useState<"OWNER" | "MEMBER" | "ADMIN">("OWNER");
   const [orgType, setOrgType] = useState<"MERCHANT" | "SUPPLIER">("MERCHANT");
   const [loading, setLoading] = useState<boolean>(true);
@@ -48,8 +28,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setIdToken(tokenResult.token);
 
           // Extract organizationId and role from custom claims or Firestore profile
-          const claimOrg = tokenResult.claims.organization_id as str | undefined;
-          const claimRole = (tokenResult.claims.role as str | undefined)?.toUpperCase() as
+          const claimOrg = tokenResult.claims.organization_id as string | undefined;
+          const claimRole = (tokenResult.claims.role as string | undefined)?.toUpperCase() as
             | "OWNER"
             | "MEMBER"
             | "ADMIN"
@@ -96,7 +76,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => unsubscribe();
   }, []);
 
-  const signIn = async (email: str, password: str) => {
+  const signIn = async (email: string, password: string) => {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(firebaseAuth, email, password);
@@ -106,11 +86,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signUp = async (
-    email: str,
-    password: str,
-    displayName: str,
-    organizationName: str,
-    organizationType: "MERCHANT" | "SUPPLIER"
+    email: string,
+    password: string,
+    displayName: string,
+    organizationName: string,
+    organizationType: "MERCHANT" | "SUPPLIER",
   ) => {
     setLoading(true);
     try {
@@ -197,12 +177,4 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       {children}
     </AuthContext.Provider>
   );
-};
-
-export const useAuth = (): UserAuthContext => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
 };
