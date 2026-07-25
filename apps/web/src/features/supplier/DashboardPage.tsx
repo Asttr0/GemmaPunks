@@ -2,12 +2,20 @@ import * as React from "react";
 import { AppLayout } from "@/components/shared/AppLayout";
 import { CatalogStockSection } from "./CatalogStockSection";
 import { OpportunitiesSection } from "./OpportunitiesSection";
-import { ActiveOffersSection } from "./ActiveOffersSection";
+// import { ActiveOffersSection } from "./ActiveOffersSection";
 import { useSupplierAuth } from "./useSupplierAuth";
-import { useCatalogItems, useOpportunities, useActiveOffers } from "./useFirestoreData";
+import {
+  useCatalogItems,
+  useOpportunities,
+  //  useActiveOffers,
+} from "./useFirestoreData";
 
 export function SupplierDashboard() {
-  const { organizationId, loading: authLoading, error: authError } = useSupplierAuth();
+  const {
+    organizationId,
+    loading: authLoading,
+    error: authError,
+  } = useSupplierAuth();
 
   const {
     items: catalogItems,
@@ -21,11 +29,12 @@ export function SupplierDashboard() {
     error: opportunitiesError,
   } = useOpportunities();
 
-  const {
-    offers: activeOffers,
-    loading: offersLoading,
-    error: offersError,
-  } = useActiveOffers(organizationId);
+  // Disabled the offers section due to incompatibility with the intent of the page.
+  //   const {
+  //     offers: activeOffers,
+  //     loading: offersLoading,
+  //     error: offersError,
+  //   } = useActiveOffers(organizationId);
 
   if (authLoading) {
     return (
@@ -70,11 +79,12 @@ export function SupplierDashboard() {
           error={catalogError}
         />
 
-        <ActiveOffersSection
-          offers={activeOffers}
-          isLoading={offersLoading}
-          error={offersError}
-        />
+        {/* Disabled the offers section due to incompatibility with the intent of the page. */}
+        {/* <ActiveOffersSection */}
+        {/*   offers={activeOffers} */}
+        {/*   isLoading={offersLoading} */}
+        {/*   error={offersError} */}
+        {/* /> */}
       </div>
     </AppLayout>
   );
