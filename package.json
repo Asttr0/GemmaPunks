@@ -11,6 +11,10 @@
     "lint": "npm --workspace apps/web run lint",
     "test": "npm --workspace apps/web run test",
     "format": "npm --workspace apps/web run format",
+    "contracts:openapi": "python scripts/generate_openapi.py",
+    "contracts:types": "openapi-typescript packages/contracts/openapi.json -o packages/contracts/generated-types/api.ts",
+    "contracts:generate": "npm run contracts:openapi && npm run contracts:types",
+    "contracts:check": "npm run contracts:generate && git diff --exit-code -- packages/contracts",
     "firebase:emulators": "firebase emulators:start --project demo-gemmapunks --only auth,firestore",
     "firebase:test-rules": "firebase emulators:exec --project demo-gemmapunks --only firestore \"node --test tests/firebase/firestore.rules.test.mjs\"",
     "firebase:validate-seed": "node scripts/seed_firebase.mjs --validate-only",
@@ -22,6 +26,7 @@
   "devDependencies": {
     "@firebase/rules-unit-testing": "^4.0.1",
     "firebase-admin": "^14.2.0",
-    "firebase-tools": "^15.24.0"
+    "firebase-tools": "^15.24.0",
+    "openapi-typescript": "^7.13.0"
   }
 }

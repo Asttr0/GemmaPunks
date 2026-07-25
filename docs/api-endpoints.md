@@ -73,6 +73,11 @@ Authenticates user and returns profile and active organization context.
 ### 2.3 Sign Up / Register Business Organization
 Creates a new user profile and merchant or supplier organization.
 
+Firebase Authentication creates the identity first. This endpoint then verifies
+that user's ID token and uses the Firebase Admin SDK to create the profile,
+organization, membership, and organization claims. The browser never writes
+those records directly.
+
 - **Method & Path**: `POST /api/v1/auth/signup`
 - **Headers**: `Authorization: Bearer <token>`
 - **Request Body**:
@@ -111,6 +116,9 @@ Creates a new user profile and merchant or supplier organization.
     }
   }
   ```
+
+After a successful signup, the client refreshes its Firebase ID token so the
+new `organization_id` and `role` claims are included in later API requests.
 
 ---
 
