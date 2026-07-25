@@ -17,6 +17,7 @@
       devShells.${system}.default = pkgs.mkShell {
         packages = with pkgs; [
           nodejs_24
+          jdk21
         ];
 
         shellHook = ''
