@@ -189,37 +189,352 @@ Statuses use uppercase values such as `ACTIVE`, `PROCESSING`, `NEEDS_REVIEW`,
 
 ## 6. Relationships
 
+The database is easier to understand as six small areas instead of one large
+diagram.
+
+How to read the diagrams:
+
+- `PK` means the document ID.
+- `FK` means the field stores another document's ID.
+- `||--o{` means one record can connect to many records.
+- Firestore does not enforce foreign keys; FastAPI validates these
+  relationships.
+- These diagrams show logical relationships. Section 2 shows the real
+  Firestore paths.
+
+### 6.1 Users and organizations
+
 ```mermaid
 erDiagram
+    direction TB
+
+    PROFILE {
+        string user_id PK
+        string display_name
+        string email
+        string primary_organization_id FK
+        string locale
+    }
+
+    ORGANIZATION {
+        string organization_id PK
+        string name
+        string type
+        string status
+        string city
+        string coarse_area
+    }
+
+    MEMBERSHIP {
+        string user_id PK
+        string organization_id FK
+        string role
+        string status
+    }
+
     PROFILE ||--o{ MEMBERSHIP : joins
     ORGANIZATION ||--o{ MEMBERSHIP : contains
-    PRODUCT ||--o{ INVENTORY_ITEM : identifies
-    ORGANIZATION ||--o{ INVENTORY_ITEM : owns
+```
+
+One profile can have membership records. For P0, the token and
+`primary_organization_id` select one active organization.
+
+### 6.2 Evidence and human review
+
+```mermaid
+erDiagram
+    direction TB
+
+    ORGANIZATION {
+        string organization_id PK
+        string name
+        string type
+    }
+
+    DOCUMENT {
+        string document_id PK
+        string organization_id FK
+        string kind
+        string content_type
+        integer size_bytes
+        boolean evidence_retained
+    }
+
+    INGESTION_JOB {
+        string ingestion_id PK
+        string organization_id FK
+        string document_id FK
+        string draft_id FK
+        string agent_run_id FK
+        string status
+        string provider
+    }
+
+    EXTRACTION_DRAFT {
+        string draft_id PK
+        string organization_id FK
+        string ingestion_job_id FK
+        string transaction_kind
+        integer version
+        integer total_centimes
+        string status
+    }
+
+    TRANSACTION {
+        string transaction_id PK
+        string organization_id FK
+        string source_draft_id FK
+        string kind
+        integer total_centimes
+        string status
+    }
 
     ORGANIZATION ||--o{ DOCUMENT : uploads
     DOCUMENT ||--|| INGESTION_JOB : starts
     INGESTION_JOB ||--o| EXTRACTION_DRAFT : produces
     EXTRACTION_DRAFT ||--o| TRANSACTION : becomes
+    ORGANIZATION ||--o{ TRANSACTION : owns
+```
+
+The draft is editable and has no official effect. Only human confirmation can
+create the transaction.
+
+### 6.3 Transactions and inventory
+
+```mermaid
+erDiagram
+    direction TB
+
+    ORGANIZATION {
+        string organization_id PK
+        string name
+        string type
+    }
+
+    PRODUCT {
+        string product_id PK
+        string canonical_name
+        string category
+        string base_unit
+        boolean active
+    }
+
+    TRANSACTION {
+        string transaction_id PK
+        string organization_id FK
+        string kind
+        integer total_centimes
+        timestamp occurred_at
+        string status
+    }
+
+    INVENTORY_MOVEMENT {
+        string movement_id PK
+        string organization_id FK
+        string product_id FK
+        string transaction_id FK
+        string kind
+        number quantity_delta
+        number quantity_after
+    }
+
+    INVENTORY_ITEM {
+        string product_id PK
+        string organization_id FK
+        string unit
+        number quantity_on_hand
+        number average_daily_sales
+        number target_stock_quantity
+        string status
+    }
 
     ORGANIZATION ||--o{ TRANSACTION : owns
     TRANSACTION ||--o{ INVENTORY_MOVEMENT : creates
     PRODUCT ||--o{ INVENTORY_MOVEMENT : changes
+    ORGANIZATION ||--o{ INVENTORY_ITEM : owns
+    PRODUCT ||--o{ INVENTORY_ITEM : identifies
+```
+
+`INVENTORY_MOVEMENT` is the audit history. `INVENTORY_ITEM` is the current
+snapshot used by the dashboard.
+
+### 6.4 Procurement and supplier offers
+
+```mermaid
+erDiagram
+    direction TB
+
+    ORGANIZATION {
+        string organization_id PK
+        string name
+        string type
+        string coarse_area
+    }
+
+    PRODUCT {
+        string product_id PK
+        string canonical_name
+        string base_unit
+    }
+
+    PROCUREMENT_NEED {
+        string need_id PK
+        string organization_id FK
+        string product_id FK
+        string unit
+        number quantity_needed
+        integer days_remaining
+        timestamp needed_by
+        string status
+    }
+
+    SUPPLIER_CATALOG_ITEM {
+        string catalog_item_id PK
+        string organization_id FK
+        string product_id FK
+        string supplier_sku
+        integer unit_price_centimes
+        number minimum_quantity
+        integer delivery_fee_centimes
+        string status
+    }
+
+    OFFER {
+        string offer_id PK
+        string organization_id FK
+        string procurement_need_id FK
+        string supplier_organization_id FK
+        string catalog_item_id FK
+        integer landed_cost_centimes
+        boolean eligible_alone
+        boolean affordable
+        string status
+    }
 
     ORGANIZATION ||--o{ PROCUREMENT_NEED : owns
     PRODUCT ||--o{ PROCUREMENT_NEED : requests
     PROCUREMENT_NEED ||--o{ OFFER : receives
     ORGANIZATION ||--o{ SUPPLIER_CATALOG_ITEM : publishes
     PRODUCT ||--o{ SUPPLIER_CATALOG_ITEM : identifies
+    SUPPLIER_CATALOG_ITEM ||--o{ OFFER : supplies
+```
+
+Procurement needs and offer comparisons remain private to the merchant.
+Suppliers see only aggregated opportunities from the next diagram.
+
+### 6.5 Collective purchasing
+
+```mermaid
+erDiagram
+    direction TB
+
+    PRODUCT {
+        string product_id PK
+        string canonical_name
+        string base_unit
+    }
+
+    ORGANIZATION {
+        string organization_id PK
+        string name
+        string type
+    }
+
+    GROUP_ORDER {
+        string group_order_id PK
+        string product_id FK
+        string supplier_organization_id FK
+        string status
+        number total_quantity
+        number minimum_quantity
+        integer unit_price_centimes
+        integer delivery_total_centimes
+        timestamp join_deadline
+    }
+
+    GROUP_ORDER_MEMBER {
+        string organization_id PK
+        string procurement_need_id FK
+        number quantity
+        string status
+        integer product_saving_centimes
+        integer delivery_saving_centimes
+        integer total_saving_centimes
+    }
+
+    SUPPLIER_OPPORTUNITY {
+        string opportunity_id PK
+        string source_group_order_id FK
+        string product_id FK
+        string coarse_area
+        number total_quantity
+        integer merchant_count
+        timestamp needed_by
+        string status
+    }
 
     PRODUCT ||--o{ GROUP_ORDER : combines
     GROUP_ORDER ||--|{ GROUP_ORDER_MEMBER : contains
     ORGANIZATION ||--o{ GROUP_ORDER_MEMBER : participates
     GROUP_ORDER ||--o| SUPPLIER_OPPORTUNITY : publishes
+```
+
+The stored group order and members are server-only. The opportunity removes
+merchant identities and private financial data before suppliers can read it.
+
+### 6.6 Human approvals and AI audit
+
+```mermaid
+erDiagram
+    direction TB
+
+    ORGANIZATION {
+        string organization_id PK
+        string name
+        string type
+    }
+
+    APPROVAL {
+        string approval_id PK
+        string organization_id FK
+        string action
+        string target_type
+        string target_id
+        string approved_by
+        string idempotency_key
+        timestamp created_at
+    }
+
+    AGENT_RUN {
+        string agent_run_id PK
+        string organization_id FK
+        string document_id FK
+        string ingestion_job_id FK
+        string provider
+        string model
+        string status
+        boolean fallback_used
+        integer duration_ms
+    }
+
+    TOOL_CALL {
+        string tool_call_id PK
+        string organization_id FK
+        integer sequence
+        string name
+        string status
+        integer duration_ms
+        string input_summary
+        string output_summary
+    }
 
     ORGANIZATION ||--o{ APPROVAL : records
     ORGANIZATION ||--o{ AGENT_RUN : owns
     AGENT_RUN ||--o{ TOOL_CALL : records
 ```
+
+Approvals prove that a human accepted an important action. Agent runs and tool
+calls provide a safe timeline without storing chain-of-thought or secrets.
 
 ## 7. Collection contracts
 
