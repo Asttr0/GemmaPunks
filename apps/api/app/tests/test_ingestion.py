@@ -1,7 +1,6 @@
-import pytest
 from fastapi.testclient import TestClient
+
 from app.main import app
-from app.core.store import db_store
 
 client = TestClient(app)
 
@@ -80,9 +79,7 @@ def test_confirm_draft_and_idempotency():
     # 2. Confirm draft
     confirm_payload = {
         "draft_version": draft["version"],
-        "clarification_answers": [
-            {"field_path": "lines[1].quantity", "answer": "10"}
-        ],
+        "clarification_answers": [{"field_path": "lines[1].quantity", "answer": "10"}],
         "draft": draft,
     }
 

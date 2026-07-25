@@ -1,5 +1,6 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Literal
+
 from pydantic import BaseModel, Field
 
 
@@ -21,7 +22,7 @@ class Transaction(BaseModel):
     lines: list[TransactionLine] = Field(default_factory=list)
     ingestion_id: str | None = None
     draft_id: str | None = None
-    occurred_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    occurred_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class TransactionListResponse(BaseModel):

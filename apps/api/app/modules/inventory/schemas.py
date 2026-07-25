@@ -1,5 +1,6 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Literal
+
 from pydantic import BaseModel, Field
 
 
@@ -20,7 +21,7 @@ class InventoryMovement(BaseModel):
     quantity: int
     direction: Literal["in", "out"]
     reference_transaction_id: str | None = None
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class InventoryItemResponse(BaseModel):

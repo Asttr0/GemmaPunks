@@ -1,5 +1,5 @@
-import pytest
 from fastapi.testclient import TestClient
+
 from app.main import app
 
 client = TestClient(app)
@@ -29,7 +29,9 @@ def test_procurement_need_generation_and_listing():
 
 def test_supplier_search_and_offer_comparison():
     # Search suppliers
-    search_res = client.get("/api/v1/suppliers/search?product_id=cooking-oil-1l", headers=auth_merchant)
+    search_res = client.get(
+        "/api/v1/suppliers/search?product_id=cooking-oil-1l", headers=auth_merchant
+    )
     assert search_res.status_code == 200
     items = search_res.json()["items"]
     assert len(items) >= 2

@@ -1,5 +1,7 @@
 from typing import Literal
+
 from pydantic import BaseModel, Field
+
 from app.modules.ai.schemas.extraction import ExtractionDraft
 
 
@@ -25,7 +27,9 @@ class ConfirmDraftRequest(BaseModel):
 class IngestionResponse(BaseModel):
     id: str
     organization_id: str
-    status: Literal["PROCESSING", "NEEDS_REVIEW", "CONFIRMED", "REJECTED", "FAILED"] = "NEEDS_REVIEW"
+    status: Literal["PROCESSING", "NEEDS_REVIEW", "CONFIRMED", "REJECTED", "FAILED"] = (
+        "NEEDS_REVIEW"
+    )
     document: DocumentMetadata
     draft: ExtractionDraft
     error_message: str | None = None

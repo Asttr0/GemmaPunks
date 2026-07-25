@@ -1,6 +1,8 @@
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
+
 from fastapi import APIRouter, Depends
+
 from app.core.models import SupplierCatalogItem
 from app.core.store import db_store
 from app.modules.auth.dependencies import get_current_user
@@ -27,7 +29,7 @@ async def create_catalog_item(
     """Add a new product catalog item for the supplier organization."""
     org_id = user.organization_id
     cat_id = f"cat-{uuid.uuid4().hex[:8]}"
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
 
     item = SupplierCatalogItem(
         catalog_item_id=cat_id,

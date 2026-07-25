@@ -17,7 +17,10 @@ settings = get_settings()
 app = FastAPI(
     title=settings.app_name,
     version="0.1.0",
-    description="MIZAN Souq - Modular FastAPI Backend for Darija-first business management and intelligent procurement.",
+    description=(
+        "MIZAN Souq - Modular FastAPI Backend for Darija-first business management "
+        "and intelligent procurement."
+    ),
 )
 
 app.add_middleware(

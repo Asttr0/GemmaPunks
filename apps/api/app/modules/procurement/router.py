@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, Query
-from app.core.models import ProcurementNeed, SupplierCatalogItem
+
+from app.core.models import ProcurementNeed
 from app.modules.auth.dependencies import get_current_user
 from app.modules.auth.schemas import UserContext
 from app.modules.procurement.schemas import (

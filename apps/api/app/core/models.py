@@ -1,5 +1,6 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Literal
+
 from pydantic import BaseModel, Field
 
 from app.modules.ai.schemas.extraction import ExtractionDraft
@@ -36,8 +37,8 @@ class Profile(BaseModel):
     email: str
     primary_organization_id: str
     locale: str = "en-MA"
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class CanonicalProduct(BaseModel):
@@ -47,8 +48,8 @@ class CanonicalProduct(BaseModel):
     base_unit: str = "UNIT"
     aliases: list[str] = Field(default_factory=list)
     active: bool = True
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class Organization(BaseModel):
@@ -59,8 +60,8 @@ class Organization(BaseModel):
     city: str = "Berrechid"
     coarse_area: str = "Berrechid Center"
     currency: str = "MAD"
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class Membership(BaseModel):
@@ -68,8 +69,8 @@ class Membership(BaseModel):
     user_id: str
     role: Literal["OWNER", "MEMBER", "ADMIN"] = "OWNER"
     status: Literal["ACTIVE", "DISABLED"] = "ACTIVE"
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 # --- Documents & Ingestion ---
@@ -85,8 +86,8 @@ class Document(BaseModel):
     evidence_retained: bool = False
     storage_provider: str = "NONE"
     created_by: str
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class IngestionJob(BaseModel):
@@ -95,13 +96,15 @@ class IngestionJob(BaseModel):
     document_id: str
     draft_id: str | None = None
     agent_run_id: str | None = None
-    status: Literal["PROCESSING", "NEEDS_REVIEW", "CONFIRMED", "REJECTED", "FAILED"] = "NEEDS_REVIEW"
+    status: Literal["PROCESSING", "NEEDS_REVIEW", "CONFIRMED", "REJECTED", "FAILED"] = (
+        "NEEDS_REVIEW"
+    )
     provider: Literal["gemma", "fixture"] = "fixture"
     fallback_used: bool = False
     error_code: str | None = None
     created_by: str
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 # --- Inventory & Movement ---
@@ -118,7 +121,7 @@ class InventoryItem(BaseModel):
     low_stock_threshold: float = 20.0
     status: Literal["HEALTHY", "LOW_STOCK", "OUT_OF_STOCK"] = "HEALTHY"
     version: int = 1
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class InventoryMovement(BaseModel):
@@ -130,8 +133,8 @@ class InventoryMovement(BaseModel):
     unit: str = "BOTTLE"
     quantity_delta: float
     quantity_after: float
-    occurred_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    occurred_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 # --- Procurement & Catalog ---
@@ -150,8 +153,8 @@ class SupplierCatalogItem(BaseModel):
     delivery_days: int = 1
     service_areas: list[str] = Field(default_factory=lambda: ["Berrechid Center"])
     status: Literal["ACTIVE", "INACTIVE"] = "ACTIVE"
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class ProcurementNeed(BaseModel):
@@ -167,9 +170,9 @@ class ProcurementNeed(BaseModel):
     status: Literal["OPEN", "MATCHED", "ORDERED", "CANCELLED"] = "OPEN"
     coarse_area: str = "Berrechid Center"
     stockout_at: datetime | None = None
-    needed_by: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    needed_by: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class Offer(BaseModel):
@@ -189,8 +192,8 @@ class Offer(BaseModel):
     affordable: bool = True
     status: Literal["AVAILABLE_NOW", "GROUP_ONLY", "REJECTED"] = "AVAILABLE_NOW"
     rejection_reasons: list[str] = Field(default_factory=list)
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 # --- Group Orders & Collective Purchasing ---
@@ -210,8 +213,8 @@ class GroupOrderMember(BaseModel):
     total_saving_centimes: int
     approved_by: str | None = None
     approved_at: datetime | None = None
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class GroupOrder(BaseModel):
@@ -227,10 +230,10 @@ class GroupOrder(BaseModel):
     delivery_total_centimes: int
     participant_organization_ids: list[str] = Field(default_factory=list)
     coarse_area: str = "Berrechid Center"
-    join_deadline: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    needed_by: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    join_deadline: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    needed_by: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class SupplierOpportunity(BaseModel):
@@ -241,10 +244,10 @@ class SupplierOpportunity(BaseModel):
     coarse_area: str = "Berrechid Center"
     merchant_count: int = 1
     status: Literal["ACTIVE", "QUOTED", "CLOSED", "ARCHIVED"] = "ACTIVE"
-    needed_by: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    needed_by: datetime = Field(default_factory=lambda: datetime.now(UTC))
     source_group_order_id: str | None = None
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 # --- Approvals & Agent Audit ---
@@ -258,7 +261,7 @@ class Approval(BaseModel):
     target_id: str
     approved_by: str
     idempotency_key: str | None = None
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class ToolCallRecord(BaseModel):
@@ -271,7 +274,7 @@ class ToolCallRecord(BaseModel):
     input_summary: str
     output_summary: str
     fallback_used: bool = False
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class AgentRunRecord(BaseModel):
@@ -285,5 +288,5 @@ class AgentRunRecord(BaseModel):
     fallback_used: bool = False
     duration_ms: int = 0
     tool_calls: list[ToolCallRecord] = Field(default_factory=list)
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
     completed_at: datetime | None = None

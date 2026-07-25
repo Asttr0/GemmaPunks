@@ -1,4 +1,5 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
+
 from app.core.models import (
     AgentRunRecord,
     Approval,
@@ -41,18 +42,26 @@ class DataStore:
         self.organizations: dict[str, Organization] = {}
         self.memberships: dict[str, list[Membership]] = {}
         self.products: dict[str, CanonicalProduct] = {}
-        self.inventory_items: dict[str, dict[str, InventoryItem]] = {}  # org_id -> (product_id -> InventoryItem)
+        self.inventory_items: dict[
+            str, dict[str, InventoryItem]
+        ] = {}  # org_id -> (product_id -> InventoryItem)
         self.documents: dict[str, Document] = {}
         self.ingestion_jobs: dict[str, IngestionJob] = {}
         self.extraction_drafts: dict[str, ExtractionDraft] = {}
         self.ingestions: dict[str, IngestionResponse] = {}
-        self.transactions: dict[str, dict[str, Transaction]] = {}  # org_id -> (txn_id -> Transaction)
-        self.inventory_movements: dict[str, list[InventoryMovement]] = {}  # org_id -> list[Movement]
+        self.transactions: dict[
+            str, dict[str, Transaction]
+        ] = {}  # org_id -> (txn_id -> Transaction)
+        self.inventory_movements: dict[
+            str, list[InventoryMovement]
+        ] = {}  # org_id -> list[Movement]
         self.catalog_items: dict[str, list[SupplierCatalogItem]] = {}  # org_id -> list[Item]
         self.procurement_needs: dict[str, list[ProcurementNeed]] = {}  # org_id -> list[Need]
         self.offers: dict[str, list[Offer]] = {}  # org_id -> list[Offer]
         self.group_orders: dict[str, GroupOrder] = {}  # group_order_id -> GroupOrder
-        self.group_order_members: dict[str, dict[str, GroupOrderMember]] = {}  # group_order_id -> (org_id -> Member)
+        self.group_order_members: dict[
+            str, dict[str, GroupOrderMember]
+        ] = {}  # group_order_id -> (org_id -> Member)
         self.supplier_opportunities: dict[str, SupplierOpportunity] = {}
         self.approvals: dict[str, list[Approval]] = {}
         self.agent_runs: dict[str, AgentRunRecord] = {}
@@ -61,7 +70,7 @@ class DataStore:
         self._seed_baseline_data()
 
     def _seed_baseline_data(self):
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         m_org = "merchant-berrechid"
         s_org = "supplier-atlas"
 
@@ -257,7 +266,9 @@ class DataStore:
                 eligible_alone=False,
                 affordable=True,
                 status="GROUP_ONLY",
-                rejection_reasons=["Minimum order quantity 50 not met by single merchant demand 20"],
+                rejection_reasons=[
+                    "Minimum order quantity 50 not met by single merchant demand 20"
+                ],
             ),
         ]
 
@@ -274,7 +285,11 @@ class DataStore:
             minimum_quantity=50.0,
             unit_price_centimes=1850,
             delivery_total_centimes=0,
-            participant_organization_ids=[m_org, "merchant-chawia-grocery", "merchant-berrechid-snack"],
+            participant_organization_ids=[
+                m_org,
+                "merchant-chawia-grocery",
+                "merchant-berrechid-snack",
+            ],
             coarse_area="Berrechid Center",
             join_deadline=now + timedelta(days=2),
             needed_by=now + timedelta(days=4),
@@ -354,7 +369,9 @@ class DataStore:
         # Return fallback products for compatibility
         return list(self.legacy_products.get(organization_id, {}).values())
 
-    def update_product_stock(self, organization_id: str, product_id: str, name: str, unit: str, delta: int):
+    def update_product_stock(
+        self, organization_id: str, product_id: str, name: str, unit: str, delta: int
+    ):
         if organization_id not in self.legacy_products:
             self.legacy_products[organization_id] = {}
         org_prods = self.legacy_products[organization_id]
@@ -409,7 +426,10 @@ class DataStore:
             alerts.append(
                 DashboardAlert(
                     code="stockout_soon",
-                    message=f"{low_stock_items[0].name} may run out soon. Current stock: {low_stock_items[0].quantity_on_hand} units.",
+                    message=(
+                        f"{low_stock_items[0].name} may run out soon. "
+                        f"Current stock: {low_stock_items[0].quantity_on_hand} units."
+                    ),
                 )
             )
 

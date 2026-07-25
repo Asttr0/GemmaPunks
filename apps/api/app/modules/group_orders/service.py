@@ -1,6 +1,8 @@
 import uuid
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
+
 from fastapi import HTTPException, status
+
 from app.core.models import GroupOrder, GroupOrderMember, SupplierOpportunity
 from app.core.store import db_store
 from app.modules.auth.schemas import UserContext
@@ -11,7 +13,7 @@ class GroupOrderService:
     @staticmethod
     def propose_group_order(user: UserContext, req: ProposeGroupOrderRequest) -> GroupOrderResponse:
         org_id = user.organization_id
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         go_id = f"go-{uuid.uuid4().hex[:8]}"
 
         # Demo calculation: 20 units merchant + 35 units partner demand = 55 total units
@@ -23,7 +25,9 @@ class GroupOrderService:
         original_delivery = 3000  # 30 MAD
         collective_delivery = 0  # 0 MAD (free bulk delivery)
 
-        product_saving = (original_unit_price - collective_unit_price) * int(qty)  # 7000 centimes (70 MAD)
+        product_saving = (original_unit_price - collective_unit_price) * int(
+            qty
+        )  # 7000 centimes (70 MAD)
         delivery_saving = original_delivery - collective_delivery  # 3000 centimes (30 MAD)
         total_saving = product_saving + delivery_saving  # 10000 centimes (100 MAD)
 
@@ -38,7 +42,11 @@ class GroupOrderService:
             minimum_quantity=50.0,
             unit_price_centimes=collective_unit_price,
             delivery_total_centimes=collective_delivery,
-            participant_organization_ids=[org_id, "merchant-chawia-grocery", "merchant-berrechid-snack"],
+            participant_organization_ids=[
+                org_id,
+                "merchant-chawia-grocery",
+                "merchant-berrechid-snack",
+            ],
             coarse_area="Berrechid Center",
             join_deadline=now + timedelta(days=2),
             needed_by=now + timedelta(days=4),
@@ -166,7 +174,7 @@ class GroupOrderService:
 
         member.status = "APPROVED"
         member.approved_by = user.user_id
-        member.approved_at = datetime.now(timezone.utc)
+        member.approved_at = datetime.now(UTC)
         go.status = "APPROVED"
 
         return GroupOrderResponse(

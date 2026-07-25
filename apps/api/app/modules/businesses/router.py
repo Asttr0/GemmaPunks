@@ -1,8 +1,10 @@
 import uuid
-from datetime import datetime, timezone
+from datetime import UTC, datetime
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
-from app.core.models import Offer, SupplierOpportunity
+
+from app.core.models import Offer
 from app.core.store import db_store
 from app.modules.auth.dependencies import get_current_user
 from app.modules.auth.schemas import UserContext
@@ -42,7 +44,7 @@ async def get_supplier_dashboard(
 async def list_supplier_opportunities(
     user: UserContext = Depends(get_current_user),
 ) -> SupplierOpportunityListResponse:
-    """Return safe aggregated demand opportunities for suppliers without exposing private merchant data."""
+    """Return safe aggregated supplier demand without exposing private merchant data."""
     opps = list(db_store.supplier_opportunities.values())
     return SupplierOpportunityListResponse(items=opps)
 
@@ -60,7 +62,7 @@ async def create_supplier_offer(
             detail="Supplier opportunity not found",
         )
 
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     offer_id = f"off-{uuid.uuid4().hex[:8]}"
 
     offer = Offer(

@@ -1,6 +1,6 @@
 import uuid
-from datetime import datetime, timedelta, timezone
-from fastapi import HTTPException, status
+from datetime import UTC, datetime, timedelta
+
 from app.core.models import Offer, ProcurementNeed, SupplierCatalogItem
 from app.core.store import db_store
 from app.modules.auth.schemas import UserContext
@@ -16,7 +16,7 @@ class ProcurementService:
     def generate_need(user: UserContext, req: GenerateProcurementNeedRequest) -> ProcurementNeed:
         org_id = user.organization_id
         need_id = f"need-{uuid.uuid4().hex[:8]}"
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
 
         need = ProcurementNeed(
             need_id=need_id,
@@ -48,7 +48,11 @@ class ProcurementService:
         results = []
         for cat_list in db_store.catalog_items.values():
             for item in cat_list:
-                if not product_id or item.product_id == product_id or item.product_id == "cooking_oil_1l":
+                if (
+                    not product_id
+                    or item.product_id == product_id
+                    or item.product_id == "cooking_oil_1l"
+                ):
                     results.append(item)
         return results
 
@@ -77,7 +81,8 @@ class ProcurementService:
             rejection_reasons = []
             if not eligible_alone:
                 rejection_reasons.append(
-                    f"Minimum order quantity {item.minimum_quantity} not met by single merchant demand {qty}"
+                    f"Minimum order quantity {item.minimum_quantity} not met by "
+                    f"single merchant demand {qty}"
                 )
 
             offer = Offer(
@@ -102,7 +107,10 @@ class ProcurementService:
             if eligible_alone:
                 available_now.append(offer)
             else:
-                if not group_opportunity or offer.unit_price_centimes < group_opportunity.unit_price_centimes:
+                if (
+                    not group_opportunity
+                    or offer.unit_price_centimes < group_opportunity.unit_price_centimes
+                ):
                     group_opportunity = offer
 
         available_now.sort(key=lambda o: o.landed_cost_centimes)

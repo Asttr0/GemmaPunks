@@ -1,7 +1,7 @@
-from fastapi import APIRouter, Depends, Header, HTTPException, status
-from pydantic import BaseModel, Field
+from fastapi import APIRouter, Depends
+from pydantic import BaseModel
 
-from app.core.models import Membership, Organization, Profile
+from app.core.models import Organization, Profile
 from app.core.store import db_store
 from app.modules.auth.dependencies import get_current_user
 from app.modules.auth.schemas import UserContext

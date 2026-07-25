@@ -1,6 +1,6 @@
-from datetime import datetime, timezone
 from pydantic import BaseModel, Field
-from app.core.models import Offer, ProcurementNeed, SupplierCatalogItem
+
+from app.core.models import Offer, SupplierCatalogItem
 
 
 class GenerateProcurementNeedRequest(BaseModel):

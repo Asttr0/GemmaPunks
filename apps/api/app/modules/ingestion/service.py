@@ -1,4 +1,5 @@
 import uuid
+
 from fastapi import HTTPException, UploadFile, status
 
 from app.core.store import db_store
@@ -11,7 +12,6 @@ from app.modules.ingestion.schemas import (
     IngestionResponse,
 )
 from app.modules.transactions.schemas import Transaction, TransactionLine
-
 
 MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024  # 10MB limit
 ALLOWED_KINDS = {"receipt", "audio", "ledger", "screenshot"}
@@ -52,7 +52,9 @@ class IngestionService:
             )
 
         content_type = file.content_type or "application/octet-stream"
-        if content_type not in ALLOWED_CONTENT_TYPES and not content_type.startswith(("image/", "audio/")):
+        if content_type not in ALLOWED_CONTENT_TYPES and not content_type.startswith(
+            ("image/", "audio/")
+        ):
             raise HTTPException(
                 status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
                 detail=f"Content type '{content_type}' is not supported for evidence extraction",
@@ -147,7 +149,7 @@ class IngestionService:
         total_centimes = 0
 
         for idx, line in enumerate(target_draft.lines):
-            line_id = line.line_id or f"line_{idx+1:03d}"
+            line_id = line.line_id or f"line_{idx + 1:03d}"
             prod_id = line.product_id or f"prod_{uuid.uuid4().hex[:6]}"
             prod_name = line.product_name
             qty = line.quantity

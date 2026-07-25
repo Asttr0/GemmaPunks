@@ -1,5 +1,7 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
+
 from fastapi import APIRouter, Depends
+
 from app.core.store import db_store
 from app.modules.auth.dependencies import get_current_user
 from app.modules.auth.schemas import UserContext
@@ -12,10 +14,10 @@ router = APIRouter(prefix="/api/v1/inventory", tags=["inventory"])
 async def list_inventory(
     user: UserContext = Depends(get_current_user),
 ) -> InventoryResponse:
-    """List current stock levels and predicted stockouts for the authenticated merchant organization."""
+    """List current stock and predicted stockouts for the authenticated merchant."""
     products = db_store.get_products(user.organization_id)
     items = []
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
 
     for p in products:
         low = p.quantity_on_hand <= p.reorder_threshold

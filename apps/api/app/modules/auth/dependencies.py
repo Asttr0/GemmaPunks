@@ -1,4 +1,5 @@
 from fastapi import Header, HTTPException, status
+
 from app.core.config import get_settings
 from app.core.firebase import verify_firebase_id_token
 from app.core.logging import logger

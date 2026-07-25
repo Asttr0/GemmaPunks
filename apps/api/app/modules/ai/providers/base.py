@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+
 from app.modules.ai.schemas.extraction import ExtractionResult
 
 

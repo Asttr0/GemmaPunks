@@ -1,6 +1,8 @@
 import os
+
 import firebase_admin
 from firebase_admin import auth, credentials
+
 from app.core.config import get_settings
 from app.core.logging import logger
 
@@ -24,7 +26,11 @@ def initialize_firebase() -> firebase_admin.App:
 
     try:
         if not firebase_admin._apps:
-            cred = credentials.ApplicationDefault() if settings.app_env == "production" else credentials.AnonymousCredentials()
+            cred = (
+                credentials.ApplicationDefault()
+                if settings.app_env == "production"
+                else credentials.AnonymousCredentials()
+            )
             _firebase_app = firebase_admin.initialize_app(
                 cred,
                 options={"projectId": project_id},
@@ -33,7 +39,9 @@ def initialize_firebase() -> firebase_admin.App:
         else:
             _firebase_app = firebase_admin.get_app()
     except Exception as exc:
-        logger.warning(f"Firebase Admin initialization warning: {exc}. Using fallback emulator context.")
+        logger.warning(
+            f"Firebase Admin initialization warning: {exc}. Using fallback emulator context."
+        )
         _firebase_app = None
 
     return _firebase_app
