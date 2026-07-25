@@ -4,27 +4,27 @@
 
 @layer base {
   :root {
-    --background: #F8FAFC;
-    --surface: #FFFFFF;
-    --surface-subtle: #F1F5F9;
-    --foreground: #0F172A;
+    --background: #f8fafc;
+    --surface: #ffffff;
+    --surface-subtle: #f1f5f9;
+    --foreground: #0f172a;
     --foreground-muted: #475569;
-    --border: #CBD5E1;
-    --border-strong: #94A3B8;
-    --primary: #0077B6;
-    --primary-hover: #03045E;
-    --primary-subtle: #CAF0F8;
-    --ai: #6D28D9;
-    --ai-subtle: #F5F3FF;
+    --border: #cbd5e1;
+    --border-strong: #94a3b8;
+    --primary: #0077b6;
+    --primary-hover: #03045e;
+    --primary-subtle: #caf0f8;
+    --ai: #6d28d9;
+    --ai-subtle: #f5f3ff;
     --success: #047857;
-    --success-subtle: #ECFDF5;
-    --warning: #B45309;
-    --warning-subtle: #FFFBEB;
-    --danger: #B91C1C;
-    --danger-subtle: #FEF2F2;
-    --info: #0369A1;
-    --info-subtle: #F0F9FF;
-    --focus: #0077B6;
+    --success-subtle: #ecfdf5;
+    --warning: #b45309;
+    --warning-subtle: #fffbeb;
+    --danger: #b91c1c;
+    --danger-subtle: #fef2f2;
+    --info: #0369a1;
+    --info-subtle: #f0f9ff;
+    --focus: #0077b6;
     --radius: 0.5rem;
     --font-sans: "Inter", "Noto Sans Arabic", system-ui, sans-serif;
   }

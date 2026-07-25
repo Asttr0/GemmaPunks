@@ -9,8 +9,7 @@ export const buttonVariants = cva(
           "bg-primary text-white hover:bg-primary-hover shadow-sm border border-primary",
         destructive:
           "bg-danger text-white hover:bg-danger/90 shadow-sm border border-danger",
-        outline:
-          "border border-border bg-surface hover:bg-surface-subtle",
+        outline: "border border-border bg-surface hover:bg-surface-subtle",
         secondary:
           "bg-surface-subtle text-foreground hover:bg-border border border-border",
         ghost: "hover:bg-surface-subtle",
@@ -28,5 +27,5 @@ export const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  }
+  },
 );

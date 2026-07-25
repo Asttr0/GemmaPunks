@@ -26,6 +26,8 @@ import { App } from "./App";
 describe("App scaffold", () => {
   it("renders the MIZAN Souq dashboard", () => {
     render(<App />);
-    expect(screen.getByRole("heading", { name: "MIZAN Souq Dashboard" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "GemmaPunks" }),
+    ).toBeInTheDocument();
   });
 });

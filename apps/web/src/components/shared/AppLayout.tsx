@@ -18,15 +18,17 @@ export function AppLayout({
   return (
     <div className="min-h-dvh bg-background">
       <Sidebar portalAccent={portalAccent} />
-      
+
       <div className="lg:pl-[240px]">
         <SidebarSpacer />
-        <TopBar title={title} description={description} portalAccent={portalAccent} />
-        
+        <TopBar
+          title={title}
+          description={description}
+          portalAccent={portalAccent}
+        />
+
         <main className="p-6 lg:px-8">
-          <div className="mx-auto max-w-[1600px]">
-            {children}
-          </div>
+          <div className="mx-auto max-w-[1600px]">{children}</div>
         </main>
       </div>
     </div>

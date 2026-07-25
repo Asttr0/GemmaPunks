@@ -7,10 +7,13 @@ interface TopBarProps {
   portalAccent?: "merchant" | "supplier";
 }
 
-export function TopBar({ title, description, portalAccent = "merchant" }: TopBarProps) {
-  const accentClasses = portalAccent === "supplier" 
-    ? "border-b-brand-200" 
-    : "border-b-transparent";
+export function TopBar({
+  title,
+  description,
+  portalAccent = "merchant",
+}: TopBarProps) {
+  const accentClasses =
+    portalAccent === "supplier" ? "border-b-brand-200" : "border-b-transparent";
 
   return (
     <header className={cn("border-b border-border bg-surface", accentClasses)}>
@@ -19,7 +22,9 @@ export function TopBar({ title, description, portalAccent = "merchant" }: TopBar
           <div>
             <h1 className="text-2xl font-semibold text-foreground">{title}</h1>
             {description && (
-              <p className="mt-1 text-sm text-foreground-muted">{description}</p>
+              <p className="mt-1 text-sm text-foreground-muted">
+                {description}
+              </p>
             )}
           </div>
           <div className="flex items-center gap-4">

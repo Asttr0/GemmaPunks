@@ -2,7 +2,14 @@ import * as React from "react";
 import { FileText, Calendar, AlertTriangle, Eye } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import type { ActiveOffer } from "./mocks/fixtures";
 
@@ -26,7 +33,10 @@ export function ActiveOffersSection({
         <CardContent>
           <div className="space-y-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="h-12 animate-pulse rounded bg-surface-subtle" />
+              <div
+                key={i}
+                className="h-12 animate-pulse rounded bg-surface-subtle"
+              />
             ))}
           </div>
         </CardContent>
@@ -65,9 +75,12 @@ export function ActiveOffersSection({
         <CardContent>
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <FileText className="size-12 text-foreground-muted mb-4" />
-            <p className="text-base font-medium text-foreground">No active offers</p>
+            <p className="text-base font-medium text-foreground">
+              No active offers
+            </p>
             <p className="text-sm text-foreground-muted mt-1">
-              Offers you create will appear here, and merchants can join collective orders
+              Offers you create will appear here, and merchants can join
+              collective orders
             </p>
           </div>
         </CardContent>
@@ -96,7 +109,9 @@ export function ActiveOffersSection({
           <TableBody>
             {offers.map((offer) => (
               <TableRow key={offer.id}>
-                <TableCell className="font-medium">{offer.productName}</TableCell>
+                <TableCell className="font-medium">
+                  {offer.productName}
+                </TableCell>
                 <TableCell className="font-mono tabular-nums">
                   {offer.offerPrice.toFixed(2)} MAD
                 </TableCell>
@@ -117,21 +132,20 @@ export function ActiveOffersSection({
                   </div>
                 </TableCell>
                 <TableCell>
-                  <Badge 
+                  <Badge
                     variant={
-                      offer.status === "accepted" 
-                        ? "success" 
-                        : offer.status === "expired" 
-                        ? "danger" 
-                        : "info"
+                      offer.status === "accepted"
+                        ? "success"
+                        : offer.status === "expired"
+                          ? "danger"
+                          : "info"
                     }
                   >
-                    {offer.status === "accepted" 
-                      ? "Accepted" 
-                      : offer.status === "expired" 
-                      ? "Expired" 
-                      : "Active"
-                    }
+                    {offer.status === "accepted"
+                      ? "Accepted"
+                      : offer.status === "expired"
+                        ? "Expired"
+                        : "Active"}
                   </Badge>
                 </TableCell>
                 <TableCell>

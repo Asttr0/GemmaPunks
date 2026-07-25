@@ -2,7 +2,14 @@ import * as React from "react";
 import { ShoppingBag, Users, Calendar, AlertTriangle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import type { Opportunity } from "./mocks/fixtures";
 
@@ -26,7 +33,10 @@ export function OpportunitiesSection({
         <CardContent>
           <div className="space-y-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="h-12 animate-pulse rounded bg-surface-subtle" />
+              <div
+                key={i}
+                className="h-12 animate-pulse rounded bg-surface-subtle"
+              />
             ))}
           </div>
         </CardContent>
@@ -44,7 +54,9 @@ export function OpportunitiesSection({
           <div className="flex items-center gap-3 rounded-lg border border-danger-subtle bg-danger-subtle p-4">
             <AlertTriangle className="size-5 text-danger" />
             <div>
-              <p className="font-medium text-danger">Failed to load opportunities</p>
+              <p className="font-medium text-danger">
+                Failed to load opportunities
+              </p>
               <p className="text-sm text-danger">{error.message}</p>
             </div>
           </div>
@@ -65,9 +77,12 @@ export function OpportunitiesSection({
         <CardContent>
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <ShoppingBag className="size-12 text-foreground-muted mb-4" />
-            <p className="text-base font-medium text-foreground">No opportunities yet</p>
+            <p className="text-base font-medium text-foreground">
+              No opportunities yet
+            </p>
             <p className="text-sm text-foreground-muted mt-1">
-              Demand will appear here when merchants express interest in your products
+              Demand will appear here when merchants express interest in your
+              products
             </p>
           </div>
         </CardContent>
@@ -120,7 +135,9 @@ export function OpportunitiesSection({
                   </div>
                 </TableCell>
                 <TableCell>
-                  <Badge variant={opp.status === "ready" ? "success" : "warning"}>
+                  <Badge
+                    variant={opp.status === "ready" ? "success" : "warning"}
+                  >
                     {opp.status === "ready" ? "Ready to quote" : "Pending"}
                   </Badge>
                 </TableCell>

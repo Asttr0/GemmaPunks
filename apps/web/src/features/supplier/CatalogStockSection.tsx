@@ -2,7 +2,14 @@ import * as React from "react";
 import { Package, AlertTriangle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import type { CatalogItem } from "./mocks/fixtures";
 
@@ -12,10 +19,10 @@ interface CatalogStockSectionProps {
   error?: Error | null;
 }
 
-export function CatalogStockSection({ 
-  items, 
-  isLoading = false, 
-  error = null 
+export function CatalogStockSection({
+  items,
+  isLoading = false,
+  error = null,
 }: CatalogStockSectionProps) {
   if (isLoading) {
     return (
@@ -26,7 +33,10 @@ export function CatalogStockSection({
         <CardContent>
           <div className="space-y-4">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-12 animate-pulse rounded bg-surface-subtle" />
+              <div
+                key={i}
+                className="h-12 animate-pulse rounded bg-surface-subtle"
+              />
             ))}
           </div>
         </CardContent>
@@ -65,19 +75,25 @@ export function CatalogStockSection({
         <CardContent>
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <Package className="size-12 text-foreground-muted mb-4" />
-            <p className="text-base font-medium text-foreground">No catalog items yet</p>
+            <p className="text-base font-medium text-foreground">
+              No catalog items yet
+            </p>
             <p className="text-sm text-foreground-muted mt-1">
               Upload your product catalog to start receiving orders
             </p>
-            <Button className="mt-4" size="sm">Upload catalog</Button>
+            <Button className="mt-4" size="sm">
+              Upload catalog
+            </Button>
           </div>
         </CardContent>
       </Card>
     );
   }
 
-  const outOfStockCount = items.filter(i => i.stock === 0).length;
-  const lowStockCount = items.filter(i => i.stock > 0 && i.stock < i.minStock).length;
+  const outOfStockCount = items.filter((i) => i.stock === 0).length;
+  const lowStockCount = items.filter(
+    (i) => i.stock > 0 && i.stock < i.minStock,
+  ).length;
   const hasWarnings = outOfStockCount > 0 || lowStockCount > 0;
 
   return (
@@ -88,10 +104,9 @@ export function CatalogStockSection({
           {hasWarnings && (
             <Badge variant="warning" className="gap-1">
               <AlertTriangle className="size-3" />
-              {outOfStockCount > 0 
-                ? `${outOfStockCount} out of stock` 
-                : `${lowStockCount} low stock`
-              }
+              {outOfStockCount > 0
+                ? `${outOfStockCount} out of stock`
+                : `${lowStockCount} low stock`}
             </Badge>
           )}
         </div>
@@ -112,11 +127,13 @@ export function CatalogStockSection({
             {items.map((item) => {
               const isOutOfStock = item.stock === 0;
               const isLowStock = item.stock > 0 && item.stock < item.minStock;
-              
+
               return (
                 <TableRow key={item.id}>
                   <TableCell className="font-medium">{item.name}</TableCell>
-                  <TableCell className="text-foreground-muted">{item.sku}</TableCell>
+                  <TableCell className="text-foreground-muted">
+                    {item.sku}
+                  </TableCell>
                   <TableCell>{item.category}</TableCell>
                   <TableCell className="text-right font-mono tabular-nums">
                     {item.price.toFixed(2)} MAD
