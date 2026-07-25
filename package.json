@@ -17,6 +17,7 @@
     "contracts:check": "npm run contracts:generate && git diff --exit-code -- packages/contracts",
     "firebase:emulators": "firebase emulators:start --project demo-gemmapunks --only auth,firestore",
     "firebase:test-rules": "firebase emulators:exec --project demo-gemmapunks --only firestore \"node --test tests/firebase/firestore.rules.test.mjs\"",
+    "firebase:test-api": "firebase emulators:exec --project demo-gemmapunks --only firestore \"pytest -q apps/api/app/tests/test_ingestion_firestore.py\"",
     "firebase:validate-seed": "node scripts/seed_firebase.mjs --validate-only",
     "firebase:seed-emulator": "firebase emulators:exec --project demo-gemmapunks --only auth,firestore \"node scripts/seed_firebase.mjs --project demo-gemmapunks --verify\""
   },

@@ -713,8 +713,9 @@ export interface components {
             /**
              * Currency
              * @default MAD
+             * @constant
              */
-            currency: string;
+            currency: "MAD";
             /** Id */
             id?: string | null;
             /** Lines */
@@ -875,7 +876,7 @@ export interface components {
         /** IngestionResponse */
         IngestionResponse: {
             document: components["schemas"]["DocumentMetadata"];
-            draft: components["schemas"]["ExtractionDraft"];
+            draft?: components["schemas"]["ExtractionDraft"] | null;
             /** Error Message */
             error_message?: string | null;
             /** Id */
@@ -2233,9 +2234,9 @@ export interface operations {
     confirm_draft_api_v1_ingestions__id__confirm_post: {
         parameters: {
             query?: never;
-            header?: {
+            header: {
                 /** @example string */
-                "Idempotency-Key"?: string | null;
+                "Idempotency-Key": string;
                 /** @example string */
                 authorization?: string | null;
                 /** @example string */
