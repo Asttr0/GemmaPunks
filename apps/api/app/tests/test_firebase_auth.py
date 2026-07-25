@@ -43,3 +43,31 @@ def test_valid_firebase_id_token(mock_verify):
 
     assert response.status_code == 200
     mock_verify.assert_called_once_with("valid_firebase_token_string")
+
+
+def test_auth_me_endpoint():
+    response = client.get(
+        "/api/v1/auth/me",
+        headers={"Authorization": "Bearer test_token_usr01_merchant-berrechid"},
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert "user" in data
+    assert data["user"]["organization_id"] == "merchant-berrechid"
+
+
+def test_auth_signup_endpoint():
+    response = client.post(
+        "/api/v1/auth/signup",
+        json={
+            "email": "newuser@example.com",
+            "display_name": "New Merchant Owner",
+            "organization_name": "New Berrechid Store",
+            "organization_type": "MERCHANT",
+        },
+        headers={"Authorization": "Bearer test_token_newusr_neworg"},
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert data["organization"]["name"] == "New Berrechid Store"
+    assert data["profile"]["display_name"] == "New Merchant Owner"

@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import get_settings
 from app.modules.ai.router import router as ai_audit_router
+from app.modules.auth.router import router as auth_router
 from app.modules.businesses.router import router as business_router
 from app.modules.catalogs.router import router as catalogs_router
 from app.modules.group_orders.router import router as group_orders_router
@@ -28,6 +29,7 @@ app.add_middleware(
 )
 
 # Register module API routers
+app.include_router(auth_router)
 app.include_router(ingestion_router)
 app.include_router(transactions_router)
 app.include_router(inventory_router)
