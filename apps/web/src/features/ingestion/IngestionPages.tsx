@@ -500,8 +500,6 @@ export function IngestionReviewPage() {
               )}
             </CardContent>
           </Card>
-
-          <AgentTimeline run={demoAgentRun} />
         </div>
 
         <div className="space-y-6">
@@ -824,6 +822,8 @@ export function IngestionReviewPage() {
           ) : null}
         </div>
       </section>
+
+      <AgentTimeline run={demoAgentRun} />
     </PageMotion>
   );
 }

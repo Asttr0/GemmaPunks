@@ -51,7 +51,10 @@ export function AgentTimeline({ run }: { run: AgentRunRecord }) {
           <CardTitle>How Gemma worked</CardTitle>
         </CardHeader>
         <CardContent>
-          <ol className="relative space-y-0" aria-label="Agent tool calls">
+          <ol
+            className="relative grid gap-5 lg:grid-cols-3"
+            aria-label="Agent tool calls"
+          >
             {calls.map((call, index) => {
               const successful = call.status === "SUCCEEDED";
               const failed = call.status === "FAILED";
@@ -68,16 +71,16 @@ export function AgentTimeline({ run }: { run: AgentRunRecord }) {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, amount: 0.35 }}
                   transition={{ delay: index * 0.08, duration: 0.3 }}
-                  className="relative grid grid-cols-[2.5rem_1fr] gap-4 pb-7 last:pb-0"
+                  className="relative grid grid-cols-[2.5rem_1fr] gap-4 pb-7 last:pb-0 lg:flex lg:flex-col lg:items-center lg:gap-3 lg:pb-0"
                 >
                   {index < calls.length - 1 ? (
                     <span
                       aria-hidden="true"
-                      className="absolute left-5 top-9 h-[calc(100%-1rem)] w-px bg-border"
+                      className="absolute left-5 top-9 h-[calc(100%-1rem)] w-px bg-border lg:left-1/2 lg:top-5 lg:h-px lg:w-[calc(100%+1.25rem)]"
                     />
                   ) : null}
                   <span
-                    className={`z-10 flex h-10 w-10 items-center justify-center rounded-full border bg-surface ${
+                    className={`z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border bg-surface ${
                       successful
                         ? "border-emerald-200 text-success"
                         : failed
@@ -87,7 +90,7 @@ export function AgentTimeline({ run }: { run: AgentRunRecord }) {
                   >
                     <Icon aria-hidden="true" className="h-5 w-5" />
                   </span>
-                  <div className="min-w-0 rounded-control border border-border bg-surface-subtle p-4">
+                  <div className="min-w-0 rounded-control border border-border bg-surface-subtle p-4 lg:w-full lg:flex-1">
                     <div className="flex flex-wrap items-start justify-between gap-2">
                       <div>
                         <p className="flex items-center gap-2 font-semibold text-foreground">
@@ -112,7 +115,7 @@ export function AgentTimeline({ run }: { run: AgentRunRecord }) {
                         }
                       />
                     </div>
-                    <dl className="mt-4 grid gap-3 text-sm md:grid-cols-2">
+                    <dl className="mt-4 grid gap-3 text-sm 2xl:grid-cols-2">
                       <div>
                         <dt className="font-medium text-foreground-muted">
                           Input
