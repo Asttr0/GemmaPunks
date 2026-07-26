@@ -6,6 +6,7 @@ import pytest
 
 from app.modules.ai.providers.fixture import (
     APPROVED_RECEIPT_FILENAME,
+    DISTRIBUTOR_INVOICE_FILENAME,
     FixtureProvider,
     UnsupportedFixtureError,
 )
@@ -24,6 +25,18 @@ async def test_fixture_provider_supports_only_approved_receipt_and_audio_files()
     assert receipt.draft.transaction_kind == "purchase"
     assert receipt.draft.clarification_question
     assert receipt.draft.lines[0].product_id == "cooking-oil-1l"
+
+    invoice = await provider.extract_evidence(
+        b"synthetic",
+        DISTRIBUTOR_INVOICE_FILENAME,
+        "image/png",
+        "receipt",
+    )
+    assert invoice.draft.total_centimes == 9_250_000
+    assert invoice.draft.lines[0].product_id == "cooking-oil-1l"
+    assert invoice.draft.lines[0].unit == "carton"
+    assert invoice.draft.lines[0].base_unit == "bottle"
+    assert invoice.draft.lines[0].unit_multiplier == 12
 
     audio = await provider.extract_evidence(
         b"synthetic",
@@ -114,6 +127,48 @@ def test_gemma_sends_inline_evidence_and_recalculates_model_totals():
     assert fake_models.request["contents"][0].inline_data.mime_type == "image/jpeg"
     assert fake_models.request["contents"][0].inline_data.data == b"private evidence bytes"
     assert fake_models.request["config"].response_mime_type == "application/json"
+    assert fake_models.request["config"].max_output_tokens == 4096
+    assert fake_models.request["config"].thinking_config.thinking_level.value == "MINIMAL"
+
+
+def test_gemma_normalizes_a_null_unit_into_an_uncertain_reviewable_field():
+    pytest.importorskip("google.genai")
+    model_payload = {
+        "transaction_kind": "purchase",
+        "currency": "MAD",
+        "lines": [
+            {
+                "line_id": "line-001",
+                "product_id": None,
+                "product_name": "Sugar",
+                "original_product_name": "Sucre",
+                "unit": None,
+                "quantity": 2,
+                "unit_price_centimes": 800,
+                "line_total_centimes": 1600,
+                "confidence": 0.72,
+                "uncertain_fields": [],
+            }
+        ],
+        "total_centimes": 1600,
+        "clarification_question": "Is the sugar sold by bag or kilogram?",
+    }
+
+    class FakeModels:
+        def generate_content(self, **kwargs):
+            return SimpleNamespace(text=json.dumps(model_payload))
+
+    provider = GemmaProvider(client=SimpleNamespace(models=FakeModels()))
+    draft = provider._call_gemma(
+        b"private evidence bytes",
+        "merchant-receipt.jpg",
+        "image/jpeg",
+        "receipt",
+        None,
+    )
+
+    assert draft.lines[0].unit == "unit"
+    assert "unit" in draft.lines[0].uncertain_fields
 
 
 @pytest.mark.asyncio
@@ -137,7 +192,7 @@ async def test_gemma_failure_only_falls_back_for_an_approved_fixture(monkeypatch
     assert approved.provider == "gemma-fallback"
     assert approved.fallback_used is True
 
-    with pytest.raises(UnsupportedFixtureError):
+    with pytest.raises(RuntimeError, match="No approved fixture fallback"):
         await provider.extract_evidence(
             b"private",
             "unknown-private-receipt.jpg",

@@ -41,11 +41,18 @@ class Profile(BaseModel):
     updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
+class ProductUnitDefinition(BaseModel):
+    unit: str
+    label: str
+    conversion_to_base: int = Field(default=1, ge=1)
+
+
 class CanonicalProduct(BaseModel):
     product_id: str
     canonical_name: str
     category: str = "GROCERY"
     base_unit: str = "UNIT"
+    purchase_units: list[ProductUnitDefinition] = Field(default_factory=list)
     aliases: list[str] = Field(default_factory=list)
     active: bool = True
     created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))

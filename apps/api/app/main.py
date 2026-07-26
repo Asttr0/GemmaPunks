@@ -6,6 +6,7 @@ from app.modules.ai.router import router as ai_audit_router
 from app.modules.auth.router import router as auth_router
 from app.modules.businesses.router import router as business_router
 from app.modules.catalogs.router import router as catalogs_router
+from app.modules.control_tower.router import router as control_tower_router
 from app.modules.group_orders.router import router as group_orders_router
 from app.modules.ingestion.router import router as ingestion_router
 from app.modules.inventory.router import router as inventory_router
@@ -18,8 +19,8 @@ app = FastAPI(
     title=settings.app_name,
     version="0.1.0",
     description=(
-        "MIZAN Souq - Modular FastAPI Backend for Darija-first business management "
-        "and intelligent procurement."
+        "MIZAN Control - AI financial control, supplier intelligence, and working-capital "
+        "decision support for Moroccan distribution companies."
     ),
 )
 
@@ -41,6 +42,7 @@ app.include_router(procurement_router)
 app.include_router(group_orders_router)
 app.include_router(catalogs_router)
 app.include_router(ai_audit_router)
+app.include_router(control_tower_router)
 
 
 @app.get("/health", tags=["system"])

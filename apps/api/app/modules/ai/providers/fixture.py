@@ -15,6 +15,9 @@ class UnsupportedFixtureError(ValueError):
 
 APPROVED_RECEIPT_FILENAME = "demo-receipt.jpg"
 APPROVED_AUDIO_FILENAME = "demo-sales-note.wav"
+DISTRIBUTOR_INVOICE_FILENAME = "invoice-inv-8821.png"
+PURCHASE_ORDER_FILENAME = "purchase-order-po-1042.png"
+DELIVERY_NOTE_FILENAME = "delivery-note-bl-4478.png"
 
 
 class FixtureProvider(ExtractionProvider):
@@ -23,6 +26,9 @@ class FixtureProvider(ExtractionProvider):
         "receipt.jpeg",
         "receipt.png",
         APPROVED_RECEIPT_FILENAME,
+        DISTRIBUTOR_INVOICE_FILENAME,
+        PURCHASE_ORDER_FILENAME,
+        DELIVERY_NOTE_FILENAME,
         "synthetic-purchase-receipt.jpg",
     }
     APPROVED_AUDIO_NAMES = {
@@ -50,7 +56,33 @@ class FixtureProvider(ExtractionProvider):
         if not self.supports(original_name, evidence_kind):
             raise UnsupportedFixtureError("No approved fixture exists for this evidence file")
 
-        if evidence_kind == "audio":
+        safe_name = PurePath(original_name).name.casefold()
+        if safe_name in {
+            DISTRIBUTOR_INVOICE_FILENAME,
+            PURCHASE_ORDER_FILENAME,
+            DELIVERY_NOTE_FILENAME,
+        }:
+            quantity = 480 if safe_name == DELIVERY_NOTE_FILENAME else 500
+            unit_price = 18_500 if safe_name == DISTRIBUTOR_INVOICE_FILENAME else 18_000
+            draft_lines = [
+                DraftLine(
+                    line_id="line-001",
+                    product_id="cooking-oil-1l",
+                    product_name="Cooking oil 1L carton (12 bottles)",
+                    original_product_name="Huile de table 1L — cartons de 12",
+                    unit="carton",
+                    base_unit="bottle",
+                    unit_multiplier=12,
+                    quantity=quantity,
+                    unit_price_centimes=unit_price,
+                    line_total_centimes=quantity * unit_price,
+                    confidence=0.99,
+                    uncertain_fields=[],
+                )
+            ]
+            transaction_kind = "purchase"
+            clarification = None
+        elif evidence_kind == "audio":
             draft_lines = [
                 DraftLine(
                     line_id="line-001",
@@ -124,29 +156,29 @@ class FixtureProvider(ExtractionProvider):
         timeline = [
             AgentTimelineEvent(
                 sequence=1,
-                name="inspect_evidence",
+                name="read_document",
                 status="SUCCEEDED",
                 duration_ms=45,
                 input_summary=f"Processed synthetic {evidence_kind} file '{original_name}'",
-                output_summary="File validated and read successfully",
+                output_summary="Document read successfully",
                 fallback_used=False,
             ),
             AgentTimelineEvent(
                 sequence=2,
-                name="extract_draft",
+                name="create_draft",
                 status="SUCCEEDED",
                 duration_ms=120,
-                input_summary="Evidence content parsing",
-                output_summary=f"Extracted {len(draft_lines)} items; 1 uncertainty detected",
+                input_summary="Financial fields",
+                output_summary=f"{len(draft_lines)} line extracted",
                 fallback_used=False,
             ),
             AgentTimelineEvent(
                 sequence=3,
-                name="validate_draft",
+                name="check_totals",
                 status="SUCCEEDED",
                 duration_ms=15,
-                input_summary="Pydantic schema validation & centimes check",
-                output_summary=f"Valid draft with total_centimes={total_centimes}",
+                input_summary="Quantities and prices",
+                output_summary=f"Total checked: {total_centimes / 100:,.2f} MAD",
                 fallback_used=False,
             ),
         ]

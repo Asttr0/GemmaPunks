@@ -84,6 +84,125 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/control-tower/audit-findings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Audit Findings */
+        get: operations["list_audit_findings_api_v1_control_tower_audit_findings_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/control-tower/audit-findings/{finding_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Audit Finding */
+        get: operations["get_audit_finding_api_v1_control_tower_audit_findings__finding_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/control-tower/audit-findings/{finding_id}/decide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Decide Audit Finding */
+        post: operations["decide_audit_finding_api_v1_control_tower_audit_findings__finding_id__decide_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/control-tower/audit-runs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Run Control Audit */
+        post: operations["run_control_audit_api_v1_control_tower_audit_runs_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/control-tower/dashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Dashboard */
+        get: operations["get_dashboard_api_v1_control_tower_dashboard_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/control-tower/records": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Financial Records */
+        get: operations["get_financial_records_api_v1_control_tower_records_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/control-tower/suppliers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Supplier Portfolio */
+        get: operations["get_supplier_portfolio_api_v1_control_tower_suppliers_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/group-orders": {
         parameters: {
             query?: never;
@@ -236,6 +355,26 @@ export interface paths {
          * @description List authoritative stock snapshots updated by confirmed inventory movements.
          */
         get: operations["list_inventory_api_v1_inventory_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/inventory/product-options": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Product Options
+         * @description Return the approved products and purchasing units used during human review.
+         */
+        get: operations["list_product_options_api_v1_inventory_product_options_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -512,6 +651,122 @@ export interface components {
             /** Tool Calls */
             tool_calls?: components["schemas"]["ToolCallRecord"][];
         };
+        /** AuditEvidence */
+        AuditEvidence: {
+            /** Amount Centimes */
+            amount_centimes?: number | null;
+            /**
+             * Document Type
+             * @enum {string}
+             */
+            document_type: "PURCHASE_ORDER" | "DELIVERY_NOTE" | "SUPPLIER_INVOICE" | "BANK_PAYMENT" | "SUPPLIER_CONTRACT";
+            /** Label */
+            label: string;
+            /** Quantity */
+            quantity?: number | null;
+            /** Reference */
+            reference: string;
+            /**
+             * Status
+             * @default SUPPORTING
+             * @enum {string}
+             */
+            status: "MATCHED" | "MISMATCH" | "SUPPORTING";
+            /** Unit Price Centimes */
+            unit_price_centimes?: number | null;
+        };
+        /** AuditFinding */
+        AuditFinding: {
+            /** Calculation */
+            calculation?: components["schemas"]["CalculationStep"][];
+            /** Confidence */
+            confidence: number;
+            /**
+             * Due Date
+             * Format: date
+             */
+            due_date: string;
+            /** Evidence */
+            evidence?: components["schemas"]["AuditEvidence"][];
+            /** Expected Amount Centimes */
+            expected_amount_centimes?: number | null;
+            /** Financial Impact Centimes */
+            financial_impact_centimes: number;
+            /** Finding Id */
+            finding_id: string;
+            /**
+             * Finding Type
+             * @enum {string}
+             */
+            finding_type: "THREE_WAY_MISMATCH" | "DUPLICATE_PAYMENT" | "PRICE_DRIFT" | "MISSING_CREDIT_NOTE" | "SUPPLIER_CONCENTRATION";
+            /** Observed Amount Centimes */
+            observed_amount_centimes?: number | null;
+            /** Owner */
+            owner: string;
+            /** Recommended Action */
+            recommended_action: string;
+            /**
+             * Severity
+             * @enum {string}
+             */
+            severity: "CRITICAL" | "HIGH" | "MEDIUM" | "LOW";
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "OPEN" | "READY_FOR_APPROVAL" | "APPROVED" | "RESOLVED";
+            /** Summary */
+            summary: string;
+            /** Supplier Id */
+            supplier_id: string;
+            /** Supplier Name */
+            supplier_name: string;
+            /** Title */
+            title: string;
+        };
+        /** AuditRunResponse */
+        AuditRunResponse: {
+            /** Documents Analyzed */
+            documents_analyzed: number;
+            /** Findings Created */
+            findings_created: number;
+            /** Model */
+            model: string;
+            /** Provider */
+            provider: string;
+            /** Run Id */
+            run_id: string;
+            /**
+             * Status
+             * @constant
+             */
+            status: "SUCCEEDED";
+            /** Tool Calls */
+            tool_calls: components["schemas"]["AuditRunToolCall"][];
+            /** Total Impact Centimes */
+            total_impact_centimes: number;
+        };
+        /** AuditRunToolCall */
+        AuditRunToolCall: {
+            /** Deterministic */
+            deterministic: boolean;
+            /** Duration Ms */
+            duration_ms: number;
+            /** Label */
+            label: string;
+            /** Name */
+            name: string;
+            /** Output */
+            output: string;
+            /** Sequence */
+            sequence: number;
+            /**
+             * Status
+             * @default SUCCEEDED
+             * @constant
+             */
+            status: "SUCCEEDED";
+        };
         /** AuthResponse */
         AuthResponse: {
             organization?: components["schemas"]["Organization"] | null;
@@ -528,12 +783,54 @@ export interface components {
              */
             kind: string;
         };
+        /** CalculationStep */
+        CalculationStep: {
+            /** Expression */
+            expression: string;
+            /** Label */
+            label: string;
+            /** Result Centimes */
+            result_centimes: number;
+        };
+        /** CashForecastPoint */
+        CashForecastPoint: {
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Inflows Centimes */
+            inflows_centimes: number;
+            /** Label */
+            label: string;
+            /** Outflows Centimes */
+            outflows_centimes: number;
+            /** Projected Balance Centimes */
+            projected_balance_centimes: number;
+        };
         /** ClarificationAnswer */
         ClarificationAnswer: {
             /** Answer */
             answer: string;
             /** Field Path */
             field_path: string;
+        };
+        /** CompanyContext */
+        CompanyContext: {
+            /** Active Supplier Count */
+            active_supplier_count: number;
+            /** City */
+            city: string;
+            /** Legal Name */
+            legal_name: string;
+            /** Name */
+            name: string;
+            /** Reporting Period */
+            reporting_period: string;
+            /** Sector */
+            sector: string;
+            /** Warehouse Count */
+            warehouse_count: number;
         };
         /** ConfirmDraftRequest */
         ConfirmDraftRequest: {
@@ -564,6 +861,37 @@ export interface components {
             total_centimes: number;
             /** Transaction Id */
             transaction_id: string;
+        };
+        /** ControlTowerDashboard */
+        ControlTowerDashboard: {
+            /** Cash Forecast */
+            cash_forecast: components["schemas"]["CashForecastPoint"][];
+            company: components["schemas"]["CompanyContext"];
+            /** Findings */
+            findings: components["schemas"]["AuditFinding"][];
+            /**
+             * Generated At
+             * Format: date-time
+             */
+            generated_at: string;
+            kpis: components["schemas"]["ControlTowerKPIs"];
+            /** Priority Actions */
+            priority_actions: components["schemas"]["PriorityAction"][];
+        };
+        /** ControlTowerKPIs */
+        ControlTowerKPIs: {
+            /** Cash At Risk Centimes */
+            cash_at_risk_centimes: number;
+            /** Critical Findings */
+            critical_findings: number;
+            /** Inventory Value Centimes */
+            inventory_value_centimes: number;
+            /** Monitored Spend Centimes */
+            monitored_spend_centimes: number;
+            /** Open Findings */
+            open_findings: number;
+            /** Preventable Leakage Centimes */
+            preventable_leakage_centimes: number;
         };
         /** CreateCatalogItemRequest */
         CreateCatalogItemRequest: {
@@ -675,6 +1003,11 @@ export interface components {
         /** DraftLine */
         DraftLine: {
             /**
+             * Base Unit
+             * @default unit
+             */
+            base_unit: string;
+            /**
              * Confidence
              * @default 1
              */
@@ -698,6 +1031,11 @@ export interface components {
              * @default unit
              */
             unit: string;
+            /**
+             * Unit Multiplier
+             * @default 1
+             */
+            unit_multiplier: number;
             /** Unit Price Centimes */
             unit_price_centimes: number;
         };
@@ -728,6 +1066,76 @@ export interface components {
              * @default 1
              */
             version: number;
+        };
+        /** FinancialRecord */
+        FinancialRecord: {
+            /** Amount Centimes */
+            amount_centimes: number;
+            /** Counterparty */
+            counterparty: string;
+            /** Due On */
+            due_on?: string | null;
+            /**
+             * Issued On
+             * Format: date
+             */
+            issued_on: string;
+            /** Linked Records */
+            linked_records?: string[];
+            /** Record Id */
+            record_id: string;
+            /**
+             * Record Type
+             * @enum {string}
+             */
+            record_type: "PURCHASE_ORDER" | "DELIVERY_NOTE" | "SUPPLIER_INVOICE" | "BANK_PAYMENT" | "CUSTOMER_RECEIVABLE";
+            /** Reference */
+            reference: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "MATCHED" | "EXCEPTION" | "PENDING" | "PAID" | "EXPECTED";
+        };
+        /** FinancialRecordListResponse */
+        FinancialRecordListResponse: {
+            /** Items */
+            items: components["schemas"]["FinancialRecord"][];
+        };
+        /** FindingDecisionRequest */
+        FindingDecisionRequest: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "PREPARE_DISPUTE" | "APPROVE_CORRECTED_AMOUNT" | "DISMISS";
+            /** Note */
+            note?: string | null;
+        };
+        /** FindingDecisionResponse */
+        FindingDecisionResponse: {
+            /** Action */
+            action: string;
+            /** Approved Amount Centimes */
+            approved_amount_centimes?: number | null;
+            /**
+             * Approved At
+             * Format: date-time
+             */
+            approved_at: string;
+            /** Approved By */
+            approved_by: string;
+            /** Dispute Reference */
+            dispute_reference?: string | null;
+            /** Finding Id */
+            finding_id: string;
+            /** Message */
+            message: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "APPROVED" | "RESOLVED";
         };
         /** GenerateProcurementNeedRequest */
         GenerateProcurementNeedRequest: {
@@ -1048,6 +1456,24 @@ export interface components {
              */
             updated_at?: string;
         };
+        /** PriorityAction */
+        PriorityAction: {
+            /** Action Id */
+            action_id: string;
+            /** Description */
+            description: string;
+            /** Impact Centimes */
+            impact_centimes: number;
+            /** Target Path */
+            target_path: string;
+            /** Title */
+            title: string;
+            /**
+             * Urgency
+             * @enum {string}
+             */
+            urgency: "NOW" | "THIS_WEEK" | "MONITOR";
+        };
         /** ProcurementNeed */
         ProcurementNeed: {
             /** Average Daily Sales */
@@ -1117,6 +1543,31 @@ export interface components {
              * Format: date-time
              */
             updated_at?: string;
+        };
+        /** ProductOptionListResponse */
+        ProductOptionListResponse: {
+            /** Items */
+            items: components["schemas"]["ProductOptionResponse"][];
+        };
+        /** ProductOptionResponse */
+        ProductOptionResponse: {
+            /** Base Unit */
+            base_unit: string;
+            /** Name */
+            name: string;
+            /** Product Id */
+            product_id: string;
+            /** Units */
+            units: components["schemas"]["ProductUnitOptionResponse"][];
+        };
+        /** ProductUnitOptionResponse */
+        ProductUnitOptionResponse: {
+            /** Conversion To Base */
+            conversion_to_base: number;
+            /** Label */
+            label: string;
+            /** Unit */
+            unit: string;
         };
         /** Profile */
         Profile: {
@@ -1319,6 +1770,52 @@ export interface components {
             /** Items */
             items: components["schemas"]["SupplierOpportunity"][];
         };
+        /** SupplierPortfolioResponse */
+        SupplierPortfolioResponse: {
+            /** Concentration Risk Percent */
+            concentration_risk_percent: number;
+            /** Savings Opportunity Centimes */
+            savings_opportunity_centimes: number;
+            /** Scorecards */
+            scorecards: components["schemas"]["SupplierScorecard"][];
+            /** Total Spend Centimes */
+            total_spend_centimes: number;
+        };
+        /** SupplierScorecard */
+        SupplierScorecard: {
+            /** Annual Spend Centimes */
+            annual_spend_centimes: number;
+            /** Average Payment Terms Days */
+            average_payment_terms_days: number;
+            /** Category */
+            category: string;
+            /** City */
+            city: string;
+            /** Contract Compliance Percent */
+            contract_compliance_percent: number;
+            /** Delivery Reliability Percent */
+            delivery_reliability_percent: number;
+            /** Disputed Invoice Rate Percent */
+            disputed_invoice_rate_percent: number;
+            /** Name */
+            name: string;
+            /** Recommendation */
+            recommendation: string;
+            /**
+             * Risk
+             * @enum {string}
+             */
+            risk: "LOW" | "MEDIUM" | "HIGH";
+            /** Spend Share Percent */
+            spend_share_percent: number;
+            /** Supplier Id */
+            supplier_id: string;
+            /**
+             * Trend
+             * @enum {string}
+             */
+            trend: "IMPROVING" | "STABLE" | "DECLINING";
+        };
         /** SupplierSearchResponse */
         SupplierSearchResponse: {
             /** Items */
@@ -1392,6 +1889,13 @@ export interface components {
         };
         /** TransactionLine */
         TransactionLine: {
+            /**
+             * Base Unit
+             * @default UNIT
+             */
+            base_unit: string;
+            /** Inventory Quantity */
+            inventory_quantity?: number | null;
             /** Line Id */
             line_id: string;
             /** Line Total Centimes */
@@ -1402,6 +1906,16 @@ export interface components {
             product_name: string;
             /** Quantity */
             quantity: number;
+            /**
+             * Unit
+             * @default UNIT
+             */
+            unit: string;
+            /**
+             * Unit Multiplier
+             * @default 1
+             */
+            unit_multiplier: number;
             /** Unit Price Centimes */
             unit_price_centimes: number;
         };
@@ -1727,6 +2241,505 @@ export interface operations {
                      *     }
                      */
                     "application/json": components["schemas"]["AuthResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_audit_findings_api_v1_control_tower_audit_findings_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @example string */
+                authorization?: string | null;
+                /** @example string */
+                "x-test-user-id"?: string | null;
+                /** @example string */
+                "x-test-org-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example [
+                     *       {
+                     *         "calculation": [
+                     *           {
+                     *             "expression": "string",
+                     *             "label": "Review purchasing need",
+                     *             "result_centimes": 1
+                     *           }
+                     *         ],
+                     *         "confidence": 1,
+                     *         "due_date": "string",
+                     *         "evidence": [
+                     *           {
+                     *             "amount_centimes": 1,
+                     *             "document_type": "PURCHASE_ORDER",
+                     *             "label": "Review purchasing need",
+                     *             "quantity": 20,
+                     *             "reference": "string",
+                     *             "status": "SUPPORTING",
+                     *             "unit_price_centimes": 1850
+                     *           }
+                     *         ],
+                     *         "expected_amount_centimes": 1,
+                     *         "financial_impact_centimes": 1,
+                     *         "finding_id": "string",
+                     *         "finding_type": "THREE_WAY_MISMATCH",
+                     *         "observed_amount_centimes": 1,
+                     *         "owner": "string",
+                     *         "recommended_action": "string",
+                     *         "severity": "CRITICAL",
+                     *         "status": "OPEN",
+                     *         "summary": "string",
+                     *         "supplier_id": "string",
+                     *         "supplier_name": "string",
+                     *         "title": "string"
+                     *       }
+                     *     ]
+                     */
+                    "application/json": components["schemas"]["AuditFinding"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_audit_finding_api_v1_control_tower_audit_findings__finding_id__get: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @example string */
+                authorization?: string | null;
+                /** @example string */
+                "x-test-user-id"?: string | null;
+                /** @example string */
+                "x-test-org-id"?: string | null;
+            };
+            path: {
+                /** @example string */
+                finding_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "calculation": [
+                     *         {
+                     *           "expression": "string",
+                     *           "label": "Review purchasing need",
+                     *           "result_centimes": 1
+                     *         }
+                     *       ],
+                     *       "confidence": 1,
+                     *       "due_date": "string",
+                     *       "evidence": [
+                     *         {
+                     *           "amount_centimes": 1,
+                     *           "document_type": "PURCHASE_ORDER",
+                     *           "label": "Review purchasing need",
+                     *           "quantity": 20,
+                     *           "reference": "string",
+                     *           "status": "SUPPORTING",
+                     *           "unit_price_centimes": 1850
+                     *         }
+                     *       ],
+                     *       "expected_amount_centimes": 1,
+                     *       "financial_impact_centimes": 1,
+                     *       "finding_id": "string",
+                     *       "finding_type": "THREE_WAY_MISMATCH",
+                     *       "observed_amount_centimes": 1,
+                     *       "owner": "string",
+                     *       "recommended_action": "string",
+                     *       "severity": "CRITICAL",
+                     *       "status": "OPEN",
+                     *       "summary": "string",
+                     *       "supplier_id": "string",
+                     *       "supplier_name": "string",
+                     *       "title": "string"
+                     *     }
+                     */
+                    "application/json": components["schemas"]["AuditFinding"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    decide_audit_finding_api_v1_control_tower_audit_findings__finding_id__decide_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @example string */
+                authorization?: string | null;
+                /** @example string */
+                "x-test-user-id"?: string | null;
+                /** @example string */
+                "x-test-org-id"?: string | null;
+            };
+            path: {
+                /** @example string */
+                finding_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "action": "PREPARE_DISPUTE",
+                 *       "note": "string"
+                 *     }
+                 */
+                "application/json": components["schemas"]["FindingDecisionRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "action": "string",
+                     *       "approved_amount_centimes": 1,
+                     *       "approved_at": "2026-07-25T08:00:00Z",
+                     *       "approved_by": "string",
+                     *       "dispute_reference": "string",
+                     *       "finding_id": "string",
+                     *       "message": "Cooking oil may run out in four days.",
+                     *       "status": "APPROVED"
+                     *     }
+                     */
+                    "application/json": components["schemas"]["FindingDecisionResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    run_control_audit_api_v1_control_tower_audit_runs_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @example string */
+                authorization?: string | null;
+                /** @example string */
+                "x-test-user-id"?: string | null;
+                /** @example string */
+                "x-test-org-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "documents_analyzed": 1,
+                     *       "findings_created": 1,
+                     *       "model": "string",
+                     *       "provider": "string",
+                     *       "run_id": "string",
+                     *       "status": "SUCCEEDED",
+                     *       "tool_calls": [
+                     *         {
+                     *           "deterministic": true,
+                     *           "duration_ms": 1,
+                     *           "label": "Review purchasing need",
+                     *           "name": "string",
+                     *           "output": "string",
+                     *           "sequence": 1,
+                     *           "status": "SUCCEEDED"
+                     *         }
+                     *       ],
+                     *       "total_impact_centimes": 1
+                     *     }
+                     */
+                    "application/json": components["schemas"]["AuditRunResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_dashboard_api_v1_control_tower_dashboard_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @example string */
+                authorization?: string | null;
+                /** @example string */
+                "x-test-user-id"?: string | null;
+                /** @example string */
+                "x-test-org-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "cash_forecast": [
+                     *         {
+                     *           "date": "string",
+                     *           "inflows_centimes": 1,
+                     *           "label": "Review purchasing need",
+                     *           "outflows_centimes": 1,
+                     *           "projected_balance_centimes": 1
+                     *         }
+                     *       ],
+                     *       "company": {
+                     *         "active_supplier_count": 1,
+                     *         "city": "Berrechid",
+                     *         "legal_name": "string",
+                     *         "name": "string",
+                     *         "reporting_period": "string",
+                     *         "sector": "string",
+                     *         "warehouse_count": 1
+                     *       },
+                     *       "findings": [
+                     *         {
+                     *           "calculation": [
+                     *             {
+                     *               "expression": "string",
+                     *               "label": "Review purchasing need",
+                     *               "result_centimes": 1
+                     *             }
+                     *           ],
+                     *           "confidence": 1,
+                     *           "due_date": "string",
+                     *           "evidence": [
+                     *             {
+                     *               "amount_centimes": 1,
+                     *               "document_type": "PURCHASE_ORDER",
+                     *               "label": "Review purchasing need",
+                     *               "quantity": 20,
+                     *               "reference": "string",
+                     *               "status": "SUPPORTING",
+                     *               "unit_price_centimes": 1850
+                     *             }
+                     *           ],
+                     *           "expected_amount_centimes": 1,
+                     *           "financial_impact_centimes": 1,
+                     *           "finding_id": "string",
+                     *           "finding_type": "THREE_WAY_MISMATCH",
+                     *           "observed_amount_centimes": 1,
+                     *           "owner": "string",
+                     *           "recommended_action": "string",
+                     *           "severity": "CRITICAL",
+                     *           "status": "OPEN",
+                     *           "summary": "string",
+                     *           "supplier_id": "string",
+                     *           "supplier_name": "string",
+                     *           "title": "string"
+                     *         }
+                     *       ],
+                     *       "generated_at": "2026-07-25T08:00:00Z",
+                     *       "kpis": {
+                     *         "cash_at_risk_centimes": 1,
+                     *         "critical_findings": 1,
+                     *         "inventory_value_centimes": 1,
+                     *         "monitored_spend_centimes": 1,
+                     *         "open_findings": 1,
+                     *         "preventable_leakage_centimes": 1
+                     *       },
+                     *       "priority_actions": [
+                     *         {
+                     *           "action_id": "string",
+                     *           "description": "string",
+                     *           "impact_centimes": 1,
+                     *           "target_path": "string",
+                     *           "title": "string",
+                     *           "urgency": "NOW"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": components["schemas"]["ControlTowerDashboard"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_financial_records_api_v1_control_tower_records_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @example string */
+                authorization?: string | null;
+                /** @example string */
+                "x-test-user-id"?: string | null;
+                /** @example string */
+                "x-test-org-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "items": [
+                     *         {
+                     *           "amount_centimes": 1,
+                     *           "counterparty": "string",
+                     *           "due_on": "string",
+                     *           "issued_on": "string",
+                     *           "linked_records": [
+                     *             "string"
+                     *           ],
+                     *           "record_id": "string",
+                     *           "record_type": "PURCHASE_ORDER",
+                     *           "reference": "string",
+                     *           "status": "MATCHED"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": components["schemas"]["FinancialRecordListResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_supplier_portfolio_api_v1_control_tower_suppliers_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @example string */
+                authorization?: string | null;
+                /** @example string */
+                "x-test-user-id"?: string | null;
+                /** @example string */
+                "x-test-org-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "concentration_risk_percent": 1,
+                     *       "savings_opportunity_centimes": 1,
+                     *       "scorecards": [
+                     *         {
+                     *           "annual_spend_centimes": 1,
+                     *           "average_payment_terms_days": 1,
+                     *           "category": "string",
+                     *           "city": "Berrechid",
+                     *           "contract_compliance_percent": 1,
+                     *           "delivery_reliability_percent": 1,
+                     *           "disputed_invoice_rate_percent": 1,
+                     *           "name": "string",
+                     *           "recommendation": "string",
+                     *           "risk": "LOW",
+                     *           "spend_share_percent": 1,
+                     *           "supplier_id": "string",
+                     *           "trend": "IMPROVING"
+                     *         }
+                     *       ],
+                     *       "total_spend_centimes": 1
+                     *     }
+                     */
+                    "application/json": components["schemas"]["SupplierPortfolioResponse"];
                 };
             };
             /** @description Validation Error */
@@ -2116,6 +3129,7 @@ export interface operations {
                      *         "id": "resource-001",
                      *         "lines": [
                      *           {
+                     *             "base_unit": "unit",
                      *             "confidence": 1,
                      *             "line_id": "string",
                      *             "line_total_centimes": 1,
@@ -2127,6 +3141,7 @@ export interface operations {
                      *               "string"
                      *             ],
                      *             "unit": "unit",
+                     *             "unit_multiplier": 1,
                      *             "unit_price_centimes": 1850
                      *           }
                      *         ],
@@ -2194,6 +3209,7 @@ export interface operations {
                      *         "id": "resource-001",
                      *         "lines": [
                      *           {
+                     *             "base_unit": "unit",
                      *             "confidence": 1,
                      *             "line_id": "string",
                      *             "line_total_centimes": 1,
@@ -2205,6 +3221,7 @@ export interface operations {
                      *               "string"
                      *             ],
                      *             "unit": "unit",
+                     *             "unit_multiplier": 1,
                      *             "unit_price_centimes": 1850
                      *           }
                      *         ],
@@ -2267,6 +3284,7 @@ export interface operations {
                  *         "id": "resource-001",
                  *         "lines": [
                  *           {
+                 *             "base_unit": "unit",
                  *             "confidence": 1,
                  *             "line_id": "string",
                  *             "line_total_centimes": 1,
@@ -2278,6 +3296,7 @@ export interface operations {
                  *               "string"
                  *             ],
                  *             "unit": "unit",
+                 *             "unit_multiplier": 1,
                  *             "unit_price_centimes": 1850
                  *           }
                  *         ],
@@ -2363,6 +3382,60 @@ export interface operations {
                      *     }
                      */
                     "application/json": components["schemas"]["InventoryResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_product_options_api_v1_inventory_product_options_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @example string */
+                authorization?: string | null;
+                /** @example string */
+                "x-test-user-id"?: string | null;
+                /** @example string */
+                "x-test-org-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "items": [
+                     *         {
+                     *           "base_unit": "string",
+                     *           "name": "string",
+                     *           "product_id": "cooking-oil-1l",
+                     *           "units": [
+                     *             {
+                     *               "conversion_to_base": 1,
+                     *               "label": "Review purchasing need",
+                     *               "unit": "BOTTLE"
+                     *             }
+                     *           ]
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": components["schemas"]["ProductOptionListResponse"];
                 };
             };
             /** @description Validation Error */
@@ -3130,11 +4203,15 @@ export interface operations {
                      *           "kind": "purchase",
                      *           "lines": [
                      *             {
+                     *               "base_unit": "UNIT",
+                     *               "inventory_quantity": 1,
                      *               "line_id": "string",
                      *               "line_total_centimes": 1,
                      *               "product_id": "cooking-oil-1l",
                      *               "product_name": "string",
                      *               "quantity": 20,
+                     *               "unit": "UNIT",
+                     *               "unit_multiplier": 1,
                      *               "unit_price_centimes": 1850
                      *             }
                      *           ],

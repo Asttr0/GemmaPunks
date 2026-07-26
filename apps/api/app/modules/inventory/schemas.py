@@ -37,3 +37,20 @@ class InventoryItemResponse(BaseModel):
 
 class InventoryResponse(BaseModel):
     items: list[InventoryItemResponse]
+
+
+class ProductUnitOptionResponse(BaseModel):
+    unit: str
+    label: str
+    conversion_to_base: int = Field(ge=1)
+
+
+class ProductOptionResponse(BaseModel):
+    product_id: str
+    name: str
+    base_unit: str
+    units: list[ProductUnitOptionResponse]
+
+
+class ProductOptionListResponse(BaseModel):
+    items: list[ProductOptionResponse]

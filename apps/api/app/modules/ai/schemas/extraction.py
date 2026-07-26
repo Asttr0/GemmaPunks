@@ -12,11 +12,35 @@ class DraftLine(BaseModel):
     product_name: str = Field(min_length=1, max_length=160)
     original_product_name: str | None = Field(default=None, max_length=160)
     unit: str = Field(default="unit", min_length=1, max_length=32)
+    base_unit: str = Field(default="unit", min_length=1, max_length=32)
+    unit_multiplier: int = Field(default=1, ge=1, le=100_000)
     quantity: int = Field(gt=0)
     unit_price_centimes: int = Field(ge=0)
     line_total_centimes: int = Field(ge=0)
     confidence: float = Field(ge=0.0, le=1.0, default=1.0)
     uncertain_fields: list[str] = Field(default_factory=list)
+
+    @model_validator(mode="before")
+    @classmethod
+    def normalize_missing_unit(cls, value: object) -> object:
+        """Keep incomplete AI output reviewable without weakening downstream types."""
+        if not isinstance(value, dict):
+            return value
+
+        unit = value.get("unit")
+        if isinstance(unit, str) and unit.strip():
+            return value
+
+        normalized = dict(value)
+        normalized["unit"] = "unit"
+
+        uncertain_fields = normalized.get("uncertain_fields")
+        uncertain_fields = [] if not isinstance(uncertain_fields, list) else list(uncertain_fields)
+
+        if "unit" not in uncertain_fields:
+            uncertain_fields.append("unit")
+        normalized["uncertain_fields"] = uncertain_fields
+        return normalized
 
     @model_validator(mode="after")
     def recalculate_line_total(self) -> "DraftLine":

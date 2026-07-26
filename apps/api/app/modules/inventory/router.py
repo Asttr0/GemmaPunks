@@ -9,9 +9,51 @@ from app.core.business_repository import (
 )
 from app.modules.auth.dependencies import get_current_user
 from app.modules.auth.schemas import UserContext
-from app.modules.inventory.schemas import InventoryItemResponse, InventoryResponse
+from app.modules.inventory.schemas import (
+    InventoryItemResponse,
+    InventoryResponse,
+    ProductOptionListResponse,
+    ProductOptionResponse,
+    ProductUnitOptionResponse,
+)
 
 router = APIRouter(prefix="/api/v1/inventory", tags=["inventory"])
+
+
+@router.get("/product-options", response_model=ProductOptionListResponse)
+async def list_product_options(
+    user: UserContext = Depends(get_current_user),
+    repository: BusinessRepository = Depends(business_repository_dependency),
+) -> ProductOptionListResponse:
+    """Return the approved products and purchasing units used during human review."""
+    try:
+        require_organization_type(repository, user.organization_id, "MERCHANT")
+    except PermissionError as exc:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=str(exc)) from exc
+
+    items = []
+    for product in repository.list_canonical_products():
+        configured_units = product.purchase_units or [
+            {
+                "unit": product.base_unit,
+                "label": product.base_unit.replace("_", " ").title(),
+                "conversion_to_base": 1,
+            }
+        ]
+        items.append(
+            ProductOptionResponse(
+                product_id=product.product_id,
+                name=product.canonical_name,
+                base_unit=product.base_unit,
+                units=[
+                    ProductUnitOptionResponse.model_validate(
+                        unit.model_dump(mode="json") if hasattr(unit, "model_dump") else unit
+                    )
+                    for unit in configured_units
+                ],
+            )
+        )
+    return ProductOptionListResponse(items=items)
 
 
 @router.get("", response_model=InventoryResponse)

@@ -12,7 +12,7 @@ web:
 	npm run dev
 
 api:
-	.venv/bin/uvicorn app.main:app --reload --app-dir apps/api
+	.venv/bin/uvicorn app.main:app --reload --app-dir apps/api --env-file .env
 
 firebase:
 	npm run firebase:emulators

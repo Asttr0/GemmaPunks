@@ -11,14 +11,14 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    app_name: str = "MIZAN Souq API"
+    app_name: str = "MIZAN Souq — MIZAN Control API"
     app_env: str = "development"
     app_cors_origins: str = "http://localhost:5173"
     firebase_project_id: str = "demo-gemmapunks"
     ai_provider: str = "fixture"
     gemini_api_key: str | None = None
     gemma_model: str = "gemma-4-26b-a4b-it"
-    ai_timeout_seconds: int = Field(default=30, ge=5, le=120)
+    ai_timeout_seconds: int = Field(default=60, ge=5, le=120)
     max_upload_mb: int = Field(default=10, ge=1, le=25)
 
     @property

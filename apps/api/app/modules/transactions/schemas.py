@@ -9,6 +9,10 @@ class TransactionLine(BaseModel):
     product_id: str
     product_name: str
     quantity: int
+    unit: str = "UNIT"
+    base_unit: str = "UNIT"
+    unit_multiplier: int = Field(default=1, ge=1)
+    inventory_quantity: int | None = Field(default=None, ge=0)
     unit_price_centimes: int
     line_total_centimes: int
 
