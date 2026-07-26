@@ -13,4 +13,5 @@ coverage/
 *.log
 .idea/
 .vscode/
-
+get-pip.py
+desktop.ini
