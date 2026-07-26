@@ -1,6 +1,16 @@
+"""Shared extraction provider contract.
+
+The ingestion service calls this interface in both hosted-Gemma and deterministic
+fixture modes. Providers only return an unconfirmed draft; they never write
+financial records, update inventory, or approve an order.
+"""
+
 from abc import ABC, abstractmethod
+from typing import Literal
 
 from app.modules.ai.schemas.extraction import ExtractionResult
+
+EvidenceKind = Literal["receipt", "audio"]
 
 
 class ExtractionProvider(ABC):
@@ -10,8 +20,8 @@ class ExtractionProvider(ABC):
         file_bytes: bytes,
         original_name: str,
         content_type: str,
-        evidence_kind: str = "receipt",
+        evidence_kind: EvidenceKind = "receipt",
         safe_product_context: list[dict] | None = None,
     ) -> ExtractionResult:
-        """Extract evidence and return a structured ExtractionResult draft."""
-        pass
+        """Return a validated, reviewable draft from untrusted business evidence."""
+        raise NotImplementedError

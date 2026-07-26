@@ -17,9 +17,13 @@ def forecast_stockout(
     average_daily_sales: float | None,
     sales_history_days: int,
     target_stock_quantity: float,
+    incoming_stock: float = 0,
     minimum_history_days: int = 3,
 ) -> StockoutForecast:
-    quantity_needed = max(0.0, target_stock_quantity - max(0.0, stock_on_hand))
+    quantity_needed = max(
+        0.0,
+        target_stock_quantity - max(0.0, stock_on_hand) - max(0.0, incoming_stock),
+    )
     if stock_on_hand <= 0:
         return StockoutForecast(
             status="OUT_OF_STOCK",

@@ -6,11 +6,13 @@ from app.modules.ai.providers.gemma import GemmaProvider
 
 def get_extraction_provider() -> ExtractionProvider:
     settings = get_settings()
-    provider_name = getattr(settings, "ai_provider", "fixture").lower()
+    provider_name = getattr(settings, "ai_provider", "fixture").strip().lower()
     if provider_name == "gemma":
         return GemmaProvider(
             api_key=settings.gemini_api_key,
             model_name=settings.gemma_model,
             timeout_seconds=settings.ai_timeout_seconds,
         )
-    return FixtureProvider()
+    if provider_name == "fixture":
+        return FixtureProvider()
+    raise ValueError("AI_PROVIDER must be either 'fixture' or 'gemma'")

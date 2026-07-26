@@ -1,10 +1,8 @@
 import asyncio
 import json
-import os
-import tempfile
 import time
-from contextlib import suppress
 from pathlib import Path
+from typing import Any
 
 from app.core.logging import logger
 from app.modules.ai.providers.base import ExtractionProvider
@@ -25,7 +23,14 @@ def _extract_json(text: str) -> dict:
     end = normalized.rfind("}")
     if start < 0 or end <= start:
         raise ValueError("Gemma did not return a JSON object")
-    return json.loads(normalized[start : end + 1])
+    parsed = json.loads(normalized[start : end + 1])
+    if isinstance(parsed, list):
+        if len(parsed) != 1 or not isinstance(parsed[0], dict):
+            raise ValueError("Gemma returned an unexpected JSON list")
+        parsed = parsed[0]
+    if not isinstance(parsed, dict):
+        raise ValueError("Gemma did not return a JSON object")
+    return parsed
 
 
 class GemmaProvider(ExtractionProvider):
@@ -34,10 +39,12 @@ class GemmaProvider(ExtractionProvider):
         api_key: str | None = None,
         model_name: str = "gemma-4-26b-a4b-it",
         timeout_seconds: int = 30,
+        client: Any | None = None,
     ):
         self.api_key = api_key
         self.model_name = model_name
         self.timeout_seconds = timeout_seconds
+        self._client = client
         self.fixture_fallback = FixtureProvider()
 
     @staticmethod
@@ -59,33 +66,23 @@ class GemmaProvider(ExtractionProvider):
         safe_product_context: list[dict] | None,
     ) -> ExtractionDraft:
         from google import genai
+        from google.genai import types
 
-        suffix = Path(original_name).suffix
-        temporary_path = ""
-        try:
-            with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as temporary:
-                temporary.write(file_bytes)
-                temporary_path = temporary.name
-
-            client = genai.Client(api_key=self.api_key)
-            uploaded_file = client.files.upload(
-                file=temporary_path,
-                config={"mime_type": content_type, "display_name": original_name},
-            )
-            response = client.models.generate_content(
-                model=self.model_name,
-                contents=[
-                    uploaded_file,
-                    self._prompt(evidence_kind, safe_product_context),
-                ],
-            )
-            if not response.text:
-                raise ValueError("Gemma returned an empty response")
-            return ExtractionDraft.model_validate(_extract_json(response.text))
-        finally:
-            if temporary_path:
-                with suppress(FileNotFoundError):
-                    os.unlink(temporary_path)
+        client = self._client or genai.Client(api_key=self.api_key)
+        response = client.models.generate_content(
+            model=self.model_name,
+            contents=[
+                types.Part.from_bytes(data=file_bytes, mime_type=content_type),
+                self._prompt(evidence_kind, safe_product_context),
+            ],
+            config=types.GenerateContentConfig(
+                response_mime_type="application/json",
+                http_options=types.HttpOptions(timeout=self.timeout_seconds * 1000),
+            ),
+        )
+        if not response or not response.text:
+            raise ValueError("Gemma returned an empty response")
+        return ExtractionDraft.model_validate(_extract_json(response.text))
 
     async def _fallback(
         self,
@@ -129,7 +126,7 @@ class GemmaProvider(ExtractionProvider):
         evidence_kind: str = "receipt",
         safe_product_context: list[dict] | None = None,
     ) -> ExtractionResult:
-        if not self.api_key:
+        if not self.api_key and self._client is None:
             return await self._fallback(
                 file_bytes=file_bytes,
                 original_name=original_name,

@@ -1,6 +1,7 @@
+from decimal import ROUND_HALF_UP, Decimal
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 class DraftLine(BaseModel):
@@ -9,12 +10,24 @@ class DraftLine(BaseModel):
     line_id: str | None = None
     product_id: str | None = None
     product_name: str = Field(min_length=1, max_length=160)
+    original_product_name: str | None = Field(default=None, max_length=160)
     unit: str = Field(default="unit", min_length=1, max_length=32)
     quantity: int = Field(gt=0)
     unit_price_centimes: int = Field(ge=0)
     line_total_centimes: int = Field(ge=0)
     confidence: float = Field(ge=0.0, le=1.0, default=1.0)
     uncertain_fields: list[str] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def recalculate_line_total(self) -> "DraftLine":
+        """Financial totals come from deterministic code, never model arithmetic."""
+        self.line_total_centimes = int(
+            (Decimal(str(self.quantity)) * Decimal(self.unit_price_centimes)).quantize(
+                Decimal("1"),
+                rounding=ROUND_HALF_UP,
+            )
+        )
+        return self
 
 
 class ExtractionDraft(BaseModel):
@@ -27,6 +40,11 @@ class ExtractionDraft(BaseModel):
     lines: list[DraftLine] = Field(min_length=1, max_length=100)
     total_centimes: int = Field(ge=0)
     clarification_question: str | None = Field(default=None, max_length=500)
+
+    @model_validator(mode="after")
+    def recalculate_total(self) -> "ExtractionDraft":
+        self.total_centimes = sum(line.line_total_centimes for line in self.lines)
+        return self
 
 
 class AgentTimelineEvent(BaseModel):

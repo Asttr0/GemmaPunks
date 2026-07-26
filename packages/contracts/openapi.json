@@ -526,6 +526,18 @@
             "title": "Line Total Centimes",
             "type": "integer"
           },
+          "original_product_name": {
+            "anyOf": [
+              {
+                "maxLength": 160,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Original Product Name"
+          },
           "product_id": {
             "anyOf": [
               {
@@ -3277,6 +3289,7 @@
                         "confidence": 1.0,
                         "line_id": "string",
                         "line_total_centimes": 1,
+                        "original_product_name": "string",
                         "product_id": "cooking-oil-1l",
                         "product_name": "string",
                         "quantity": 20,
@@ -3408,6 +3421,7 @@
                         "confidence": 1.0,
                         "line_id": "string",
                         "line_total_centimes": 1,
+                        "original_product_name": "string",
                         "product_id": "cooking-oil-1l",
                         "product_name": "string",
                         "quantity": 20,
@@ -3549,6 +3563,7 @@
                       "confidence": 1.0,
                       "line_id": "string",
                       "line_total_centimes": 1,
+                      "original_product_name": "string",
                       "product_id": "cooking-oil-1l",
                       "product_name": "string",
                       "quantity": 20,

@@ -1,6 +1,5 @@
 import hashlib
 from datetime import UTC, datetime, timedelta
-from decimal import ROUND_HALF_UP, Decimal
 
 from fastapi import HTTPException, status
 
@@ -9,20 +8,15 @@ from app.core.models import Offer, ProcurementNeed, SupplierCatalogItem
 from app.modules.auth.schemas import UserContext
 from app.modules.businesses.service import build_merchant_dashboard
 from app.modules.procurement.forecasting import forecast_stockout
+from app.modules.procurement.offer_comparison import (
+    evaluate_catalog_offer,
+    offer_rank_key,
+)
 from app.modules.procurement.schemas import (
     GenerateProcurementNeedRequest,
     OfferCompareRequest,
     OfferCompareResponse,
 )
-
-
-def _money(quantity: float, unit_centimes: int) -> int:
-    return int(
-        (Decimal(str(quantity)) * Decimal(unit_centimes)).quantize(
-            Decimal("1"),
-            rounding=ROUND_HALF_UP,
-        )
-    )
 
 
 class ProcurementService:
@@ -155,53 +149,20 @@ class ProcurementService:
         group_candidates: list[Offer] = []
         rejected: list[Offer] = []
         for item in self.repository.list_catalog_items(need.product_id):
-            reasons: list[str] = []
-            if item.unit.casefold() != need.unit.casefold():
-                reasons.append("UNIT_MISMATCH")
-            if need.coarse_area.casefold() not in {area.casefold() for area in item.service_areas}:
-                reasons.append("AREA_NOT_SERVED")
-            if item.available_quantity < quantity:
-                reasons.append("INSUFFICIENT_SUPPLIER_STOCK")
-            if now + timedelta(days=item.delivery_days) > need.needed_by:
-                reasons.append("DELIVERY_AFTER_NEEDED_BY")
-
-            product_cost = _money(quantity, item.unit_price_centimes)
-            landed_cost = product_cost + item.delivery_fee_centimes
-            landed_unit = int(
-                (Decimal(landed_cost) / Decimal(str(quantity))).quantize(
-                    Decimal("1"),
-                    rounding=ROUND_HALF_UP,
-                )
-            )
-            eligible_alone = quantity >= item.minimum_quantity
-            affordable = landed_cost <= available_cash
-            expected_margin = (
-                inventory_item.selling_price_centimes - landed_unit
-                if inventory_item and inventory_item.selling_price_centimes > 0
-                else None
-            )
-            if not eligible_alone:
-                reasons.append("MINIMUM_QUANTITY_NOT_MET")
-
-            status_value = (
-                "REJECTED"
-                if any(
-                    reason
-                    in {
-                        "UNIT_MISMATCH",
-                        "AREA_NOT_SERVED",
-                        "INSUFFICIENT_SUPPLIER_STOCK",
-                        "DELIVERY_AFTER_NEEDED_BY",
-                    }
-                    for reason in reasons
-                )
-                else "GROUP_ONLY"
-                if not eligible_alone
-                else "AVAILABLE_NOW"
+            evaluation = evaluate_catalog_offer(
+                item=item,
+                need=need,
+                quantity=quantity,
+                available_cash_centimes=available_cash,
+                selling_price_centimes=(
+                    inventory_item.selling_price_centimes if inventory_item else None
+                ),
+                evaluated_at=now,
             )
             explanation = (
                 f"{quantity:g} × {item.unit_price_centimes} centimes plus "
-                f"{item.delivery_fee_centimes} delivery = {landed_cost} centimes. "
+                f"{item.delivery_fee_centimes} delivery = "
+                f"{evaluation.landed_cost_centimes} centimes. "
                 f"Cash available: {available_cash} centimes. "
                 f"MOQ: {item.minimum_quantity:g}; delivery: {item.delivery_days} day(s)."
             )
@@ -218,15 +179,15 @@ class ProcurementService:
                 unit_price_centimes=item.unit_price_centimes,
                 minimum_quantity=item.minimum_quantity,
                 delivery_fee_centimes=item.delivery_fee_centimes,
-                product_cost_centimes=product_cost,
-                landed_cost_centimes=landed_cost,
-                landed_unit_cost_centimes=landed_unit,
-                expected_unit_margin_centimes=expected_margin,
+                product_cost_centimes=evaluation.product_cost_centimes,
+                landed_cost_centimes=evaluation.landed_cost_centimes,
+                landed_unit_cost_centimes=evaluation.landed_unit_cost_centimes,
+                expected_unit_margin_centimes=evaluation.expected_unit_margin_centimes,
                 delivery_days=item.delivery_days,
-                eligible_alone=eligible_alone,
-                affordable=affordable,
-                status=status_value,
-                rejection_reasons=reasons,
+                eligible_alone=evaluation.eligible_alone,
+                affordable=evaluation.affordable,
+                status=evaluation.status,
+                rejection_reasons=list(evaluation.rejection_reasons),
                 explanation=explanation,
                 created_at=now,
                 updated_at=now,
@@ -238,16 +199,8 @@ class ProcurementService:
             else:
                 available_now.append(offer)
 
-        def rank_key(offer: Offer):
-            return (
-                not offer.affordable,
-                offer.landed_cost_centimes,
-                offer.delivery_days,
-                offer.supplier_organization_id,
-            )
-
-        available_now.sort(key=rank_key)
-        group_candidates.sort(key=rank_key)
+        available_now.sort(key=offer_rank_key)
+        group_candidates.sort(key=offer_rank_key)
         rejected.sort(key=lambda offer: offer.supplier_organization_id)
         all_offers = [*available_now, *group_candidates, *rejected]
         self.repository.save_offers(user.organization_id, all_offers)

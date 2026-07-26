@@ -683,6 +683,8 @@ export interface components {
             line_id?: string | null;
             /** Line Total Centimes */
             line_total_centimes: number;
+            /** Original Product Name */
+            original_product_name?: string | null;
             /** Product Id */
             product_id?: string | null;
             /** Product Name */
@@ -2117,6 +2119,7 @@ export interface operations {
                      *             "confidence": 1,
                      *             "line_id": "string",
                      *             "line_total_centimes": 1,
+                     *             "original_product_name": "string",
                      *             "product_id": "cooking-oil-1l",
                      *             "product_name": "string",
                      *             "quantity": 20,
@@ -2194,6 +2197,7 @@ export interface operations {
                      *             "confidence": 1,
                      *             "line_id": "string",
                      *             "line_total_centimes": 1,
+                     *             "original_product_name": "string",
                      *             "product_id": "cooking-oil-1l",
                      *             "product_name": "string",
                      *             "quantity": 20,
@@ -2266,6 +2270,7 @@ export interface operations {
                  *             "confidence": 1,
                  *             "line_id": "string",
                  *             "line_total_centimes": 1,
+                 *             "original_product_name": "string",
                  *             "product_id": "cooking-oil-1l",
                  *             "product_name": "string",
                  *             "quantity": 20,

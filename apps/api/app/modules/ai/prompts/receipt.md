@@ -18,7 +18,8 @@ Required JSON shape:
   "lines": [{
     "line_id": "line-001",
     "product_id": "approved-id-or-null",
-    "product_name": "visible product name",
+    "product_name": "normalized product name",
+    "original_product_name": "exact wording visible in the evidence or null",
     "unit": "unit",
     "quantity": 1,
     "unit_price_centimes": 0,
