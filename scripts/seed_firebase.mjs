@@ -9,6 +9,14 @@ import {
 import { getAuth } from "firebase-admin/auth";
 import { getFirestore, Timestamp } from "firebase-admin/firestore";
 
+try {
+  process.loadEnvFile();
+} catch (error) {
+  if (error?.code !== "ENOENT") {
+    throw error;
+  }
+}
+
 const defaultSeedPath = "packages/demo-data/firebase/developer-baseline.json";
 const allowedOrganizationCollections = new Set([
   "memberships",
