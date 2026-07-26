@@ -153,12 +153,17 @@
         "type": "object"
       },
       "ClarificationAnswer": {
+        "additionalProperties": false,
         "properties": {
           "answer": {
+            "maxLength": 500,
+            "minLength": 1,
             "title": "Answer",
             "type": "string"
           },
           "field_path": {
+            "maxLength": 200,
+            "minLength": 1,
             "title": "Field Path",
             "type": "string"
           }
@@ -171,11 +176,13 @@
         "type": "object"
       },
       "ConfirmDraftRequest": {
+        "additionalProperties": false,
         "properties": {
           "clarification_answers": {
             "items": {
               "$ref": "#/components/schemas/ClarificationAnswer"
             },
+            "maxItems": 50,
             "title": "Clarification Answers",
             "type": "array"
           },
@@ -191,6 +198,7 @@
           },
           "draft_version": {
             "default": 1,
+            "minimum": 1.0,
             "title": "Draft Version",
             "type": "integer"
           }
@@ -199,6 +207,7 @@
         "type": "object"
       },
       "ConfirmationResponse": {
+        "additionalProperties": false,
         "properties": {
           "draft_id": {
             "title": "Draft Id",
@@ -429,8 +438,11 @@
         "type": "object"
       },
       "DocumentMetadata": {
+        "additionalProperties": false,
         "properties": {
           "content_type": {
+            "maxLength": 100,
+            "minLength": 1,
             "title": "Content Type",
             "type": "string"
           },
@@ -450,10 +462,13 @@
             "type": "string"
           },
           "original_name": {
+            "maxLength": 255,
+            "minLength": 1,
             "title": "Original Name",
             "type": "string"
           },
           "size_bytes": {
+            "minimum": 1.0,
             "title": "Size Bytes",
             "type": "integer"
           }
@@ -468,6 +483,7 @@
         "type": "object"
       },
       "DraftLine": {
+        "additionalProperties": false,
         "properties": {
           "confidence": {
             "default": 1.0,
@@ -504,6 +520,8 @@
             "title": "Product Id"
           },
           "product_name": {
+            "maxLength": 160,
+            "minLength": 1,
             "title": "Product Name",
             "type": "string"
           },
@@ -521,6 +539,8 @@
           },
           "unit": {
             "default": "unit",
+            "maxLength": 32,
+            "minLength": 1,
             "title": "Unit",
             "type": "string"
           },
@@ -540,10 +560,12 @@
         "type": "object"
       },
       "ExtractionDraft": {
+        "additionalProperties": false,
         "properties": {
           "clarification_question": {
             "anyOf": [
               {
+                "maxLength": 500,
                 "type": "string"
               },
               {
@@ -553,6 +575,7 @@
             "title": "Clarification Question"
           },
           "currency": {
+            "const": "MAD",
             "default": "MAD",
             "title": "Currency",
             "type": "string"
@@ -572,6 +595,8 @@
             "items": {
               "$ref": "#/components/schemas/DraftLine"
             },
+            "maxItems": 100,
+            "minItems": 1,
             "title": "Lines",
             "type": "array"
           },
@@ -592,6 +617,7 @@
           },
           "version": {
             "default": 1,
+            "minimum": 1.0,
             "title": "Version",
             "type": "integer"
           }
@@ -884,12 +910,20 @@
         "type": "object"
       },
       "IngestionResponse": {
+        "additionalProperties": false,
         "properties": {
           "document": {
             "$ref": "#/components/schemas/DocumentMetadata"
           },
           "draft": {
-            "$ref": "#/components/schemas/ExtractionDraft"
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ExtractionDraft"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "error_message": {
             "anyOf": [
@@ -926,8 +960,7 @@
         "required": [
           "id",
           "organization_id",
-          "document",
-          "draft"
+          "document"
         ],
         "title": "IngestionResponse",
         "type": "object"
@@ -3313,17 +3346,12 @@
             "example": "string",
             "in": "header",
             "name": "Idempotency-Key",
-            "required": false,
+            "required": true,
             "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Idempotency-Key"
+              "maxLength": 128,
+              "minLength": 8,
+              "title": "Idempotency-Key",
+              "type": "string"
             }
           },
           {

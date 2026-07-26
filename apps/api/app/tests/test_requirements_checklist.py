@@ -40,15 +40,15 @@ def test_already_confirmed_draft_conflict_409():
     confirm_1 = client.post(
         f"/api/v1/ingestions/{ingestion_id}/confirm",
         json={"draft_version": draft["version"], "draft": draft},
-        headers=auth_merchant,
+        headers={**auth_merchant, "Idempotency-Key": f"confirm-first-{ingestion_id}"},
     )
     assert confirm_1.status_code == 200
 
-    # Second confirmation without idempotency key -> 409 Conflict
+    # A different confirmation attempt after success is a conflict.
     confirm_2 = client.post(
         f"/api/v1/ingestions/{ingestion_id}/confirm",
         json={"draft_version": draft["version"], "draft": draft},
-        headers=auth_merchant,
+        headers={**auth_merchant, "Idempotency-Key": f"confirm-second-{ingestion_id}"},
     )
     assert confirm_2.status_code == 409
 
@@ -136,7 +136,10 @@ def test_centimes_financial_recalculation_on_confirm():
     confirm_res = client.post(
         f"/api/v1/ingestions/{ingestion_id}/confirm",
         json={"draft_version": draft["version"], "draft": draft},
-        headers=auth_merchant,
+        headers={
+            **auth_merchant,
+            "Idempotency-Key": f"confirm-centimes-{ingestion_id}",
+        },
     )
     assert confirm_res.status_code == 200
     data = confirm_res.json()
