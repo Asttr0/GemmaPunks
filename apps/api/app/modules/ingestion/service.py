@@ -48,6 +48,19 @@ RESOURCE_ID_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
 READ_CHUNK_SIZE = 1024 * 1024
 
 
+def detect_content_type(file_bytes: bytes, declared_content_type: str) -> str:
+    """Correct common browser/filename MIME mismatches using trusted file signatures."""
+    if file_bytes.startswith(b"\xff\xd8\xff"):
+        return "image/jpeg"
+    if file_bytes.startswith(b"\x89PNG\r\n\x1a\n"):
+        return "image/png"
+    if len(file_bytes) >= 12 and file_bytes.startswith(b"RIFF") and file_bytes[8:12] == b"WEBP":
+        return "image/webp"
+    if file_bytes.startswith(b"%PDF-"):
+        return "application/pdf"
+    return declared_content_type
+
+
 def get_ingestion_service() -> "IngestionService":
     return IngestionService(
         repository=get_ingestion_repository(),
@@ -208,6 +221,8 @@ class IngestionService:
         file_bytes = b""
         try:
             file_bytes = await self._read_temporary_upload(file)
+            content_type = detect_content_type(file_bytes, content_type)
+            self._validate_upload(normalized_kind, content_type)
             now = datetime.now(UTC)
             ingestion_id = f"ing-{uuid.uuid4().hex[:12]}"
             document_id = f"doc-{uuid.uuid4().hex[:12]}"

@@ -51,6 +51,19 @@ def test_upload_evidence_success():
     }.intersection(document_fields)
 
 
+def test_upload_corrects_a_webp_file_mislabeled_as_jpeg():
+    webp_bytes = b"RIFF" + (16).to_bytes(4, "little") + b"WEBP" + b"synthetic"
+    response = client.post(
+        "/api/v1/ingestions",
+        files={"file": ("receipt.jpeg", webp_bytes, "image/jpeg")},
+        data={"kind": "receipt"},
+        headers=auth_org_one,
+    )
+
+    assert response.status_code == 200
+    assert response.json()["document"]["content_type"] == "image/webp"
+
+
 def test_upload_unsupported_kind():
     files = {"file": ("document.txt", b"txt content", "text/plain")}
     data = {"kind": "unsupported_kind"}

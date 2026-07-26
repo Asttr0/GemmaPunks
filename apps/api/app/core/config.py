@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     ai_provider: str = "fixture"
     gemini_api_key: str | None = None
     gemma_model: str = "gemma-4-26b-a4b-it"
-    ai_timeout_seconds: int = Field(default=30, ge=5, le=120)
+    ai_timeout_seconds: int = Field(default=60, ge=5, le=120)
     max_upload_mb: int = Field(default=10, ge=1, le=25)
 
     @property

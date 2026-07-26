@@ -38,7 +38,7 @@ class GemmaProvider(ExtractionProvider):
         self,
         api_key: str | None = None,
         model_name: str = "gemma-4-26b-a4b-it",
-        timeout_seconds: int = 30,
+        timeout_seconds: int = 60,
         client: Any | None = None,
     ):
         self.api_key = api_key
@@ -77,6 +77,8 @@ class GemmaProvider(ExtractionProvider):
             ],
             config=types.GenerateContentConfig(
                 response_mime_type="application/json",
+                max_output_tokens=4096,
+                thinking_config=types.ThinkingConfig(thinking_level="minimal"),
                 http_options=types.HttpOptions(timeout=self.timeout_seconds * 1000),
             ),
         )
@@ -94,13 +96,18 @@ class GemmaProvider(ExtractionProvider):
         safe_product_context: list[dict] | None,
         reason: str,
     ) -> ExtractionResult:
-        result = await self.fixture_fallback.extract_evidence(
-            file_bytes=file_bytes,
-            original_name=original_name,
-            content_type=content_type,
-            evidence_kind=evidence_kind,
-            safe_product_context=safe_product_context,
-        )
+        try:
+            result = await self.fixture_fallback.extract_evidence(
+                file_bytes=file_bytes,
+                original_name=original_name,
+                content_type=content_type,
+                evidence_kind=evidence_kind,
+                safe_product_context=safe_product_context,
+            )
+        except Exception as fallback_exc:
+            raise RuntimeError(
+                f"{reason}. No approved fixture fallback is available for this evidence."
+            ) from fallback_exc
         result.provider = "gemma-fallback"
         result.model = self.model_name
         result.fallback_used = True
@@ -171,7 +178,8 @@ class GemmaProvider(ExtractionProvider):
             )
         except Exception as exc:
             logger.warning(
-                "Gemma extraction failed; attempting approved fixture fallback: %s",
+                "Gemma extraction failed; attempting approved fixture fallback: %s: %r",
+                type(exc).__name__,
                 exc,
             )
             return await self._fallback(
