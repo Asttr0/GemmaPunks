@@ -1,201 +1,442 @@
-import React, { useState } from "react";
-import { AuthProvider } from "../features/auth/AuthContext";
-import { useAuth } from "../features/auth/auth-context";
-import { AuthStatusHeader } from "../features/auth/AuthStatusHeader";
+import { lazy, Suspense } from "react";
 import {
-  Store,
+  Activity,
+  Boxes,
   Building2,
-  Receipt,
-  ShoppingBag,
-  Users,
-  CheckCircle2,
-  TrendingUp,
-  ArrowRight,
-  ShieldCheck,
+  FilePlus2,
+  Handshake,
+  LayoutDashboard,
+  PackageSearch,
+  ReceiptText,
+  Settings,
+  ShoppingCart,
+  Store,
 } from "lucide-react";
+import {
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import { AppShell } from "../components/shared/AppShell";
+import type { AppNavigationItem } from "../components/shared/AppShell";
+import { EmptyState } from "../components/shared/EmptyState";
+import { PageHeader } from "../components/shared/PageHeader";
+import { PageMotion } from "../components/shared/PageMotion";
+import { Button } from "../components/ui/Button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/Card";
+import { LoginPage } from "../features/auth/LoginPage";
+import { useAuth } from "../features/auth/auth-context";
+import { AppProviders } from "./AppProviders";
 
-function MainDashboard() {
-  const { organizationId, orgType, role } = useAuth();
-  const [activeTab, setActiveTab] = useState<"merchant" | "supplier" | "procurement">("merchant");
+const AgentRunPage = lazy(() =>
+  import("../features/ai/AgentRunPage").then((module) => ({
+    default: module.AgentRunPage,
+  })),
+);
+const ImpactPage = lazy(() =>
+  import("../features/demo/ImpactPage").then((module) => ({
+    default: module.ImpactPage,
+  })),
+);
+const GroupOrderDetailPage = lazy(() =>
+  import("../features/group-orders/GroupOrderPages").then((module) => ({
+    default: module.GroupOrderDetailPage,
+  })),
+);
+const GroupOrdersListPage = lazy(() =>
+  import("../features/group-orders/GroupOrderPages").then((module) => ({
+    default: module.GroupOrdersListPage,
+  })),
+);
+const EvidenceUploadPage = lazy(() =>
+  import("../features/ingestion/IngestionPages").then((module) => ({
+    default: module.EvidenceUploadPage,
+  })),
+);
+const IngestionReviewPage = lazy(() =>
+  import("../features/ingestion/IngestionPages").then((module) => ({
+    default: module.IngestionReviewPage,
+  })),
+);
+const InventoryPage = lazy(() =>
+  import("../features/merchant/MerchantPages").then((module) => ({
+    default: module.InventoryPage,
+  })),
+);
+const MerchantDashboardPage = lazy(() =>
+  import("../features/merchant/MerchantPages").then((module) => ({
+    default: module.MerchantDashboardPage,
+  })),
+);
+const TransactionsPage = lazy(() =>
+  import("../features/merchant/MerchantPages").then((module) => ({
+    default: module.TransactionsPage,
+  })),
+);
+const ProcurementCockpitPage = lazy(() =>
+  import("../features/procurement/ProcurementPages").then((module) => ({
+    default: module.ProcurementCockpitPage,
+  })),
+);
+const ProcurementListPage = lazy(() =>
+  import("../features/procurement/ProcurementPages").then((module) => ({
+    default: module.ProcurementListPage,
+  })),
+);
+const SupplierCatalogPage = lazy(() =>
+  import("../features/supplier/SupplierPages").then((module) => ({
+    default: module.SupplierCatalogPage,
+  })),
+);
+const SupplierDashboardPage = lazy(() =>
+  import("../features/supplier/SupplierPages").then((module) => ({
+    default: module.SupplierDashboardPage,
+  })),
+);
+const SupplierOpportunitiesPage = lazy(() =>
+  import("../features/supplier/SupplierPages").then((module) => ({
+    default: module.SupplierOpportunitiesPage,
+  })),
+);
+const SupplierOpportunityDetailPage = lazy(() =>
+  import("../features/supplier/SupplierPages").then((module) => ({
+    default: module.SupplierOpportunityDetailPage,
+  })),
+);
+
+const merchantNavigation: AppNavigationItem[] = [
+  {
+    label: "Overview",
+    href: "/merchant/dashboard",
+    icon: LayoutDashboard,
+  },
+  {
+    label: "Add evidence",
+    href: "/merchant/evidence/new",
+    icon: FilePlus2,
+    badge: "AI",
+  },
+  {
+    label: "Inventory",
+    href: "/merchant/inventory",
+    icon: Boxes,
+    badge: "1",
+  },
+  {
+    label: "Procurement",
+    href: "/merchant/procurement",
+    icon: PackageSearch,
+  },
+  {
+    label: "Group orders",
+    href: "/merchant/group-orders",
+    icon: Handshake,
+  },
+  {
+    label: "Transactions",
+    href: "/merchant/transactions",
+    icon: ReceiptText,
+  },
+  {
+    label: "Agent activity",
+    href: "/agent-runs/run-demo-001",
+    icon: Activity,
+  },
+  {
+    label: "Settings",
+    href: "/settings",
+    icon: Settings,
+  },
+];
+
+const supplierNavigation: AppNavigationItem[] = [
+  {
+    label: "Overview",
+    href: "/supplier/dashboard",
+    icon: LayoutDashboard,
+  },
+  {
+    label: "Opportunities",
+    href: "/supplier/opportunities",
+    icon: ShoppingCart,
+    badge: "2",
+  },
+  {
+    label: "Catalog",
+    href: "/supplier/catalog",
+    icon: Boxes,
+  },
+  {
+    label: "Agent activity",
+    href: "/agent-runs/run-demo-001",
+    icon: Activity,
+  },
+  {
+    label: "Settings",
+    href: "/settings",
+    icon: Settings,
+  },
+];
+
+function RoleRedirect() {
+  const { user, orgType, loading } = useAuth();
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  if (!user) {
+    return <Navigate replace to="/login" />;
+  }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
-      <AuthStatusHeader />
+    <Navigate
+      replace
+      to={
+        orgType === "SUPPLIER" ? "/supplier/dashboard" : "/merchant/dashboard"
+      }
+    />
+  );
+}
 
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
-        {/* Banner Hero */}
-        <div className="relative overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-r from-slate-900 via-slate-900/90 to-emerald-950/40 p-6 sm:p-8 shadow-xl">
-          <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-            <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-400">
-                <ShieldCheck className="h-3.5 w-3.5" />
-                Firebase Auth & Data Foundation Active
-              </div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-                MIZAN Souq Dashboard
-              </h1>
-              <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
-                Turning microbusiness evidence (Darija/French voice, receipts, WhatsApp screenshots) into clear decisions, supplier competition & collective orders.
-              </p>
-            </div>
+function LoginRoute({ mode = "sign-in" }: { mode?: "sign-in" | "sign-up" }) {
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
-            <div className="rounded-2xl border border-slate-800 bg-slate-950/80 p-4 min-w-[240px] space-y-2 text-xs">
-              <div className="text-slate-400 font-medium">Active Organization Context</div>
-              <div className="text-sm font-bold text-white flex items-center gap-2">
-                {orgType === "SUPPLIER" ? (
-                  <Building2 className="h-4 w-4 text-amber-400" />
-                ) : (
-                  <Store className="h-4 w-4 text-emerald-400" />
-                )}
-                {organizationId}
-              </div>
-              <div className="flex items-center justify-between text-[11px] border-t border-slate-800/80 pt-2 text-slate-400">
-                <span>Role: <strong className="text-emerald-400">{role}</strong></span>
-                <span>Type: <strong className="text-amber-400">{orgType}</strong></span>
-              </div>
-            </div>
-          </div>
-        </div>
+  if (user) {
+    return <Navigate replace to="/app" />;
+  }
 
-        {/* Navigation Tabs */}
-        <div className="flex items-center gap-2 border-b border-slate-800 pb-2 text-xs font-semibold">
-          <button
-            onClick={() => setActiveTab("merchant")}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition-all ${
-              activeTab === "merchant"
-                ? "bg-emerald-600 text-white shadow-md shadow-emerald-950/50"
-                : "text-slate-400 hover:text-white hover:bg-slate-900"
-            }`}
-          >
-            <Store className="h-4 w-4" />
-            Merchant Portal
-          </button>
-          <button
-            onClick={() => setActiveTab("procurement")}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition-all ${
-              activeTab === "procurement"
-                ? "bg-emerald-600 text-white shadow-md shadow-emerald-950/50"
-                : "text-slate-400 hover:text-white hover:bg-slate-900"
-            }`}
-          >
-            <Users className="h-4 w-4" />
-            Collective Purchasing Engine
-          </button>
-          <button
-            onClick={() => setActiveTab("supplier")}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition-all ${
-              activeTab === "supplier"
-                ? "bg-amber-600 text-white shadow-md shadow-amber-950/50"
-                : "text-slate-400 hover:text-white hover:bg-slate-900"
-            }`}
-          >
-            <Building2 className="h-4 w-4" />
-            Supplier Opportunities Portal
-          </button>
-        </div>
+  return (
+    <LoginPage initialMode={mode} onAuthenticated={() => navigate("/app")} />
+  );
+}
 
-        {/* Tab Content Cards */}
-        {activeTab === "merchant" && (
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/90 p-5 space-y-2">
-              <div className="flex items-center justify-between text-slate-400">
-                <span>Daily Sales</span>
-                <TrendingUp className="h-4 w-4 text-emerald-400" />
-              </div>
-              <div className="text-2xl font-bold text-white">12,500 MAD</div>
-              <div className="text-[11px] text-emerald-400">1250000 centimes</div>
-            </div>
+function LoadingScreen() {
+  return (
+    <main className="flex min-h-dvh items-center justify-center bg-background p-6">
+      <div role="status" className="text-center">
+        <span
+          aria-hidden="true"
+          className="mx-auto block h-10 w-10 animate-spin rounded-full border-4 border-brand-200 border-r-primary motion-reduce:animate-none"
+        />
+        <p className="mt-4 font-semibold text-foreground">Opening MIZAN Souq</p>
+        <p className="mt-1 text-sm text-foreground-muted">
+          Restoring your secure Firebase session…
+        </p>
+      </div>
+    </main>
+  );
+}
 
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/90 p-5 space-y-2">
-              <div className="flex items-center justify-between text-slate-400">
-                <span>Expenses</span>
-                <Receipt className="h-4 w-4 text-amber-400" />
-              </div>
-              <div className="text-2xl font-bold text-white">8,300 MAD</div>
-              <div className="text-[11px] text-slate-400">Confirmed purchases</div>
-            </div>
+function ApplicationLayout() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { user, organizationId, role, orgType, loading, signOut } = useAuth();
 
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/90 p-5 space-y-2">
-              <div className="flex items-center justify-between text-slate-400">
-                <span>Estimated Profit</span>
-                <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-              </div>
-              <div className="text-2xl font-bold text-emerald-400">4,200 MAD</div>
-              <div className="text-[11px] text-emerald-400/80">420000 centimes net</div>
-            </div>
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/90 p-5 space-y-2">
-              <div className="flex items-center justify-between text-slate-400">
-                <span>Available Cash</span>
-                <ShoppingBag className="h-4 w-4 text-teal-400" />
-              </div>
-              <div className="text-2xl font-bold text-white">6,100 MAD</div>
-              <div className="text-[11px] text-teal-400">Safe reorder cash</div>
-            </div>
-          </div>
-        )}
+  const supplierRoute = location.pathname.startsWith("/supplier");
+  const portal = supplierRoute
+    ? "supplier"
+    : location.pathname.startsWith("/merchant")
+      ? "merchant"
+      : orgType === "SUPPLIER"
+        ? "supplier"
+        : "merchant";
+  const navigation =
+    portal === "supplier" ? supplierNavigation : merchantNavigation;
+  const fallbackOrganization =
+    portal === "supplier" ? "Atlas Distribution" : "Grocery Store Berrechid";
 
-        {activeTab === "procurement" && (
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/90 p-6 space-y-4 text-xs">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+  return (
+    <AppShell
+      navigation={navigation}
+      activePath={location.pathname}
+      portal={portal}
+      organizationName={
+        user ? organizationId || fallbackOrganization : fallbackOrganization
+      }
+      role={user ? role : "DEMO PREVIEW"}
+      userName={user?.displayName || user?.email}
+      onNavigate={navigate}
+      onSignOut={
+        user
+          ? async () => {
+              await signOut();
+              navigate("/login");
+            }
+          : undefined
+      }
+    >
+      <Outlet />
+    </AppShell>
+  );
+}
+
+function SettingsPage() {
+  const { user, organizationId, orgType, role } = useAuth();
+  return (
+    <PageMotion>
+      <PageHeader
+        eyebrow="Workspace"
+        title="Settings"
+        description="Account and business context used by the MIZAN demo."
+      />
+      <div className="grid gap-6 lg:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Account</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <dl className="space-y-4 text-sm">
               <div>
-                <h3 className="text-sm font-bold text-white">Active Collective Order Opportunity</h3>
-                <p className="text-slate-400 text-[11px]">Combining nearby shop demand to unlock wholesale prices</p>
+                <dt className="text-foreground-muted">Name</dt>
+                <dd className="mt-1 font-semibold">
+                  {user?.displayName ?? "Demo preview user"}
+                </dd>
               </div>
-              <span className="rounded-full bg-emerald-500/10 px-2.5 py-1 text-emerald-400 font-semibold border border-emerald-500/30">
-                Saving 100 MAD (10000 centimes)
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="rounded-xl bg-slate-950 p-4 border border-slate-800">
-                <div className="text-slate-400 mb-1">Single Merchant Price</div>
-                <div className="text-lg font-bold text-red-400 line-through">22.00 MAD / unit</div>
-                <div className="text-[10px] text-slate-500">MOQ 10 | Delivery 30 MAD</div>
-              </div>
-              <div className="rounded-xl bg-emerald-950/30 p-4 border border-emerald-500/40">
-                <div className="text-emerald-400 mb-1">Collective Group Price</div>
-                <div className="text-lg font-bold text-emerald-300">18.50 MAD / unit</div>
-                <div className="text-[10px] text-emerald-400/80">MOQ 50 | Free Bulk Delivery</div>
-              </div>
-              <div className="rounded-xl bg-slate-950 p-4 border border-slate-800">
-                <div className="text-slate-400 mb-1">Combined Demand</div>
-                <div className="text-lg font-bold text-white">55 Units</div>
-                <div className="text-[10px] text-slate-400">20 your demand + 35 partners</div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {activeTab === "supplier" && (
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/90 p-6 space-y-4 text-xs">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
               <div>
-                <h3 className="text-sm font-bold text-white">Aggregated Demand Opportunities</h3>
-                <p className="text-slate-400 text-[11px]">Qualified consolidated demand without exposing merchant identities</p>
+                <dt className="text-foreground-muted">Email</dt>
+                <dd className="mt-1 font-semibold">
+                  {user?.email ?? "Not authenticated"}
+                </dd>
               </div>
-            </div>
-
-            <div className="rounded-xl border border-slate-800 bg-slate-950 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
-                <div className="font-bold text-white text-sm">Cooking oil 1L (55 Units)</div>
-                <div className="text-slate-400 text-[11px]">Location: Berrechid Center • 3 Merchants combined</div>
+                <dt className="text-foreground-muted">Role</dt>
+                <dd className="mt-1 font-semibold">{role}</dd>
               </div>
-              <button className="flex items-center gap-2 rounded-xl bg-amber-600 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-500 transition-all">
-                Submit Wholesale Quote <ArrowRight className="h-3.5 w-3.5" />
-              </button>
-            </div>
-          </div>
-        )}
-      </main>
-    </div>
+            </dl>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Business organization</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <dl className="space-y-4 text-sm">
+              <div>
+                <dt className="text-foreground-muted">Organization ID</dt>
+                <dd className="mt-1 font-semibold">
+                  {organizationId || "Synthetic preview organization"}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-foreground-muted">Portal type</dt>
+                <dd className="mt-1 flex items-center gap-2 font-semibold">
+                  {orgType === "SUPPLIER" ? (
+                    <Building2 className="h-4 w-4 text-primary" />
+                  ) : (
+                    <Store className="h-4 w-4 text-primary" />
+                  )}
+                  {orgType}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-foreground-muted">Demo language</dt>
+                <dd className="mt-1 font-semibold">
+                  English · Darija evidence supported
+                </dd>
+              </div>
+            </dl>
+          </CardContent>
+        </Card>
+      </div>
+    </PageMotion>
+  );
+}
+
+function NotFoundPage() {
+  const navigate = useNavigate();
+  return (
+    <EmptyState
+      title="This interface does not exist"
+      description="The link may be outdated or the page is outside the hackathon MVP."
+      action={
+        <Button onClick={() => navigate("/app")}>
+          Return to your dashboard
+        </Button>
+      }
+    />
+  );
+}
+
+function AppRoutes() {
+  return (
+    <Suspense fallback={<LoadingScreen />}>
+      <Routes>
+        <Route path="/login" element={<LoginRoute />} />
+        <Route path="/register" element={<LoginRoute mode="sign-up" />} />
+        <Route path="/app" element={<RoleRedirect />} />
+        <Route element={<ApplicationLayout />}>
+          <Route
+            path="/merchant/dashboard"
+            element={<MerchantDashboardPage />}
+          />
+          <Route
+            path="/merchant/evidence/new"
+            element={<EvidenceUploadPage />}
+          />
+          <Route
+            path="/merchant/ingestions/:ingestionId"
+            element={<IngestionReviewPage />}
+          />
+          <Route path="/merchant/transactions" element={<TransactionsPage />} />
+          <Route path="/merchant/inventory" element={<InventoryPage />} />
+          <Route
+            path="/merchant/procurement"
+            element={<ProcurementListPage />}
+          />
+          <Route
+            path="/merchant/procurement/:needId"
+            element={<ProcurementCockpitPage />}
+          />
+          <Route
+            path="/merchant/group-orders"
+            element={<GroupOrdersListPage />}
+          />
+          <Route
+            path="/merchant/group-orders/:groupOrderId"
+            element={<GroupOrderDetailPage />}
+          />
+          <Route
+            path="/supplier/dashboard"
+            element={<SupplierDashboardPage />}
+          />
+          <Route
+            path="/supplier/opportunities"
+            element={<SupplierOpportunitiesPage />}
+          />
+          <Route
+            path="/supplier/opportunities/:opportunityId"
+            element={<SupplierOpportunityDetailPage />}
+          />
+          <Route path="/supplier/catalog" element={<SupplierCatalogPage />} />
+          <Route path="/agent-runs/:agentRunId" element={<AgentRunPage />} />
+          <Route path="/demo/impact" element={<ImpactPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+        <Route path="/" element={<Navigate replace to="/app" />} />
+      </Routes>
+    </Suspense>
   );
 }
 
 export function App() {
   return (
-    <AuthProvider>
-      <MainDashboard />
-    </AuthProvider>
+    <AppProviders>
+      <AppRoutes />
+    </AppProviders>
   );
 }

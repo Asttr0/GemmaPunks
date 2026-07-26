@@ -3,7 +3,36 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
+  --color-brand-950: #03045e;
+  --color-brand-700: #0077b6;
+  --color-brand-500: #00b4d8;
+  --color-brand-200: #90e0ef;
+  --color-brand-100: #caf0f8;
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f1f5f9;
+  --color-foreground: #0f172a;
+  --color-foreground-muted: #475569;
+  --color-border: #cbd5e1;
+  --color-border-strong: #94a3b8;
+  --color-primary: #0077b6;
+  --color-primary-hover: #03045e;
+  --color-primary-subtle: #caf0f8;
+  --color-ai: #6d28d9;
+  --color-ai-subtle: #f5f3ff;
+  --color-success: #047857;
+  --color-success-subtle: #ecfdf5;
+  --color-warning: #b45309;
+  --color-warning-subtle: #fffbeb;
+  --color-danger: #b91c1c;
+  --color-danger-subtle: #fef2f2;
+  --color-info: #0369a1;
+  --color-info-subtle: #f0f9ff;
+  --color-focus: #0077b6;
+  --shadow-raised: 0 12px 30px rgb(15 23 42 / 0.08);
+  --shadow-dialog: 0 24px 60px rgb(15 23 42 / 0.2);
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
@@ -13,18 +42,48 @@
 }
 
 html {
-  background: #0f172a;
+  background: var(--color-background);
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100dvh;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family:
+    Inter,
+    "Noto Sans Arabic",
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-brand-100);
+  color: var(--color-brand-950);
 }
 
 button,
 a {
   touch-action: manipulation;
+}
+
+:where(button, a, input, select, textarea):focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
 }
 
 .skip-link {
@@ -33,11 +92,12 @@ a {
   top: 1rem;
   z-index: 100;
   transform: translateY(-200%);
-  border-radius: 0.5rem;
-  background: #f59e0b;
+  border-radius: 0.75rem;
+  background: var(--color-brand-950);
   padding: 0.75rem 1rem;
   font-weight: 700;
-  color: #0f172a;
+  color: white;
+  transition: transform 150ms ease-out;
 }
 
 .skip-link:focus {
@@ -54,4 +114,3 @@ a {
     animation-iteration-count: 1 !important;
   }
 }
-

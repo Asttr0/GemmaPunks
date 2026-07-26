@@ -20,7 +20,9 @@ export interface UserAuthContext {
   demoSignIn: (role: "merchant" | "supplier") => Promise<void>;
 }
 
-export const AuthContext = createContext<UserAuthContext | undefined>(undefined);
+export const AuthContext = createContext<UserAuthContext | undefined>(
+  undefined,
+);
 
 export const useAuth = (): UserAuthContext => {
   const context = useContext(AuthContext);
