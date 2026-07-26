@@ -1,27 +1,42 @@
 import os
 import uuid
 
+import httpx
 import pytest
-from fastapi.testclient import TestClient
 
 from app.core.firebase import get_firestore_client
 from app.main import app
 
-pytestmark = pytest.mark.skipif(
-    not os.getenv("FIRESTORE_EMULATOR_HOST"),
-    reason="Firestore emulator is required",
-)
+pytestmark = [
+    pytest.mark.asyncio,
+    pytest.mark.skipif(
+        not os.getenv("FIRESTORE_EMULATOR_HOST"),
+        reason="Firestore emulator is required",
+    ),
+]
 
 
-def test_firestore_ingestion_confirmation_is_atomic_and_idempotent():
-    client = TestClient(app)
+async def test_firestore_ingestion_confirmation_is_atomic_and_idempotent():
+    transport = httpx.ASGITransport(app=app)
+    client = httpx.AsyncClient(transport=transport, base_url="http://test")
     firestore = get_firestore_client()
     organization_id = f"merchant-ingestion-{uuid.uuid4().hex[:8]}"
     auth = {
         "Authorization": f"Bearer test_token_ingestion-user_{organization_id}",
     }
+    firestore.collection("organizations").document(organization_id).set(
+        {
+            "name": "Atomic Ingestion Test Merchant",
+            "type": "MERCHANT",
+            "status": "ACTIVE",
+            "city": "Berrechid",
+            "coarse_area": "Berrechid Centre",
+            "currency": "MAD",
+            "opening_cash_centimes": 0,
+        }
+    )
 
-    upload = client.post(
+    upload = await client.post(
         "/api/v1/ingestions",
         files={"file": ("receipt.jpg", b"synthetic receipt", "image/jpeg")},
         data={"kind": "receipt"},
@@ -44,7 +59,7 @@ def test_firestore_ingestion_confirmation_is_atomic_and_idempotent():
     assert document_snapshot.to_dict()["evidence_retained"] is False
     assert "file_bytes" not in document_snapshot.to_dict()
 
-    cross_organization = client.get(
+    cross_organization = await client.get(
         f"/api/v1/ingestions/{ingestion['id']}",
         headers={"Authorization": ("Bearer test_token_other-user_merchant-other-organization")},
     )
@@ -56,7 +71,7 @@ def test_firestore_ingestion_confirmation_is_atomic_and_idempotent():
         "draft": ingestion["draft"],
     }
     idempotency_key = f"confirm-{ingestion['id']}"
-    confirmation = client.post(
+    confirmation = await client.post(
         f"/api/v1/ingestions/{ingestion['id']}/confirm",
         json=payload,
         headers={**auth, "Idempotency-Key": idempotency_key},
@@ -86,7 +101,7 @@ def test_firestore_ingestion_confirmation_is_atomic_and_idempotent():
     assert len(list(organization_ref.collection("inventory_movements").stream())) == 2
     assert len(list(organization_ref.collection("approvals").stream())) == 1
 
-    repeated = client.post(
+    repeated = await client.post(
         f"/api/v1/ingestions/{ingestion['id']}/confirm",
         json=payload,
         headers={**auth, "Idempotency-Key": idempotency_key},
@@ -105,10 +120,11 @@ def test_firestore_ingestion_confirmation_is_atomic_and_idempotent():
         },
     }
     changed_payload["draft"]["lines"][0]["quantity"] = 21
-    conflict = client.post(
+    conflict = await client.post(
         f"/api/v1/ingestions/{ingestion['id']}/confirm",
         json=changed_payload,
         headers={**auth, "Idempotency-Key": idempotency_key},
     )
     assert conflict.status_code == 409
     assert len(list(organization_ref.collection("transactions").stream())) == 1
+    await client.aclose()

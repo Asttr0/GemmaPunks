@@ -125,7 +125,7 @@ def test_confirm_draft_and_idempotency():
     transactions_before = len(db_store.transactions.get(organization_id, {}))
     movements_before = len(db_store.inventory_movements.get(organization_id, []))
     approvals_before = len(db_store.approvals.get(organization_id, []))
-    stock_before = db_store.inventory_items.get(organization_id, {}).get("cooking_oil_1l")
+    stock_before = db_store.inventory_items.get(organization_id, {}).get("cooking-oil-1l")
     oil_quantity_before = stock_before.quantity_on_hand if stock_before else 0
 
     confirm_res = client.post(
@@ -157,7 +157,7 @@ def test_confirm_draft_and_idempotency():
     assert len(db_store.inventory_movements[organization_id]) == movements_before + 2
     assert len(db_store.approvals[organization_id]) == approvals_before + 1
     assert (
-        db_store.inventory_items[organization_id]["cooking_oil_1l"].quantity_on_hand
+        db_store.inventory_items[organization_id]["cooking-oil-1l"].quantity_on_hand
         == oil_quantity_before + 20
     )
 
@@ -222,9 +222,9 @@ def test_failed_confirmation_does_not_partially_write():
     draft = upload_res["draft"]
     draft["transaction_kind"] = "sale"
     draft["lines"][0]["quantity"] = 1_000_000
-    transaction_count = len(db_store.transactions.get("org01", {}))
-    movement_count = len(db_store.inventory_movements.get("org01", []))
-    approval_count = len(db_store.approvals.get("org01", []))
+    transaction_count = len(db_store.transactions.get("merchant-berrechid", {}))
+    movement_count = len(db_store.inventory_movements.get("merchant-berrechid", []))
+    approval_count = len(db_store.approvals.get("merchant-berrechid", []))
 
     response = client.post(
         f"/api/v1/ingestions/{upload_res['id']}/confirm",
@@ -237,9 +237,9 @@ def test_failed_confirmation_does_not_partially_write():
 
     assert response.status_code == 409
     assert "Insufficient stock" in response.json()["detail"]
-    assert len(db_store.transactions.get("org01", {})) == transaction_count
-    assert len(db_store.inventory_movements.get("org01", [])) == movement_count
-    assert len(db_store.approvals.get("org01", [])) == approval_count
+    assert len(db_store.transactions.get("merchant-berrechid", {})) == transaction_count
+    assert len(db_store.inventory_movements.get("merchant-berrechid", [])) == movement_count
+    assert len(db_store.approvals.get("merchant-berrechid", [])) == approval_count
     current = client.get(
         f"/api/v1/ingestions/{upload_res['id']}",
         headers=auth_org_one,

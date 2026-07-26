@@ -60,6 +60,7 @@ class Organization(BaseModel):
     city: str = "Berrechid"
     coarse_area: str = "Berrechid Center"
     currency: str = "MAD"
+    opening_cash_centimes: int = Field(default=0, ge=0)
     created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
     updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
@@ -117,6 +118,8 @@ class InventoryItem(BaseModel):
     unit: str = "BOTTLE"
     quantity_on_hand: float = 0.0
     average_daily_sales: float | None = None
+    sales_history_days: int = Field(default=0, ge=0)
+    selling_price_centimes: int = Field(default=0, ge=0)
     target_stock_quantity: float = 34.0
     low_stock_threshold: float = 20.0
     status: Literal["HEALTHY", "LOW_STOCK", "OUT_OF_STOCK"] = "HEALTHY"
@@ -165,11 +168,20 @@ class ProcurementNeed(BaseModel):
     quantity_needed: float
     stock_on_hand: float | None = None
     average_daily_sales: float | None = None
+    sales_history_days: int = 0
     days_remaining: int | None = None
     target_stock_quantity: float | None = None
     status: Literal["OPEN", "MATCHED", "ORDERED", "CANCELLED"] = "OPEN"
     coarse_area: str = "Berrechid Center"
     stockout_at: datetime | None = None
+    forecast_status: Literal[
+        "FORECAST",
+        "OUT_OF_STOCK",
+        "NO_DEMAND",
+        "INSUFFICIENT_HISTORY",
+    ] = "FORECAST"
+    explanation: str = ""
+    uncertainty_note: str | None = None
     needed_by: datetime = Field(default_factory=lambda: datetime.now(UTC))
     created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
     updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
@@ -187,11 +199,16 @@ class Offer(BaseModel):
     unit_price_centimes: int
     minimum_quantity: float
     delivery_fee_centimes: int
+    product_cost_centimes: int = 0
     landed_cost_centimes: int
+    landed_unit_cost_centimes: int = 0
+    expected_unit_margin_centimes: int | None = None
+    delivery_days: int = 1
     eligible_alone: bool = True
     affordable: bool = True
     status: Literal["AVAILABLE_NOW", "GROUP_ONLY", "REJECTED"] = "AVAILABLE_NOW"
     rejection_reasons: list[str] = Field(default_factory=list)
+    explanation: str = ""
     created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
     updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
@@ -238,6 +255,7 @@ class GroupOrder(BaseModel):
 
 class SupplierOpportunity(BaseModel):
     opportunity_id: str
+    supplier_organization_id: str = ""
     product_id: str
     unit: str = "BOTTLE"
     total_quantity: float

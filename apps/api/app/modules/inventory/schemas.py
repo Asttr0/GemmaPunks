@@ -27,7 +27,10 @@ class InventoryMovement(BaseModel):
 class InventoryItemResponse(BaseModel):
     product_id: str
     name: str
-    quantity_on_hand: int
+    unit: str
+    quantity_on_hand: float
+    low_stock_threshold: float
+    status: Literal["HEALTHY", "LOW_STOCK", "OUT_OF_STOCK"]
     low_stock: bool = False
     predicted_stockout_at: datetime | None = None
 

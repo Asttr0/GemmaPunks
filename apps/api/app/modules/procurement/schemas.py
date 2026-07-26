@@ -6,7 +6,7 @@ from app.core.models import Offer, SupplierCatalogItem
 class GenerateProcurementNeedRequest(BaseModel):
     product_id: str = "cooking-oil-1l"
     unit: str = "BOTTLE"
-    target_stock: float = 34.0
+    target_stock: float | None = Field(default=None, gt=0)
 
 
 class SupplierSearchResponse(BaseModel):
@@ -15,7 +15,7 @@ class SupplierSearchResponse(BaseModel):
 
 class OfferCompareRequest(BaseModel):
     procurement_need_id: str
-    quantity: float = 20.0
+    quantity: float | None = Field(default=None, gt=0)
 
 
 class OfferCompareResponse(BaseModel):

@@ -10,6 +10,7 @@ requires-python = ">=3.12,<3.15"
 dependencies = [
   "fastapi>=0.115,<1",
   "firebase-admin>=6.8,<8",
+  "google-genai>=1.0,<2",
   "httpx>=0.28,<1",
   "pydantic>=2.10,<3",
   "pydantic-settings>=2.7,<3",

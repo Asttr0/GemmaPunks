@@ -211,7 +211,7 @@ Firebase IDs and does not return an organization ID.
     "currency": "MAD",
     "lines": [
       {
-        "product_id": "cooking_oil_1l",
+        "product_id": "cooking-oil-1l",
         "product_name": "Cooking oil 1L",
         "unit": "bottle",
         "quantity": 20,
@@ -221,7 +221,7 @@ Firebase IDs and does not return an organization ID.
         "uncertain_fields": []
       },
       {
-        "product_id": "sugar_1kg",
+        "product_id": "sugar-1kg",
         "product_name": "Sugar 1kg",
         "unit": "bag",
         "quantity": 10,

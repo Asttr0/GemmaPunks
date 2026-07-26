@@ -1,3 +1,5 @@
+from pathlib import PurePath
+
 from app.modules.ai.providers.base import ExtractionProvider
 from app.modules.ai.schemas.extraction import (
     AgentTimelineEvent,
@@ -7,7 +9,32 @@ from app.modules.ai.schemas.extraction import (
 )
 
 
+class UnsupportedFixtureError(ValueError):
+    pass
+
+
 class FixtureProvider(ExtractionProvider):
+    APPROVED_RECEIPT_NAMES = {
+        "receipt.jpg",
+        "receipt.jpeg",
+        "receipt.png",
+        "demo-receipt.jpg",
+        "synthetic-purchase-receipt.jpg",
+    }
+    APPROVED_AUDIO_NAMES = {
+        "voice.mp3",
+        "voice.wav",
+        "demo-sales-note.wav",
+        "sales-note.mp3",
+    }
+
+    @classmethod
+    def supports(cls, original_name: str, evidence_kind: str) -> bool:
+        safe_name = PurePath(original_name).name.casefold()
+        if evidence_kind == "audio":
+            return safe_name in cls.APPROVED_AUDIO_NAMES
+        return safe_name in cls.APPROVED_RECEIPT_NAMES
+
     async def extract_evidence(
         self,
         file_bytes: bytes,
@@ -16,41 +43,74 @@ class FixtureProvider(ExtractionProvider):
         evidence_kind: str = "receipt",
         safe_product_context: list[dict] | None = None,
     ) -> ExtractionResult:
-        draft_lines = [
-            DraftLine(
-                line_id="line_001",
-                product_id="cooking_oil_1l",
-                product_name="Cooking oil 1L",
-                unit="bottle",
-                quantity=20,
-                unit_price_centimes=2200,
-                line_total_centimes=44000,
-                confidence=0.99,
-                uncertain_fields=[],
-            ),
-            DraftLine(
-                line_id="line_002",
-                product_id="sugar_1kg",
-                product_name="Sugar 1kg",
-                unit="bag",
-                quantity=10,
-                unit_price_centimes=850,
-                line_total_centimes=8500,
-                confidence=0.64,
-                uncertain_fields=["quantity"],
-            ),
-        ]
+        if not self.supports(original_name, evidence_kind):
+            raise UnsupportedFixtureError("No approved fixture exists for this evidence file")
+
+        if evidence_kind == "audio":
+            draft_lines = [
+                DraftLine(
+                    line_id="line-001",
+                    product_id="cooking-oil-1l",
+                    product_name="Cooking oil 1L",
+                    unit="bottle",
+                    quantity=4,
+                    unit_price_centimes=2800,
+                    line_total_centimes=11200,
+                    confidence=0.96,
+                    uncertain_fields=[],
+                ),
+                DraftLine(
+                    line_id="line-002",
+                    product_id="sugar-1kg",
+                    product_name="Sugar 1kg",
+                    unit="bag",
+                    quantity=3,
+                    unit_price_centimes=1200,
+                    line_total_centimes=3600,
+                    confidence=0.67,
+                    uncertain_fields=["quantity"],
+                ),
+            ]
+            transaction_kind = "sale"
+            clarification = "Did you say 3 bags of sugar?"
+        else:
+            draft_lines = [
+                DraftLine(
+                    line_id="line-001",
+                    product_id="cooking-oil-1l",
+                    product_name="Cooking oil 1L",
+                    unit="bottle",
+                    quantity=20,
+                    unit_price_centimes=2200,
+                    line_total_centimes=44000,
+                    confidence=0.99,
+                    uncertain_fields=[],
+                ),
+                DraftLine(
+                    line_id="line-002",
+                    product_id="sugar-1kg",
+                    product_name="Sugar 1kg",
+                    unit="bag",
+                    quantity=10,
+                    unit_price_centimes=850,
+                    line_total_centimes=8500,
+                    confidence=0.64,
+                    uncertain_fields=["quantity"],
+                ),
+            ]
+            transaction_kind = "purchase"
+            clarification = "Was the sugar quantity 10 bags?"
 
         total_centimes = sum(line.line_total_centimes for line in draft_lines)
 
         draft = ExtractionDraft(
             id="draft_fixture_001",
             version=1,
-            transaction_kind="purchase",
+            transaction_kind=transaction_kind,
             currency="MAD",
             lines=draft_lines,
             total_centimes=total_centimes,
-            clarification_question="Was the sugar quantity 10 bags?",
+            clarification_question=clarification,
         )
 
         timeline = [

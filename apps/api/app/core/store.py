@@ -94,6 +94,7 @@ class DataStore:
             type="MERCHANT",
             city="Berrechid",
             coarse_area="Berrechid Center",
+            opening_cash_centimes=600000,
         )
         self.organizations[s_org] = Organization(
             organization_id=s_org,
@@ -102,6 +103,24 @@ class DataStore:
             city="Berrechid",
             coarse_area="Berrechid Center",
         )
+        self.organizations["supplier-chawia"] = Organization(
+            organization_id="supplier-chawia",
+            name="Chawia Distribution",
+            type="SUPPLIER",
+            city="Berrechid",
+            coarse_area="Berrechid Center",
+        )
+        for partner_id, partner_name in (
+            ("merchant-partner-a", "Partner Grocery A"),
+            ("merchant-partner-b", "Partner Grocery B"),
+        ):
+            self.organizations[partner_id] = Organization(
+                organization_id=partner_id,
+                name=partner_name,
+                type="MERCHANT",
+                city="Berrechid",
+                coarse_area="Berrechid Center",
+            )
         self.memberships[m_org] = [
             Membership(
                 organization_id=m_org,
@@ -144,6 +163,8 @@ class DataStore:
                 unit="BOTTLE",
                 quantity_on_hand=14.0,
                 average_daily_sales=3.5,
+                sales_history_days=7,
+                selling_price_centimes=2800,
                 target_stock_quantity=34.0,
                 low_stock_threshold=20.0,
                 status="LOW_STOCK",
@@ -155,6 +176,8 @@ class DataStore:
                 unit="BAG",
                 quantity_on_hand=35.0,
                 average_daily_sales=2.0,
+                sales_history_days=7,
+                selling_price_centimes=1200,
                 target_stock_quantity=40.0,
                 low_stock_threshold=15.0,
                 status="HEALTHY",
@@ -244,6 +267,30 @@ class DataStore:
             needed_by=now + timedelta(days=4),
         )
         self.procurement_needs[m_org] = [need_001]
+        self.procurement_needs["merchant-partner-a"] = [
+            ProcurementNeed(
+                need_id="need-oil-partner-a",
+                organization_id="merchant-partner-a",
+                product_id="cooking-oil-1l",
+                unit="BOTTLE",
+                quantity_needed=15,
+                status="OPEN",
+                coarse_area="Berrechid Center",
+                needed_by=now + timedelta(days=4),
+            )
+        ]
+        self.procurement_needs["merchant-partner-b"] = [
+            ProcurementNeed(
+                need_id="need-oil-partner-b",
+                organization_id="merchant-partner-b",
+                product_id="cooking-oil-1l",
+                unit="BOTTLE",
+                quantity_needed=20,
+                status="OPEN",
+                coarse_area="Berrechid Center",
+                needed_by=now + timedelta(days=4),
+            )
+        ]
 
         # 6. Supplier Offers
         self.offers[m_org] = [
@@ -301,8 +348,8 @@ class DataStore:
             delivery_total_centimes=0,
             participant_organization_ids=[
                 m_org,
-                "merchant-chawia-grocery",
-                "merchant-berrechid-snack",
+                "merchant-partner-a",
+                "merchant-partner-b",
             ],
             coarse_area="Berrechid Center",
             join_deadline=now + timedelta(days=2),
@@ -328,6 +375,7 @@ class DataStore:
         # 8. Supplier Opportunity
         self.supplier_opportunities["opp-oil-001"] = SupplierOpportunity(
             opportunity_id="opp-oil-001",
+            supplier_organization_id=s_org,
             product_id="cooking-oil-1l",
             unit="BOTTLE",
             total_quantity=55.0,

@@ -9,7 +9,10 @@ from app.modules.procurement.schemas import (
     OfferCompareResponse,
     SupplierSearchResponse,
 )
-from app.modules.procurement.service import ProcurementService
+from app.modules.procurement.service import (
+    ProcurementService,
+    procurement_service_dependency,
+)
 
 router = APIRouter(tags=["procurement"])
 
@@ -18,26 +21,29 @@ router = APIRouter(tags=["procurement"])
 async def generate_procurement_need(
     req: GenerateProcurementNeedRequest,
     user: UserContext = Depends(get_current_user),
+    service: ProcurementService = Depends(procurement_service_dependency),
 ) -> ProcurementNeed:
     """Predict stockout and generate a procurement need for the merchant."""
-    return ProcurementService.generate_need(user, req)
+    return service.generate_need(user, req)
 
 
 @router.get("/api/v1/procurement-needs", response_model=list[ProcurementNeed])
 async def list_procurement_needs(
     user: UserContext = Depends(get_current_user),
+    service: ProcurementService = Depends(procurement_service_dependency),
 ) -> list[ProcurementNeed]:
     """List open procurement needs owned by the merchant organization."""
-    return ProcurementService.list_needs(user)
+    return service.list_needs(user)
 
 
 @router.get("/api/v1/suppliers/search", response_model=SupplierSearchResponse)
 async def search_suppliers(
     product_id: str | None = Query(None),
     user: UserContext = Depends(get_current_user),
+    service: ProcurementService = Depends(procurement_service_dependency),
 ) -> SupplierSearchResponse:
     """Search supplier catalog items matching product criteria."""
-    items = ProcurementService.search_suppliers(product_id)
+    items = service.search_suppliers(user, product_id)
     return SupplierSearchResponse(items=items)
 
 
@@ -45,6 +51,7 @@ async def search_suppliers(
 async def compare_offers(
     req: OfferCompareRequest,
     user: UserContext = Depends(get_current_user),
+    service: ProcurementService = Depends(procurement_service_dependency),
 ) -> OfferCompareResponse:
     """Compare supplier offers and group order opportunities for a procurement need."""
-    return ProcurementService.compare_offers(user, req)
+    return service.compare_offers(user, req)

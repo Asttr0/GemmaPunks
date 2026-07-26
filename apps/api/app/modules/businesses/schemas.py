@@ -1,18 +1,20 @@
+from datetime import datetime
+
 from pydantic import BaseModel, Field
 
 from app.core.models import SupplierOpportunity
 
 
 class DashboardKPIs(BaseModel):
-    sales_centimes: int = 1250000
-    expenses_centimes: int = 830000
-    estimated_profit_centimes: int = 420000
-    available_cash_centimes: int = 610000
+    sales_centimes: int
+    expenses_centimes: int
+    estimated_profit_centimes: int
+    available_cash_centimes: int
 
 
 class InventorySummary(BaseModel):
-    product_count: int = 18
-    low_stock_count: int = 1
+    product_count: int
+    low_stock_count: int
 
 
 class DashboardAlert(BaseModel):
@@ -31,6 +33,7 @@ class DashboardResponse(BaseModel):
     inventory: InventorySummary
     alerts: list[DashboardAlert] = Field(default_factory=list)
     next_action: DashboardNextAction | None = None
+    generated_at: datetime
 
 
 # Supplier Portal Schemas

@@ -1,9 +1,14 @@
-import uuid
+import hashlib
 from datetime import UTC, datetime, timedelta
+from decimal import ROUND_HALF_UP, Decimal
 
+from fastapi import HTTPException, status
+
+from app.core.business_repository import BusinessRepository, get_business_repository
 from app.core.models import Offer, ProcurementNeed, SupplierCatalogItem
-from app.core.store import db_store
 from app.modules.auth.schemas import UserContext
+from app.modules.businesses.service import build_merchant_dashboard
+from app.modules.procurement.forecasting import forecast_stockout
 from app.modules.procurement.schemas import (
     GenerateProcurementNeedRequest,
     OfferCompareRequest,
@@ -11,111 +16,251 @@ from app.modules.procurement.schemas import (
 )
 
 
-class ProcurementService:
-    @staticmethod
-    def generate_need(user: UserContext, req: GenerateProcurementNeedRequest) -> ProcurementNeed:
-        org_id = user.organization_id
-        need_id = f"need-{uuid.uuid4().hex[:8]}"
-        now = datetime.now(UTC)
+def _money(quantity: float, unit_centimes: int) -> int:
+    return int(
+        (Decimal(str(quantity)) * Decimal(unit_centimes)).quantize(
+            Decimal("1"),
+            rounding=ROUND_HALF_UP,
+        )
+    )
 
+
+class ProcurementService:
+    def __init__(self, repository: BusinessRepository):
+        self.repository = repository
+
+    def generate_need(
+        self,
+        user: UserContext,
+        req: GenerateProcurementNeedRequest,
+    ) -> ProcurementNeed:
+        organization = self.repository.get_organization(user.organization_id)
+        if organization is None or organization.type != "MERCHANT":
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Merchant organization required",
+            )
+        item = self.repository.get_inventory_item(user.organization_id, req.product_id)
+        if item is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Inventory item not found",
+            )
+        if item.unit.casefold() != req.unit.casefold():
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"Requested unit must be {item.unit}",
+            )
+
+        target_stock = (
+            req.target_stock if req.target_stock is not None else item.target_stock_quantity
+        )
+        forecast = forecast_stockout(
+            stock_on_hand=item.quantity_on_hand,
+            average_daily_sales=item.average_daily_sales,
+            sales_history_days=item.sales_history_days,
+            target_stock_quantity=target_stock,
+        )
+        now = datetime.now(UTC)
+        existing = next(
+            (
+                need
+                for need in self.repository.list_procurement_needs(user.organization_id)
+                if need.product_id == item.product_id and need.status == "OPEN"
+            ),
+            None,
+        )
+        need_id = existing.need_id if existing else f"need-{item.product_id}"
+        stockout_at = (
+            now + timedelta(days=forecast.days_remaining)
+            if forecast.days_remaining is not None
+            else None
+        )
         need = ProcurementNeed(
             need_id=need_id,
-            organization_id=org_id,
-            product_id=req.product_id,
-            unit=req.unit,
-            quantity_needed=20.0,
-            stock_on_hand=14.0,
-            average_daily_sales=3.5,
-            days_remaining=4,
-            target_stock_quantity=req.target_stock,
+            organization_id=user.organization_id,
+            product_id=item.product_id,
+            unit=item.unit,
+            quantity_needed=forecast.quantity_needed,
+            stock_on_hand=item.quantity_on_hand,
+            average_daily_sales=item.average_daily_sales,
+            sales_history_days=item.sales_history_days,
+            days_remaining=forecast.days_remaining,
+            target_stock_quantity=target_stock,
             status="OPEN",
-            coarse_area="Berrechid Center",
-            stockout_at=now + timedelta(days=4),
-            needed_by=now + timedelta(days=4),
+            coarse_area=organization.coarse_area,
+            stockout_at=stockout_at,
+            forecast_status=forecast.status,
+            explanation=forecast.explanation,
+            uncertainty_note=forecast.uncertainty_note,
+            needed_by=stockout_at or now + timedelta(days=7),
+            created_at=existing.created_at if existing else now,
+            updated_at=now,
         )
-
-        if org_id not in db_store.procurement_needs:
-            db_store.procurement_needs[org_id] = []
-        db_store.procurement_needs[org_id].append(need)
+        self.repository.save_procurement_need(need)
         return need
 
-    @staticmethod
-    def list_needs(user: UserContext) -> list[ProcurementNeed]:
-        return db_store.procurement_needs.get(user.organization_id, [])
+    def list_needs(self, user: UserContext) -> list[ProcurementNeed]:
+        return self.repository.list_procurement_needs(user.organization_id)
 
-    @staticmethod
-    def search_suppliers(product_id: str | None = None) -> list[SupplierCatalogItem]:
-        results = []
-        for cat_list in db_store.catalog_items.values():
-            for item in cat_list:
-                if (
-                    not product_id
-                    or item.product_id == product_id
-                    or item.product_id == "cooking_oil_1l"
-                ):
-                    results.append(item)
-        return results
+    def search_suppliers(
+        self,
+        user: UserContext,
+        product_id: str | None = None,
+    ) -> list[SupplierCatalogItem]:
+        organization = self.repository.get_organization(user.organization_id)
+        if organization is None or organization.type != "MERCHANT":
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Merchant organization required",
+            )
+        area = organization.coarse_area.casefold()
+        return [
+            item
+            for item in self.repository.list_catalog_items(product_id)
+            if area in {service_area.casefold() for service_area in item.service_areas}
+        ]
 
-    @staticmethod
-    def compare_offers(user: UserContext, req: OfferCompareRequest) -> OfferCompareResponse:
-        need = None
-        for n in db_store.procurement_needs.get(user.organization_id, []):
-            if n.need_id == req.procurement_need_id:
-                need = n
-                break
+    def compare_offers(
+        self,
+        user: UserContext,
+        req: OfferCompareRequest,
+    ) -> OfferCompareResponse:
+        need = self.repository.get_procurement_need(
+            user.organization_id,
+            req.procurement_need_id,
+        )
+        if need is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Procurement need not found",
+            )
+        inventory_item = self.repository.get_inventory_item(
+            user.organization_id,
+            need.product_id,
+        )
+        quantity = req.quantity if req.quantity is not None else need.quantity_needed
+        if quantity <= 0:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail="Quantity must be greater than zero",
+            )
+        available_cash = build_merchant_dashboard(
+            self.repository,
+            user.organization_id,
+        ).kpis.available_cash_centimes
+        now = datetime.now(UTC)
 
-        qty = req.quantity if req.quantity > 0 else (need.quantity_needed if need else 20.0)
-        catalog_items = ProcurementService.search_suppliers("cooking-oil-1l")
+        available_now: list[Offer] = []
+        group_candidates: list[Offer] = []
+        rejected: list[Offer] = []
+        for item in self.repository.list_catalog_items(need.product_id):
+            reasons: list[str] = []
+            if item.unit.casefold() != need.unit.casefold():
+                reasons.append("UNIT_MISMATCH")
+            if need.coarse_area.casefold() not in {area.casefold() for area in item.service_areas}:
+                reasons.append("AREA_NOT_SERVED")
+            if item.available_quantity < quantity:
+                reasons.append("INSUFFICIENT_SUPPLIER_STOCK")
+            if now + timedelta(days=item.delivery_days) > need.needed_by:
+                reasons.append("DELIVERY_AFTER_NEEDED_BY")
 
-        available_now = []
-        group_opportunity = None
-        rejected = []
-
-        for item in catalog_items:
-            unit_price = item.unit_price_centimes
-            delivery_fee = item.delivery_fee_centimes
-            landed_cost = int(qty * unit_price + delivery_fee)
-            eligible_alone = qty >= item.minimum_quantity
-
-            offer_id = f"off-{uuid.uuid4().hex[:8]}"
-            rejection_reasons = []
-            if not eligible_alone:
-                rejection_reasons.append(
-                    f"Minimum order quantity {item.minimum_quantity} not met by "
-                    f"single merchant demand {qty}"
+            product_cost = _money(quantity, item.unit_price_centimes)
+            landed_cost = product_cost + item.delivery_fee_centimes
+            landed_unit = int(
+                (Decimal(landed_cost) / Decimal(str(quantity))).quantize(
+                    Decimal("1"),
+                    rounding=ROUND_HALF_UP,
                 )
+            )
+            eligible_alone = quantity >= item.minimum_quantity
+            affordable = landed_cost <= available_cash
+            expected_margin = (
+                inventory_item.selling_price_centimes - landed_unit
+                if inventory_item and inventory_item.selling_price_centimes > 0
+                else None
+            )
+            if not eligible_alone:
+                reasons.append("MINIMUM_QUANTITY_NOT_MET")
 
+            status_value = (
+                "REJECTED"
+                if any(
+                    reason
+                    in {
+                        "UNIT_MISMATCH",
+                        "AREA_NOT_SERVED",
+                        "INSUFFICIENT_SUPPLIER_STOCK",
+                        "DELIVERY_AFTER_NEEDED_BY",
+                    }
+                    for reason in reasons
+                )
+                else "GROUP_ONLY"
+                if not eligible_alone
+                else "AVAILABLE_NOW"
+            )
+            explanation = (
+                f"{quantity:g} × {item.unit_price_centimes} centimes plus "
+                f"{item.delivery_fee_centimes} delivery = {landed_cost} centimes. "
+                f"Cash available: {available_cash} centimes. "
+                f"MOQ: {item.minimum_quantity:g}; delivery: {item.delivery_days} day(s)."
+            )
+            offer_key = f"{user.organization_id}:{need.need_id}:{item.catalog_item_id}:{quantity:g}"
             offer = Offer(
-                offer_id=offer_id,
+                offer_id=f"offer-{hashlib.sha256(offer_key.encode()).hexdigest()[:16]}",
                 organization_id=user.organization_id,
-                procurement_need_id=req.procurement_need_id,
+                procurement_need_id=need.need_id,
                 supplier_organization_id=item.organization_id,
                 catalog_item_id=item.catalog_item_id,
                 product_id=item.product_id,
                 unit=item.unit,
-                requested_quantity=qty,
-                unit_price_centimes=unit_price,
+                requested_quantity=quantity,
+                unit_price_centimes=item.unit_price_centimes,
                 minimum_quantity=item.minimum_quantity,
-                delivery_fee_centimes=delivery_fee,
+                delivery_fee_centimes=item.delivery_fee_centimes,
+                product_cost_centimes=product_cost,
                 landed_cost_centimes=landed_cost,
+                landed_unit_cost_centimes=landed_unit,
+                expected_unit_margin_centimes=expected_margin,
+                delivery_days=item.delivery_days,
                 eligible_alone=eligible_alone,
-                affordable=True,
-                status="AVAILABLE_NOW" if eligible_alone else "GROUP_ONLY",
-                rejection_reasons=rejection_reasons,
+                affordable=affordable,
+                status=status_value,
+                rejection_reasons=reasons,
+                explanation=explanation,
+                created_at=now,
+                updated_at=now,
+            )
+            if offer.status == "REJECTED":
+                rejected.append(offer)
+            elif offer.status == "GROUP_ONLY":
+                group_candidates.append(offer)
+            else:
+                available_now.append(offer)
+
+        def rank_key(offer: Offer):
+            return (
+                not offer.affordable,
+                offer.landed_cost_centimes,
+                offer.delivery_days,
+                offer.supplier_organization_id,
             )
 
-            if eligible_alone:
-                available_now.append(offer)
-            else:
-                if (
-                    not group_opportunity
-                    or offer.unit_price_centimes < group_opportunity.unit_price_centimes
-                ):
-                    group_opportunity = offer
-
-        available_now.sort(key=lambda o: o.landed_cost_centimes)
+        available_now.sort(key=rank_key)
+        group_candidates.sort(key=rank_key)
+        rejected.sort(key=lambda offer: offer.supplier_organization_id)
+        all_offers = [*available_now, *group_candidates, *rejected]
+        self.repository.save_offers(user.organization_id, all_offers)
         return OfferCompareResponse(
             available_now=available_now,
-            group_opportunity=group_opportunity,
+            group_opportunity=group_candidates[0] if group_candidates else None,
             rejected=rejected,
         )
+
+
+def get_procurement_service() -> ProcurementService:
+    return ProcurementService(get_business_repository())
+
+
+async def procurement_service_dependency() -> ProcurementService:
+    return get_procurement_service()

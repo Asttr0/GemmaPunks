@@ -5,7 +5,7 @@ from app.main import app
 client = TestClient(app)
 
 auth_merchant = {"Authorization": "Bearer test_token_merchant_merchant-berrechid"}
-auth_other_merchant = {"Authorization": "Bearer test_token_other_merchant-casablanca"}
+auth_other_merchant = {"Authorization": "Bearer test_token_other_merchant-partner-a"}
 auth_supplier = {"Authorization": "Bearer test_token_supplier_supplier-atlas"}
 
 
@@ -84,7 +84,7 @@ def test_group_order_join_and_approve_flow():
     )
     assert approve_res.status_code == 200
     app_data = approve_res.json()
-    assert app_data["group_order"]["status"] == "APPROVED"
+    assert app_data["group_order"]["status"] == "OPEN"
     assert app_data["member"]["status"] == "APPROVED"
     assert app_data["member"]["approved_by"] == "merchant"
 
