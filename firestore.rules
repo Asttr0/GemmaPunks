@@ -114,7 +114,8 @@ service cloud.firestore {
     // Contains product, quantity, coarse area, and deadline only—never merchant
     // identity, revenue, cash, sales history, or exact coordinates.
     match /supplier_opportunities/{opportunityId} {
-      allow read: if isSupplier();
+      allow read: if isSupplier()
+        && resource.data.supplier_organization_id == claimedOrganizationId();
       allow write: if false;
     }
 

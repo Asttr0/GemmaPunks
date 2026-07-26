@@ -270,6 +270,23 @@ async function writeDocuments(database, documents) {
   }
 }
 
+async function resetEmulator(database, authClient) {
+  const collections = await database.listCollections();
+  for (const collection of collections) {
+    await database.recursiveDelete(collection);
+  }
+
+  let pageToken;
+  do {
+    const page = await authClient.listUsers(1000, pageToken);
+    const userIds = page.users.map((user) => user.uid);
+    if (userIds.length > 0) {
+      await authClient.deleteUsers(userIds);
+    }
+    pageToken = page.pageToken;
+  } while (pageToken);
+}
+
 async function verifySeed(database, authClient, seed) {
   const documentPaths = [
     "system/schema",
@@ -344,6 +361,12 @@ async function main() {
   try {
     const authClient = getAuth(app);
     const database = getFirestore(app);
+    if (hasFlag("--reset")) {
+      if (!usingEmulators) {
+        throw new Error("--reset is allowed only against local emulators");
+      }
+      await resetEmulator(database, authClient);
+    }
     await upsertAuthUsers(authClient, seed.auth_users, usingEmulators);
     await writeDocuments(database, seed.documents);
 

@@ -842,6 +842,7 @@ Safe aggregated demand:
 
 | Field                   | Type                                        |
 | ----------------------- | ------------------------------------------- |
+| `supplier_organization_id` | supplier organization ID                 |
 | `product_id`            | string                                      |
 | `unit`                  | string                                      |
 | `total_quantity`        | number                                      |

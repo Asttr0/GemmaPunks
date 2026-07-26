@@ -68,6 +68,8 @@ binary. Known demo evidence also remains in `packages/demo-data`.
 Private business data lives below `organizations/{organization_id}`. Every
 record also contains `organization_id` for audit and server validation. Only
 aggregated, privacy-filtered demand is copied to `supplier_opportunities`.
+Each opportunity includes `supplier_organization_id`; FastAPI and Firestore
+rules prevent a different supplier from reading it.
 
 The web client sends evidence to FastAPI and may read scoped Firestore records.
 Only FastAPI writes confirmed financial, inventory, procurement, approval,
@@ -92,8 +94,9 @@ directly.
 npm run firebase:validate-seed
 npm run firebase:test-rules
 npm run firebase:seed-emulator
+npm run firebase:reset-emulator
 ```
 
-The last command starts isolated Auth and Firestore emulators, loads the
-synthetic developer baseline, verifies key documents and custom claims, and
-then stops the emulators.
+The seed command loads and verifies the synthetic developer baseline. The reset
+command first deletes emulator-only data, then reloads the same baseline. The
+script refuses `--reset` against a shared Firebase project.

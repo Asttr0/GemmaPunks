@@ -46,6 +46,10 @@ beforeEach(async () => {
         name: "Supplier One",
         type: "SUPPLIER",
       }),
+      setDoc(doc(database, "organizations/supplier-two"), {
+        name: "Supplier Two",
+        type: "SUPPLIER",
+      }),
       setDoc(
         doc(database, "organizations/merchant-one/memberships/merchant-user"),
         {
@@ -89,6 +93,7 @@ beforeEach(async () => {
         unit: "BOTTLE",
       }),
       setDoc(doc(database, "supplier_opportunities/opportunity-one"), {
+        supplier_organization_id: "supplier-one",
         product_id: "cooking-oil-1l",
         coarse_area: "Berrechid",
         total_quantity: 55,
@@ -120,6 +125,15 @@ function supplierDatabase() {
   return testEnvironment
     .authenticatedContext("supplier-user", {
       organization_id: "supplier-one",
+      role: "OWNER",
+    })
+    .firestore();
+}
+
+function otherSupplierDatabase() {
+  return testEnvironment
+    .authenticatedContext("supplier-user-two", {
+      organization_id: "supplier-two",
       role: "OWNER",
     })
     .firestore();
@@ -215,6 +229,11 @@ test("only supplier organizations can read aggregated opportunities", async () =
   );
   await assertFails(
     getDoc(doc(merchantDatabase(), "supplier_opportunities/opportunity-one")),
+  );
+  await assertFails(
+    getDoc(
+      doc(otherSupplierDatabase(), "supplier_opportunities/opportunity-one"),
+    ),
   );
 });
 

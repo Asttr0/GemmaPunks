@@ -252,21 +252,26 @@
         "properties": {
           "available_quantity": {
             "default": 1000.0,
+            "minimum": 0.0,
             "title": "Available Quantity",
             "type": "number"
           },
           "delivery_days": {
             "default": 1,
+            "maximum": 30.0,
+            "minimum": 0.0,
             "title": "Delivery Days",
             "type": "integer"
           },
           "delivery_fee_centimes": {
             "default": 3000,
+            "minimum": 0.0,
             "title": "Delivery Fee Centimes",
             "type": "integer"
           },
           "minimum_quantity": {
             "default": 1.0,
+            "exclusiveMinimum": 0.0,
             "title": "Minimum Quantity",
             "type": "number"
           },
@@ -282,6 +287,8 @@
             "type": "array"
           },
           "supplier_sku": {
+            "maxLength": 80,
+            "minLength": 1,
             "title": "Supplier Sku",
             "type": "string"
           },
@@ -291,6 +298,7 @@
             "type": "string"
           },
           "unit_price_centimes": {
+            "exclusiveMinimum": 0.0,
             "title": "Unit Price Centimes",
             "type": "integer"
           }
@@ -311,6 +319,7 @@
           },
           "minimum_quantity": {
             "default": 50.0,
+            "exclusiveMinimum": 0.0,
             "title": "Minimum Quantity",
             "type": "number"
           },
@@ -319,6 +328,7 @@
             "type": "string"
           },
           "unit_price_centimes": {
+            "exclusiveMinimum": 0.0,
             "title": "Unit Price Centimes",
             "type": "integer"
           }
@@ -352,26 +362,28 @@
       "DashboardKPIs": {
         "properties": {
           "available_cash_centimes": {
-            "default": 610000,
             "title": "Available Cash Centimes",
             "type": "integer"
           },
           "estimated_profit_centimes": {
-            "default": 420000,
             "title": "Estimated Profit Centimes",
             "type": "integer"
           },
           "expenses_centimes": {
-            "default": 830000,
             "title": "Expenses Centimes",
             "type": "integer"
           },
           "sales_centimes": {
-            "default": 1250000,
             "title": "Sales Centimes",
             "type": "integer"
           }
         },
+        "required": [
+          "sales_centimes",
+          "expenses_centimes",
+          "estimated_profit_centimes",
+          "available_cash_centimes"
+        ],
         "title": "DashboardKPIs",
         "type": "object"
       },
@@ -413,6 +425,11 @@
             "title": "Alerts",
             "type": "array"
           },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
           "inventory": {
             "$ref": "#/components/schemas/InventorySummary"
           },
@@ -432,7 +449,8 @@
         },
         "required": [
           "kpis",
-          "inventory"
+          "inventory",
+          "generated_at"
         ],
         "title": "DashboardResponse",
         "type": "object"
@@ -637,9 +655,16 @@
             "type": "string"
           },
           "target_stock": {
-            "default": 34.0,
-            "title": "Target Stock",
-            "type": "number"
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Stock"
           },
           "unit": {
             "default": "BOTTLE",
@@ -648,103 +673,6 @@
           }
         },
         "title": "GenerateProcurementNeedRequest",
-        "type": "object"
-      },
-      "GroupOrder": {
-        "properties": {
-          "coarse_area": {
-            "default": "Berrechid Center",
-            "title": "Coarse Area",
-            "type": "string"
-          },
-          "created_at": {
-            "format": "date-time",
-            "title": "Created At",
-            "type": "string"
-          },
-          "delivery_total_centimes": {
-            "title": "Delivery Total Centimes",
-            "type": "integer"
-          },
-          "group_order_id": {
-            "title": "Group Order Id",
-            "type": "string"
-          },
-          "join_deadline": {
-            "format": "date-time",
-            "title": "Join Deadline",
-            "type": "string"
-          },
-          "minimum_quantity": {
-            "title": "Minimum Quantity",
-            "type": "number"
-          },
-          "needed_by": {
-            "format": "date-time",
-            "title": "Needed By",
-            "type": "string"
-          },
-          "participant_organization_ids": {
-            "items": {
-              "type": "string"
-            },
-            "title": "Participant Organization Ids",
-            "type": "array"
-          },
-          "product_id": {
-            "title": "Product Id",
-            "type": "string"
-          },
-          "status": {
-            "default": "PROPOSED",
-            "enum": [
-              "PROPOSED",
-              "OPEN",
-              "APPROVED",
-              "ORDERED",
-              "CANCELLED"
-            ],
-            "title": "Status",
-            "type": "string"
-          },
-          "supplier_catalog_item_id": {
-            "title": "Supplier Catalog Item Id",
-            "type": "string"
-          },
-          "supplier_organization_id": {
-            "title": "Supplier Organization Id",
-            "type": "string"
-          },
-          "total_quantity": {
-            "title": "Total Quantity",
-            "type": "number"
-          },
-          "unit": {
-            "default": "BOTTLE",
-            "title": "Unit",
-            "type": "string"
-          },
-          "unit_price_centimes": {
-            "title": "Unit Price Centimes",
-            "type": "integer"
-          },
-          "updated_at": {
-            "format": "date-time",
-            "title": "Updated At",
-            "type": "string"
-          }
-        },
-        "required": [
-          "group_order_id",
-          "product_id",
-          "supplier_organization_id",
-          "supplier_catalog_item_id",
-          "total_quantity",
-          "minimum_quantity",
-          "unit_price_centimes",
-          "delivery_total_centimes"
-        ],
-        "title": "GroupOrder",
         "type": "object"
       },
       "GroupOrderListResponse": {
@@ -872,7 +800,7 @@
             "type": "integer"
           },
           "group_order": {
-            "$ref": "#/components/schemas/GroupOrder"
+            "$ref": "#/components/schemas/GroupOrderSummary"
           },
           "member": {
             "$ref": "#/components/schemas/GroupOrderMember"
@@ -894,6 +822,86 @@
           "original_unit_price_centimes"
         ],
         "title": "GroupOrderResponse",
+        "type": "object"
+      },
+      "GroupOrderSummary": {
+        "properties": {
+          "coarse_area": {
+            "title": "Coarse Area",
+            "type": "string"
+          },
+          "delivery_total_centimes": {
+            "title": "Delivery Total Centimes",
+            "type": "integer"
+          },
+          "group_order_id": {
+            "title": "Group Order Id",
+            "type": "string"
+          },
+          "join_deadline": {
+            "format": "date-time",
+            "title": "Join Deadline",
+            "type": "string"
+          },
+          "minimum_quantity": {
+            "title": "Minimum Quantity",
+            "type": "number"
+          },
+          "needed_by": {
+            "format": "date-time",
+            "title": "Needed By",
+            "type": "string"
+          },
+          "participant_count": {
+            "title": "Participant Count",
+            "type": "integer"
+          },
+          "product_id": {
+            "title": "Product Id",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "supplier_catalog_item_id": {
+            "title": "Supplier Catalog Item Id",
+            "type": "string"
+          },
+          "supplier_organization_id": {
+            "title": "Supplier Organization Id",
+            "type": "string"
+          },
+          "total_quantity": {
+            "title": "Total Quantity",
+            "type": "number"
+          },
+          "unit": {
+            "title": "Unit",
+            "type": "string"
+          },
+          "unit_price_centimes": {
+            "title": "Unit Price Centimes",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "group_order_id",
+          "product_id",
+          "unit",
+          "supplier_organization_id",
+          "supplier_catalog_item_id",
+          "status",
+          "total_quantity",
+          "minimum_quantity",
+          "unit_price_centimes",
+          "delivery_total_centimes",
+          "participant_count",
+          "coarse_area",
+          "join_deadline",
+          "needed_by"
+        ],
+        "title": "GroupOrderSummary",
         "type": "object"
       },
       "HTTPValidationError": {
@@ -972,6 +980,10 @@
             "title": "Low Stock",
             "type": "boolean"
           },
+          "low_stock_threshold": {
+            "title": "Low Stock Threshold",
+            "type": "number"
+          },
           "name": {
             "title": "Name",
             "type": "string"
@@ -994,13 +1006,29 @@
           },
           "quantity_on_hand": {
             "title": "Quantity On Hand",
-            "type": "integer"
+            "type": "number"
+          },
+          "status": {
+            "enum": [
+              "HEALTHY",
+              "LOW_STOCK",
+              "OUT_OF_STOCK"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "unit": {
+            "title": "Unit",
+            "type": "string"
           }
         },
         "required": [
           "product_id",
           "name",
-          "quantity_on_hand"
+          "unit",
+          "quantity_on_hand",
+          "low_stock_threshold",
+          "status"
         ],
         "title": "InventoryItemResponse",
         "type": "object"
@@ -1024,16 +1052,18 @@
       "InventorySummary": {
         "properties": {
           "low_stock_count": {
-            "default": 1,
             "title": "Low Stock Count",
             "type": "integer"
           },
           "product_count": {
-            "default": 18,
             "title": "Product Count",
             "type": "integer"
           }
         },
+        "required": [
+          "product_count",
+          "low_stock_count"
+        ],
         "title": "InventorySummary",
         "type": "object"
       },
@@ -1070,6 +1100,11 @@
             "title": "Created At",
             "type": "string"
           },
+          "delivery_days": {
+            "default": 1,
+            "title": "Delivery Days",
+            "type": "integer"
+          },
           "delivery_fee_centimes": {
             "title": "Delivery Fee Centimes",
             "type": "integer"
@@ -1079,8 +1114,29 @@
             "title": "Eligible Alone",
             "type": "boolean"
           },
+          "expected_unit_margin_centimes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Unit Margin Centimes"
+          },
+          "explanation": {
+            "default": "",
+            "title": "Explanation",
+            "type": "string"
+          },
           "landed_cost_centimes": {
             "title": "Landed Cost Centimes",
+            "type": "integer"
+          },
+          "landed_unit_cost_centimes": {
+            "default": 0,
+            "title": "Landed Unit Cost Centimes",
             "type": "integer"
           },
           "minimum_quantity": {
@@ -1098,6 +1154,11 @@
           "procurement_need_id": {
             "title": "Procurement Need Id",
             "type": "string"
+          },
+          "product_cost_centimes": {
+            "default": 0,
+            "title": "Product Cost Centimes",
+            "type": "integer"
           },
           "product_id": {
             "title": "Product Id",
@@ -1166,9 +1227,16 @@
             "type": "string"
           },
           "quantity": {
-            "default": 20.0,
-            "title": "Quantity",
-            "type": "number"
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Quantity"
           }
         },
         "required": [
@@ -1232,6 +1300,12 @@
           "name": {
             "title": "Name",
             "type": "string"
+          },
+          "opening_cash_centimes": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Opening Cash Centimes",
+            "type": "integer"
           },
           "organization_id": {
             "title": "Organization Id",
@@ -1302,6 +1376,22 @@
             ],
             "title": "Days Remaining"
           },
+          "explanation": {
+            "default": "",
+            "title": "Explanation",
+            "type": "string"
+          },
+          "forecast_status": {
+            "default": "FORECAST",
+            "enum": [
+              "FORECAST",
+              "OUT_OF_STOCK",
+              "NO_DEMAND",
+              "INSUFFICIENT_HISTORY"
+            ],
+            "title": "Forecast Status",
+            "type": "string"
+          },
           "need_id": {
             "title": "Need Id",
             "type": "string"
@@ -1322,6 +1412,11 @@
           "quantity_needed": {
             "title": "Quantity Needed",
             "type": "number"
+          },
+          "sales_history_days": {
+            "default": 0,
+            "title": "Sales History Days",
+            "type": "integer"
           },
           "status": {
             "default": "OPEN",
@@ -1367,6 +1462,17 @@
               }
             ],
             "title": "Target Stock Quantity"
+          },
+          "uncertainty_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Uncertainty Note"
           },
           "unit": {
             "default": "BOTTLE",
@@ -1438,28 +1544,41 @@
             "type": "string"
           },
           "product_id": {
-            "default": "cooking-oil-1l",
-            "title": "Product Id",
-            "type": "string"
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Id"
           },
           "quantity": {
-            "default": 20.0,
-            "title": "Quantity",
-            "type": "number"
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Quantity"
           },
           "supplier_catalog_item_id": {
-            "default": "cat-oil-bulk",
             "title": "Supplier Catalog Item Id",
             "type": "string"
           },
           "supplier_organization_id": {
-            "default": "supplier-atlas",
             "title": "Supplier Organization Id",
             "type": "string"
           }
         },
         "required": [
-          "procurement_need_id"
+          "procurement_need_id",
+          "supplier_organization_id",
+          "supplier_catalog_item_id"
         ],
         "title": "ProposeGroupOrderRequest",
         "type": "object"
@@ -1697,6 +1816,11 @@
               "ARCHIVED"
             ],
             "title": "Status",
+            "type": "string"
+          },
+          "supplier_organization_id": {
+            "default": "",
+            "title": "Supplier Organization Id",
             "type": "string"
           },
           "total_quantity": {
@@ -2256,6 +2380,7 @@
                     "created_at": "2026-07-25T08:00:00Z",
                     "currency": "MAD",
                     "name": "string",
+                    "opening_cash_centimes": 0,
                     "organization_id": "merchant-berrechid",
                     "status": "ACTIVE",
                     "type": "MERCHANT",
@@ -2370,6 +2495,7 @@
                     "created_at": "2026-07-25T08:00:00Z",
                     "currency": "MAD",
                     "name": "string",
+                    "opening_cash_centimes": 0,
                     "organization_id": "merchant-berrechid",
                     "status": "ACTIVE",
                     "type": "MERCHANT",
@@ -2466,6 +2592,7 @@
                     "created_at": "2026-07-25T08:00:00Z",
                     "currency": "MAD",
                     "name": "string",
+                    "opening_cash_centimes": 0,
                     "organization_id": "merchant-berrechid",
                     "status": "ACTIVE",
                     "type": "MERCHANT",
@@ -2579,23 +2706,19 @@
                       "collective_unit_price_centimes": 1850,
                       "group_order": {
                         "coarse_area": "Berrechid Center",
-                        "created_at": "2026-07-25T08:00:00Z",
                         "delivery_total_centimes": 3000,
                         "group_order_id": "group-oil-001",
                         "join_deadline": "2026-07-25T08:00:00Z",
                         "minimum_quantity": 50,
                         "needed_by": "2026-07-25T08:00:00Z",
-                        "participant_organization_ids": [
-                          "merchant-berrechid"
-                        ],
+                        "participant_count": 1,
                         "product_id": "cooking-oil-1l",
-                        "status": "PROPOSED",
+                        "status": "string",
                         "supplier_catalog_item_id": "cat-oil-bulk",
                         "supplier_organization_id": "supplier-atlas",
                         "total_quantity": 1.0,
                         "unit": "BOTTLE",
-                        "unit_price_centimes": 1850,
-                        "updated_at": "2026-07-25T08:00:00Z"
+                        "unit_price_centimes": 1850
                       },
                       "member": {
                         "approved_at": "2026-07-25T08:00:00Z",
@@ -2706,7 +2829,7 @@
               "example": {
                 "procurement_need_id": "need-oil-001",
                 "product_id": "cooking-oil-1l",
-                "quantity": 20.0,
+                "quantity": 20,
                 "supplier_catalog_item_id": "cat-oil-bulk",
                 "supplier_organization_id": "supplier-atlas"
               },
@@ -2725,23 +2848,19 @@
                   "collective_unit_price_centimes": 1850,
                   "group_order": {
                     "coarse_area": "Berrechid Center",
-                    "created_at": "2026-07-25T08:00:00Z",
                     "delivery_total_centimes": 3000,
                     "group_order_id": "group-oil-001",
                     "join_deadline": "2026-07-25T08:00:00Z",
                     "minimum_quantity": 50,
                     "needed_by": "2026-07-25T08:00:00Z",
-                    "participant_organization_ids": [
-                      "merchant-berrechid"
-                    ],
+                    "participant_count": 1,
                     "product_id": "cooking-oil-1l",
-                    "status": "PROPOSED",
+                    "status": "string",
                     "supplier_catalog_item_id": "cat-oil-bulk",
                     "supplier_organization_id": "supplier-atlas",
                     "total_quantity": 1.0,
                     "unit": "BOTTLE",
-                    "unit_price_centimes": 1850,
-                    "updated_at": "2026-07-25T08:00:00Z"
+                    "unit_price_centimes": 1850
                   },
                   "member": {
                     "approved_at": "2026-07-25T08:00:00Z",
@@ -2799,6 +2918,19 @@
             "required": true,
             "schema": {
               "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "example": "demo-approval",
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": false,
+            "schema": {
+              "default": "demo-approval",
+              "maxLength": 128,
+              "minLength": 8,
+              "title": "Idempotency-Key",
               "type": "string"
             }
           },
@@ -2862,23 +2994,19 @@
                   "collective_unit_price_centimes": 1850,
                   "group_order": {
                     "coarse_area": "Berrechid Center",
-                    "created_at": "2026-07-25T08:00:00Z",
                     "delivery_total_centimes": 3000,
                     "group_order_id": "group-oil-001",
                     "join_deadline": "2026-07-25T08:00:00Z",
                     "minimum_quantity": 50,
                     "needed_by": "2026-07-25T08:00:00Z",
-                    "participant_organization_ids": [
-                      "merchant-berrechid"
-                    ],
+                    "participant_count": 1,
                     "product_id": "cooking-oil-1l",
-                    "status": "PROPOSED",
+                    "status": "string",
                     "supplier_catalog_item_id": "cat-oil-bulk",
                     "supplier_organization_id": "supplier-atlas",
                     "total_quantity": 1.0,
                     "unit": "BOTTLE",
-                    "unit_price_centimes": 1850,
-                    "updated_at": "2026-07-25T08:00:00Z"
+                    "unit_price_centimes": 1850
                   },
                   "member": {
                     "approved_at": "2026-07-25T08:00:00Z",
@@ -2999,23 +3127,19 @@
                   "collective_unit_price_centimes": 1850,
                   "group_order": {
                     "coarse_area": "Berrechid Center",
-                    "created_at": "2026-07-25T08:00:00Z",
                     "delivery_total_centimes": 3000,
                     "group_order_id": "group-oil-001",
                     "join_deadline": "2026-07-25T08:00:00Z",
                     "minimum_quantity": 50,
                     "needed_by": "2026-07-25T08:00:00Z",
-                    "participant_organization_ids": [
-                      "merchant-berrechid"
-                    ],
+                    "participant_count": 1,
                     "product_id": "cooking-oil-1l",
-                    "status": "PROPOSED",
+                    "status": "string",
                     "supplier_catalog_item_id": "cat-oil-bulk",
                     "supplier_organization_id": "supplier-atlas",
                     "total_quantity": 1.0,
                     "unit": "BOTTLE",
-                    "unit_price_centimes": 1850,
-                    "updated_at": "2026-07-25T08:00:00Z"
+                    "unit_price_centimes": 1850
                   },
                   "member": {
                     "approved_at": "2026-07-25T08:00:00Z",
@@ -3488,7 +3612,7 @@
     },
     "/api/v1/inventory": {
       "get": {
-        "description": "List current stock and predicted stockouts for the authenticated merchant.",
+        "description": "List authoritative stock snapshots updated by confirmed inventory movements.",
         "operationId": "list_inventory_api_v1_inventory_get",
         "parameters": [
           {
@@ -3551,10 +3675,13 @@
                   "items": [
                     {
                       "low_stock": false,
+                      "low_stock_threshold": 1.0,
                       "name": "string",
                       "predicted_stockout_at": "2026-07-25T08:00:00Z",
                       "product_id": "cooking-oil-1l",
-                      "quantity_on_hand": 14
+                      "quantity_on_hand": 14,
+                      "status": "HEALTHY",
+                      "unit": "BOTTLE"
                     }
                   ]
                 },
@@ -3650,9 +3777,10 @@
                       "message": "Cooking oil may run out in four days."
                     }
                   ],
+                  "generated_at": "2026-07-25T08:00:00Z",
                   "inventory": {
                     "low_stock_count": 1,
-                    "product_count": 18
+                    "product_count": 1
                   },
                   "kpis": {
                     "available_cash_centimes": 610000,
@@ -3752,7 +3880,7 @@
             "application/json": {
               "example": {
                 "procurement_need_id": "need-oil-001",
-                "quantity": 20.0
+                "quantity": 20
               },
               "schema": {
                 "$ref": "#/components/schemas/OfferCompareRequest"
@@ -3771,13 +3899,18 @@
                       "affordable": true,
                       "catalog_item_id": "cat-oil-bulk",
                       "created_at": "2026-07-25T08:00:00Z",
+                      "delivery_days": 1,
                       "delivery_fee_centimes": 3000,
                       "eligible_alone": true,
+                      "expected_unit_margin_centimes": 1,
+                      "explanation": "",
                       "landed_cost_centimes": 40000,
+                      "landed_unit_cost_centimes": 0,
                       "minimum_quantity": 50,
                       "offer_id": "string",
                       "organization_id": "merchant-berrechid",
                       "procurement_need_id": "need-oil-001",
+                      "product_cost_centimes": 0,
                       "product_id": "cooking-oil-1l",
                       "rejection_reasons": [
                         "string"
@@ -3794,13 +3927,18 @@
                     "affordable": true,
                     "catalog_item_id": "cat-oil-bulk",
                     "created_at": "2026-07-25T08:00:00Z",
+                    "delivery_days": 1,
                     "delivery_fee_centimes": 3000,
                     "eligible_alone": true,
+                    "expected_unit_margin_centimes": 1,
+                    "explanation": "",
                     "landed_cost_centimes": 40000,
+                    "landed_unit_cost_centimes": 0,
                     "minimum_quantity": 50,
                     "offer_id": "string",
                     "organization_id": "merchant-berrechid",
                     "procurement_need_id": "need-oil-001",
+                    "product_cost_centimes": 0,
                     "product_id": "cooking-oil-1l",
                     "rejection_reasons": [
                       "string"
@@ -3817,13 +3955,18 @@
                       "affordable": true,
                       "catalog_item_id": "cat-oil-bulk",
                       "created_at": "2026-07-25T08:00:00Z",
+                      "delivery_days": 1,
                       "delivery_fee_centimes": 3000,
                       "eligible_alone": true,
+                      "expected_unit_margin_centimes": 1,
+                      "explanation": "",
                       "landed_cost_centimes": 40000,
+                      "landed_unit_cost_centimes": 0,
                       "minimum_quantity": 50,
                       "offer_id": "string",
                       "organization_id": "merchant-berrechid",
                       "procurement_need_id": "need-oil-001",
+                      "product_cost_centimes": 0,
                       "product_id": "cooking-oil-1l",
                       "rejection_reasons": [
                         "string"
@@ -3928,15 +4071,19 @@
                     "coarse_area": "Berrechid Center",
                     "created_at": "2026-07-25T08:00:00Z",
                     "days_remaining": 1,
+                    "explanation": "",
+                    "forecast_status": "FORECAST",
                     "need_id": "string",
                     "needed_by": "2026-07-25T08:00:00Z",
                     "organization_id": "merchant-berrechid",
                     "product_id": "cooking-oil-1l",
                     "quantity_needed": 20,
+                    "sales_history_days": 0,
                     "status": "OPEN",
                     "stock_on_hand": 1.0,
                     "stockout_at": "2026-07-25T08:00:00Z",
                     "target_stock_quantity": 34,
+                    "uncertainty_note": "string",
                     "unit": "BOTTLE",
                     "updated_at": "2026-07-25T08:00:00Z"
                   }
@@ -4031,7 +4178,7 @@
             "application/json": {
               "example": {
                 "product_id": "cooking-oil-1l",
-                "target_stock": 34.0,
+                "target_stock": 34,
                 "unit": "BOTTLE"
               },
               "schema": {
@@ -4050,15 +4197,19 @@
                   "coarse_area": "Berrechid Center",
                   "created_at": "2026-07-25T08:00:00Z",
                   "days_remaining": 1,
+                  "explanation": "",
+                  "forecast_status": "FORECAST",
                   "need_id": "string",
                   "needed_by": "2026-07-25T08:00:00Z",
                   "organization_id": "merchant-berrechid",
                   "product_id": "cooking-oil-1l",
                   "quantity_needed": 20,
+                  "sales_history_days": 0,
                   "status": "OPEN",
                   "stock_on_hand": 1.0,
                   "stockout_at": "2026-07-25T08:00:00Z",
                   "target_stock_quantity": 34,
+                  "uncertainty_note": "string",
                   "unit": "BOTTLE",
                   "updated_at": "2026-07-25T08:00:00Z"
                 },
@@ -4395,6 +4546,7 @@
                       "product_id": "cooking-oil-1l",
                       "source_group_order_id": "string",
                       "status": "ACTIVE",
+                      "supplier_organization_id": "",
                       "total_quantity": 1.0,
                       "unit": "BOTTLE",
                       "updated_at": "2026-07-25T08:00:00Z"
@@ -4506,13 +4658,18 @@
                   "affordable": true,
                   "catalog_item_id": "cat-oil-bulk",
                   "created_at": "2026-07-25T08:00:00Z",
+                  "delivery_days": 1,
                   "delivery_fee_centimes": 3000,
                   "eligible_alone": true,
+                  "expected_unit_margin_centimes": 1,
+                  "explanation": "",
                   "landed_cost_centimes": 40000,
+                  "landed_unit_cost_centimes": 0,
                   "minimum_quantity": 50,
                   "offer_id": "string",
                   "organization_id": "merchant-berrechid",
                   "procurement_need_id": "need-oil-001",
+                  "product_cost_centimes": 0,
                   "product_id": "cooking-oil-1l",
                   "rejection_reasons": [
                     "string"
@@ -4620,6 +4777,7 @@
                       "product_id": "cooking-oil-1l",
                       "source_group_order_id": "string",
                       "status": "ACTIVE",
+                      "supplier_organization_id": "",
                       "total_quantity": 1.0,
                       "unit": "BOTTLE",
                       "updated_at": "2026-07-25T08:00:00Z"

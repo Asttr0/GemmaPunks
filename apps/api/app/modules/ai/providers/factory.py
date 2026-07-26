@@ -8,6 +8,9 @@ def get_extraction_provider() -> ExtractionProvider:
     settings = get_settings()
     provider_name = getattr(settings, "ai_provider", "fixture").lower()
     if provider_name == "gemma":
-        api_key = getattr(settings, "gemini_api_key", None)
-        return GemmaProvider(api_key=api_key)
+        return GemmaProvider(
+            api_key=settings.gemini_api_key,
+            model_name=settings.gemma_model,
+            timeout_seconds=settings.ai_timeout_seconds,
+        )
     return FixtureProvider()

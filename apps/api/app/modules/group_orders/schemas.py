@@ -1,23 +1,37 @@
-from pydantic import BaseModel
+from datetime import datetime
 
-from app.core.models import GroupOrder, GroupOrderMember
+from pydantic import BaseModel, Field
+
+from app.core.models import GroupOrderMember
 
 
 class ProposeGroupOrderRequest(BaseModel):
     procurement_need_id: str
-    product_id: str = "cooking-oil-1l"
-    quantity: float = 20.0
-    supplier_organization_id: str = "supplier-atlas"
-    supplier_catalog_item_id: str = "cat-oil-bulk"
+    supplier_organization_id: str
+    supplier_catalog_item_id: str
+    product_id: str | None = None
+    quantity: float | None = Field(default=None, gt=0)
 
 
-class GroupOrderMemberDetail(BaseModel):
-    member: GroupOrderMember
-    is_current_organization: bool = True
+class GroupOrderSummary(BaseModel):
+    group_order_id: str
+    product_id: str
+    unit: str
+    supplier_organization_id: str
+    supplier_catalog_item_id: str
+    status: str
+    total_quantity: float
+    minimum_quantity: float
+    unit_price_centimes: int
+    delivery_total_centimes: int
+    participant_count: int
+    coarse_area: str
+    join_deadline: datetime
+    needed_by: datetime
 
 
 class GroupOrderResponse(BaseModel):
-    group_order: GroupOrder
+    group_order: GroupOrderSummary
     member: GroupOrderMember
     total_savings_centimes: int
     collective_unit_price_centimes: int

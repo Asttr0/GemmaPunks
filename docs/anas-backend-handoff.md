@@ -426,7 +426,7 @@ Simple response:
     "lines": [
       {
         "line_id": "line_001",
-        "product_id": "cooking_oil_1l",
+        "product_id": "cooking-oil-1l",
         "product_name": "Cooking oil 1L",
         "quantity": 20,
         "unit_price_centimes": 2200,
@@ -491,7 +491,7 @@ Simple request:
     "lines": [
       {
         "line_id": "line_001",
-        "product_id": "cooking_oil_1l",
+        "product_id": "cooking-oil-1l",
         "quantity": 20,
         "unit_price_centimes": 2200
       }
@@ -551,7 +551,7 @@ GET /api/v1/merchant/dashboard
 {
   "items": [
     {
-      "product_id": "cooking_oil_1l",
+      "product_id": "cooking-oil-1l",
       "name": "Cooking oil 1L",
       "quantity_on_hand": 35,
       "low_stock": true,

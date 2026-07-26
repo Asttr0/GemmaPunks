@@ -3,6 +3,7 @@ from unittest.mock import patch
 from fastapi.testclient import TestClient
 
 from app.core.config import Settings
+from app.core.models import Membership
 from app.core.store import db_store
 from app.main import app
 
@@ -38,6 +39,13 @@ def test_valid_firebase_id_token(mock_verify):
         "organization_id": "merchant-berrechid",
         "role": "OWNER",
     }
+    db_store.memberships["merchant-berrechid"].append(
+        Membership(
+            organization_id="merchant-berrechid",
+            user_id="fb_user_123",
+            role="OWNER",
+        )
+    )
 
     response = client.get(
         "/api/v1/transactions",

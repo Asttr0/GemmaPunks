@@ -1,10 +1,14 @@
-import uuid
+import hashlib
 from datetime import UTC, datetime
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, status
 
+from app.core.business_repository import (
+    BusinessRepository,
+    business_repository_dependency,
+    require_organization_type,
+)
 from app.core.models import SupplierCatalogItem
-from app.core.store import db_store
 from app.modules.auth.dependencies import get_current_user
 from app.modules.auth.schemas import UserContext
 from app.modules.catalogs.schemas import CreateCatalogItemRequest, SupplierCatalogResponse
@@ -15,9 +19,18 @@ router = APIRouter(prefix="/api/v1/supplier/catalogs", tags=["supplier-catalogs"
 @router.get("", response_model=SupplierCatalogResponse)
 async def list_supplier_catalogs(
     user: UserContext = Depends(get_current_user),
+    repository: BusinessRepository = Depends(business_repository_dependency),
 ) -> SupplierCatalogResponse:
     """List catalog items published by the authenticated supplier."""
-    items = db_store.catalog_items.get(user.organization_id, [])
+    try:
+        require_organization_type(repository, user.organization_id, "SUPPLIER")
+    except PermissionError as exc:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=str(exc)) from exc
+    items = [
+        item
+        for item in repository.list_catalog_items()
+        if item.organization_id == user.organization_id
+    ]
     return SupplierCatalogResponse(items=items)
 
 
@@ -25,10 +38,16 @@ async def list_supplier_catalogs(
 async def create_catalog_item(
     req: CreateCatalogItemRequest,
     user: UserContext = Depends(get_current_user),
+    repository: BusinessRepository = Depends(business_repository_dependency),
 ) -> SupplierCatalogItem:
     """Add a new product catalog item for the supplier organization."""
+    try:
+        require_organization_type(repository, user.organization_id, "SUPPLIER")
+    except PermissionError as exc:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=str(exc)) from exc
     org_id = user.organization_id
-    cat_id = f"cat-{uuid.uuid4().hex[:8]}"
+    identity = f"{org_id}:{req.supplier_sku.strip().casefold()}"
+    cat_id = f"catalog-{hashlib.sha256(identity.encode()).hexdigest()[:16]}"
     now = datetime.now(UTC)
 
     item = SupplierCatalogItem(
@@ -48,7 +67,5 @@ async def create_catalog_item(
         updated_at=now,
     )
 
-    if org_id not in db_store.catalog_items:
-        db_store.catalog_items[org_id] = []
-    db_store.catalog_items[org_id].append(item)
+    repository.save_catalog_item(item)
     return item

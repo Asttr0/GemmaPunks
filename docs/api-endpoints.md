@@ -467,7 +467,7 @@ Evaluates catalog items against a procurement need, computes landed cost (`unit_
       "affordable": true,
       "status": "GROUP_ONLY",
       "rejection_reasons": [
-        "Minimum order quantity 50.0 not met by single merchant demand 20.0"
+        "MINIMUM_QUANTITY_NOT_MET"
       ]
     },
     "rejected": []
@@ -502,16 +502,12 @@ Combines compatible merchant demand (e.g. 20 units merchant + 35 units partner s
       "unit": "BOTTLE",
       "supplier_organization_id": "supplier-atlas",
       "supplier_catalog_item_id": "cat-oil-bulk",
-      "status": "PROPOSED",
+      "status": "OPEN",
       "total_quantity": 55.0,
       "minimum_quantity": 50.0,
       "unit_price_centimes": 1850,
       "delivery_total_centimes": 0,
-      "participant_organization_ids": [
-        "merchant-berrechid",
-        "merchant-chawia-grocery",
-        "merchant-berrechid-snack"
-      ],
+      "participant_count": 3,
       "coarse_area": "Berrechid Center"
     },
     "member": {
@@ -539,8 +535,11 @@ Combines compatible merchant demand (e.g. 20 units merchant + 35 units partner s
 
 ### 6.3 Approve Group Order
 - **Method & Path**: `POST /api/v1/group-orders/{id}/approve`
-- **Headers**: `Authorization: Bearer <token>`
+- **Headers**: `Authorization: Bearer <token>`, `Idempotency-Key: <key>`
 - **Response `200 OK`**: Updates member status to `APPROVED` and records approval user ID and timestamp.
+
+Approving one member does not approve the whole order. The order becomes
+`APPROVED` only after every member has independently approved.
 
 ---
 
@@ -561,6 +560,7 @@ Combines compatible merchant demand (e.g. 20 units merchant + 35 units partner s
     "opportunities": [
       {
         "opportunity_id": "opp-oil-001",
+        "supplier_organization_id": "supplier-atlas",
         "product_id": "cooking-oil-1l",
         "unit": "BOTTLE",
         "total_quantity": 55.0,

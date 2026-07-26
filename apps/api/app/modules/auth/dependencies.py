@@ -87,8 +87,10 @@ async def get_current_user(
 
     if authorization:
         try:
+            token = _bearer_token(authorization)
+            is_synthetic = token.startswith("test_token_")
             identity = _identity_from_token(
-                _bearer_token(authorization),
+                token,
                 allow_synthetic=settings.app_env == "development",
             )
             organization_id = identity.claims.get("organization_id")
@@ -104,6 +106,18 @@ async def get_current_user(
                     )
                 organization_id = profile.primary_organization_id
                 membership = repository.get_membership(organization_id, identity.user_id)
+                if membership is None or membership.status != "ACTIVE":
+                    raise HTTPException(
+                        status_code=status.HTTP_403_FORBIDDEN,
+                        detail="Active organization membership required",
+                    )
+                membership_role = membership.role
+            elif not is_synthetic:
+                repository = get_auth_repository()
+                membership = repository.get_membership(
+                    organization_id,
+                    identity.user_id,
+                )
                 if membership is None or membership.status != "ACTIVE":
                     raise HTTPException(
                         status_code=status.HTTP_403_FORBIDDEN,
