@@ -28,12 +28,12 @@ export function useSupplierAuth(): AuthResult {
         const userCredential = await signInWithEmailAndPassword(
           firebaseAuth,
           DEMO_SUPPLIER_EMAIL,
-          DEMO_SUPPLIER_PASSWORD
+          DEMO_SUPPLIER_PASSWORD,
         );
-        
+
         const tokenResult = await userCredential.user.getIdTokenResult();
         const orgId = tokenResult.claims.organization_id as string | undefined;
-        
+
         setUser(userCredential.user);
         setOrganizationId(orgId ?? null);
       } catch (err) {
@@ -48,7 +48,8 @@ export function useSupplierAuth(): AuthResult {
         signInDemoSupplier();
       } else {
         firebaseUser.getIdTokenResult().then((tokenResult) => {
-          const orgId = tokenResult.claims.organization_id as string | undefined;
+          const orgId = tokenResult.claims.organization_id as
+            string | undefined;
           setUser(firebaseUser);
           setOrganizationId(orgId ?? null);
           setLoading(false);

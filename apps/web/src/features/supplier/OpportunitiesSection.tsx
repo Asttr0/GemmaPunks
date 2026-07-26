@@ -110,9 +110,10 @@ export function OpportunitiesSection({
           </TableHeader>
           <TableBody>
             {opportunities.map((opp) => {
-              const deadlineDate = opp.needed_by instanceof Timestamp
-                ? opp.needed_by.toDate()
-                : new Date(opp.needed_by as unknown as string | number);
+              const deadlineDate =
+                opp.needed_by instanceof Timestamp
+                  ? opp.needed_by.toDate()
+                  : new Date(opp.needed_by as unknown as string | number);
 
               return (
                 <TableRow key={opp.opportunity_id}>
@@ -140,9 +141,7 @@ export function OpportunitiesSection({
                   </TableCell>
                   <TableCell>
                     <Badge
-                      variant={
-                        opp.status === "ACTIVE" ? "success" : "warning"
-                      }
+                      variant={opp.status === "ACTIVE" ? "success" : "warning"}
                     >
                       {opp.status === "ACTIVE" ? "Ready to quote" : opp.status}
                     </Badge>

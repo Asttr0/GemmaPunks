@@ -11,9 +11,11 @@ import {
 import { firestore } from "@/lib/firebase";
 import type { CatalogItem, Opportunity, ActiveOffer } from "./mocks/fixtures";
 
-function useCollection<T>(
-  collectionPath: string | null
-): { data: T[]; loading: boolean; error: Error | null } {
+function useCollection<T>(collectionPath: string | null): {
+  data: T[];
+  loading: boolean;
+  error: Error | null;
+} {
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
@@ -38,7 +40,7 @@ function useCollection<T>(
       (err) => {
         setError(err);
         setLoading(false);
-      }
+      },
     );
 
     return () => unsubscribe();
@@ -50,7 +52,7 @@ function useCollection<T>(
 function useCollectionGroup<T>(
   collectionName: string,
   whereField: string,
-  whereValue: string | null
+  whereValue: string | null,
 ): { data: T[]; loading: boolean; error: Error | null } {
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState(true);
@@ -64,7 +66,7 @@ function useCollectionGroup<T>(
 
     const q = query(
       collectionGroup(firestore, collectionName),
-      where(whereField, "==", whereValue)
+      where(whereField, "==", whereValue),
     );
 
     const unsubscribe = onSnapshot(
@@ -79,7 +81,7 @@ function useCollectionGroup<T>(
       (err) => {
         setError(err);
         setLoading(false);
-      }
+      },
     );
 
     return () => unsubscribe();
@@ -88,9 +90,11 @@ function useCollectionGroup<T>(
   return { data, loading, error };
 }
 
-export function useCatalogItems(
-  organizationId: string | null
-): { items: CatalogItem[]; loading: boolean; error: Error | null } {
+export function useCatalogItems(organizationId: string | null): {
+  items: CatalogItem[];
+  loading: boolean;
+  error: Error | null;
+} {
   const path = organizationId
     ? `organizations/${organizationId}/supplier_catalog_items`
     : null;
@@ -98,9 +102,11 @@ export function useCatalogItems(
   return { items: result.data, loading: result.loading, error: result.error };
 }
 
-export function useCatalog(
-  organizationId: string | null
-): { items: CatalogItem[]; loading: boolean; error: Error | null } {
+export function useCatalog(organizationId: string | null): {
+  items: CatalogItem[];
+  loading: boolean;
+  error: Error | null;
+} {
   const path = organizationId
     ? `organizations/${organizationId}/supplier_catalog_items`
     : null;
@@ -121,9 +127,7 @@ export function useOpportunities(): {
   };
 }
 
-export function useActiveOffers(
-  organizationId: string | null
-): {
+export function useActiveOffers(organizationId: string | null): {
   offers: ActiveOffer[];
   loading: boolean;
   error: Error | null;
@@ -131,7 +135,7 @@ export function useActiveOffers(
   const result = useCollectionGroup<ActiveOffer>(
     "offers",
     "supplier_organization_id",
-    organizationId
+    organizationId,
   );
 
   return {
@@ -174,7 +178,7 @@ export function useProducts(): {
       (err) => {
         setError(err);
         setLoading(false);
-      }
+      },
     );
 
     return () => unsubscribe();

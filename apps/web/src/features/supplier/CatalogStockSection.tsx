@@ -90,11 +90,12 @@ export function CatalogStockSection({
     );
   }
 
-  const outOfStockCount = items.filter((i) => i.available_quantity === 0).length;
+  const outOfStockCount = items.filter(
+    (i) => i.available_quantity === 0,
+  ).length;
   const lowStockCount = items.filter(
     (i) =>
-      i.available_quantity > 0 &&
-      i.available_quantity < i.minimum_quantity,
+      i.available_quantity > 0 && i.available_quantity < i.minimum_quantity,
   ).length;
   const hasWarnings = outOfStockCount > 0 || lowStockCount > 0;
 
