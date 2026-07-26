@@ -11,7 +11,7 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    app_name: str = "MIZAN Souq API"
+    app_name: str = "MIZAN Control API"
     app_env: str = "development"
     app_cors_origins: str = "http://localhost:5173"
     firebase_project_id: str = "demo-gemmapunks"

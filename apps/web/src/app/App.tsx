@@ -1,16 +1,14 @@
 import { lazy, Suspense } from "react";
 import {
   Activity,
-  Boxes,
-  Building2,
+  Database,
   FilePlus2,
-  Handshake,
+  Landmark,
   LayoutDashboard,
-  PackageSearch,
-  ReceiptText,
   Settings,
-  ShoppingCart,
-  Store,
+  ShieldCheck,
+  UsersRound,
+  WalletCards,
 } from "lucide-react";
 import {
   Navigate,
@@ -42,18 +40,38 @@ const AgentRunPage = lazy(() =>
   })),
 );
 const ImpactPage = lazy(() =>
-  import("../features/demo/ImpactPage").then((module) => ({
-    default: module.ImpactPage,
+  import("../features/control-tower/ControlTowerPages").then((module) => ({
+    default: module.ControlTowerImpactPage,
   })),
 );
-const GroupOrderDetailPage = lazy(() =>
-  import("../features/group-orders/GroupOrderPages").then((module) => ({
-    default: module.GroupOrderDetailPage,
+const ControlTowerDashboardPage = lazy(() =>
+  import("../features/control-tower/ControlTowerPages").then((module) => ({
+    default: module.ControlTowerDashboardPage,
   })),
 );
-const GroupOrdersListPage = lazy(() =>
-  import("../features/group-orders/GroupOrderPages").then((module) => ({
-    default: module.GroupOrdersListPage,
+const AuditCenterPage = lazy(() =>
+  import("../features/control-tower/ControlTowerPages").then((module) => ({
+    default: module.AuditCenterPage,
+  })),
+);
+const AuditFindingDetailPage = lazy(() =>
+  import("../features/control-tower/ControlTowerPages").then((module) => ({
+    default: module.AuditFindingDetailPage,
+  })),
+);
+const CashFlowPage = lazy(() =>
+  import("../features/control-tower/ControlTowerPages").then((module) => ({
+    default: module.CashFlowPage,
+  })),
+);
+const SupplierIntelligencePage = lazy(() =>
+  import("../features/control-tower/ControlTowerPages").then((module) => ({
+    default: module.SupplierIntelligencePage,
+  })),
+);
+const FinancialRecordsPage = lazy(() =>
+  import("../features/control-tower/ControlTowerPages").then((module) => ({
+    default: module.FinancialRecordsPage,
   })),
 );
 const EvidenceUploadPage = lazy(() =>
@@ -66,117 +84,42 @@ const IngestionReviewPage = lazy(() =>
     default: module.IngestionReviewPage,
   })),
 );
-const InventoryPage = lazy(() =>
-  import("../features/merchant/MerchantPages").then((module) => ({
-    default: module.InventoryPage,
-  })),
-);
-const MerchantDashboardPage = lazy(() =>
-  import("../features/merchant/MerchantPages").then((module) => ({
-    default: module.MerchantDashboardPage,
-  })),
-);
-const TransactionsPage = lazy(() =>
-  import("../features/merchant/MerchantPages").then((module) => ({
-    default: module.TransactionsPage,
-  })),
-);
-const ProcurementCockpitPage = lazy(() =>
-  import("../features/procurement/ProcurementPages").then((module) => ({
-    default: module.ProcurementCockpitPage,
-  })),
-);
-const ProcurementListPage = lazy(() =>
-  import("../features/procurement/ProcurementPages").then((module) => ({
-    default: module.ProcurementListPage,
-  })),
-);
-const SupplierCatalogPage = lazy(() =>
-  import("../features/supplier/SupplierPages").then((module) => ({
-    default: module.SupplierCatalogPage,
-  })),
-);
-const SupplierDashboardPage = lazy(() =>
-  import("../features/supplier/SupplierPages").then((module) => ({
-    default: module.SupplierDashboardPage,
-  })),
-);
-const SupplierOpportunitiesPage = lazy(() =>
-  import("../features/supplier/SupplierPages").then((module) => ({
-    default: module.SupplierOpportunitiesPage,
-  })),
-);
-const SupplierOpportunityDetailPage = lazy(() =>
-  import("../features/supplier/SupplierPages").then((module) => ({
-    default: module.SupplierOpportunityDetailPage,
-  })),
-);
-
-const merchantNavigation: AppNavigationItem[] = [
+const companyNavigation: AppNavigationItem[] = [
   {
-    label: "Overview",
-    href: "/merchant/dashboard",
+    label: "Control tower",
+    href: "/control-tower/overview",
     icon: LayoutDashboard,
   },
   {
-    label: "Add evidence",
-    href: "/merchant/evidence/new",
+    label: "Financial evidence",
+    href: "/control-tower/evidence/new",
     icon: FilePlus2,
     badge: "AI",
   },
   {
-    label: "Inventory",
-    href: "/merchant/inventory",
-    icon: Boxes,
-    badge: "1",
+    label: "Audit center",
+    href: "/control-tower/audit",
+    icon: ShieldCheck,
+    badge: "3",
   },
   {
-    label: "Procurement",
-    href: "/merchant/procurement",
-    icon: PackageSearch,
+    label: "Cash-flow forecast",
+    href: "/control-tower/cash-flow",
+    icon: WalletCards,
   },
   {
-    label: "Group orders",
-    href: "/merchant/group-orders",
-    icon: Handshake,
+    label: "Supplier intelligence",
+    href: "/control-tower/suppliers",
+    icon: UsersRound,
   },
   {
-    label: "Transactions",
-    href: "/merchant/transactions",
-    icon: ReceiptText,
+    label: "Connected records",
+    href: "/control-tower/records",
+    icon: Database,
   },
   {
-    label: "Agent activity",
-    href: "/agent-runs/run-demo-001",
-    icon: Activity,
-  },
-  {
-    label: "Settings",
-    href: "/settings",
-    icon: Settings,
-  },
-];
-
-const supplierNavigation: AppNavigationItem[] = [
-  {
-    label: "Overview",
-    href: "/supplier/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    label: "Opportunities",
-    href: "/supplier/opportunities",
-    icon: ShoppingCart,
-    badge: "2",
-  },
-  {
-    label: "Catalog",
-    href: "/supplier/catalog",
-    icon: Boxes,
-  },
-  {
-    label: "Agent activity",
-    href: "/agent-runs/run-demo-001",
+    label: "Demo impact",
+    href: "/demo/impact",
     icon: Activity,
   },
   {
@@ -187,7 +130,7 @@ const supplierNavigation: AppNavigationItem[] = [
 ];
 
 function RoleRedirect() {
-  const { user, orgType, loading } = useAuth();
+  const { user, loading } = useAuth();
 
   if (loading) {
     return <LoadingScreen />;
@@ -197,14 +140,7 @@ function RoleRedirect() {
     return <Navigate replace to="/login" />;
   }
 
-  return (
-    <Navigate
-      replace
-      to={
-        orgType === "SUPPLIER" ? "/supplier/dashboard" : "/merchant/dashboard"
-      }
-    />
-  );
+  return <Navigate replace to="/control-tower/overview" />;
 }
 
 function LoginRoute({ mode = "sign-in" }: { mode?: "sign-in" | "sign-up" }) {
@@ -228,7 +164,9 @@ function LoadingScreen() {
           aria-hidden="true"
           className="mx-auto block h-10 w-10 animate-spin rounded-full border-4 border-brand-200 border-r-primary motion-reduce:animate-none"
         />
-        <p className="mt-4 font-semibold text-foreground">Opening MIZAN Souq</p>
+        <p className="mt-4 font-semibold text-foreground">
+          Opening MIZAN Control
+        </p>
         <p className="mt-1 text-sm text-foreground-muted">
           Restoring your secure Firebase session…
         </p>
@@ -240,33 +178,25 @@ function LoadingScreen() {
 function ApplicationLayout() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, organizationId, role, orgType, loading, signOut } = useAuth();
+  const { user, organizationId, role, loading, signOut } = useAuth();
+  const previewMode =
+    new URLSearchParams(location.search).get("preview") === "1";
 
-  if (loading) {
+  if (loading && !previewMode) {
     return <LoadingScreen />;
   }
 
-  const supplierRoute = location.pathname.startsWith("/supplier");
-  const portal = supplierRoute
-    ? "supplier"
-    : location.pathname.startsWith("/merchant")
-      ? "merchant"
-      : orgType === "SUPPLIER"
-        ? "supplier"
-        : "merchant";
-  const navigation =
-    portal === "supplier" ? supplierNavigation : merchantNavigation;
-  const fallbackOrganization =
-    portal === "supplier" ? "Atlas Distribution" : "Grocery Store Berrechid";
+  const fallbackOrganization = "Atlas Distribution Maroc";
+  const organizationName =
+    organizationId === "merchant-berrechid"
+      ? "Atlas Distribution Maroc"
+      : organizationId || fallbackOrganization;
 
   return (
     <AppShell
-      navigation={navigation}
+      navigation={companyNavigation}
       activePath={location.pathname}
-      portal={portal}
-      organizationName={
-        user ? organizationId || fallbackOrganization : fallbackOrganization
-      }
+      organizationName={user ? organizationName : fallbackOrganization}
       role={user ? role : "DEMO PREVIEW"}
       userName={user?.displayName || user?.email}
       onNavigate={navigate}
@@ -285,13 +215,13 @@ function ApplicationLayout() {
 }
 
 function SettingsPage() {
-  const { user, organizationId, orgType, role } = useAuth();
+  const { user, organizationId, role } = useAuth();
   return (
     <PageMotion>
       <PageHeader
         eyebrow="Workspace"
         title="Settings"
-        description="Account and business context used by the MIZAN demo."
+        description="Manage your finance workspace."
       />
       <div className="grid gap-6 lg:grid-cols-2">
         <Card>
@@ -332,14 +262,10 @@ function SettingsPage() {
                 </dd>
               </div>
               <div>
-                <dt className="text-foreground-muted">Portal type</dt>
+                <dt className="text-foreground-muted">Workspace</dt>
                 <dd className="mt-1 flex items-center gap-2 font-semibold">
-                  {orgType === "SUPPLIER" ? (
-                    <Building2 className="h-4 w-4 text-primary" />
-                  ) : (
-                    <Store className="h-4 w-4 text-primary" />
-                  )}
-                  {orgType}
+                  <Landmark className="h-4 w-4 text-primary" />
+                  Finance team
                 </dd>
               </div>
               <div>
@@ -380,48 +306,39 @@ function AppRoutes() {
         <Route path="/app" element={<RoleRedirect />} />
         <Route element={<ApplicationLayout />}>
           <Route
-            path="/merchant/dashboard"
-            element={<MerchantDashboardPage />}
+            path="/control-tower/overview"
+            element={<ControlTowerDashboardPage />}
           />
           <Route
-            path="/merchant/evidence/new"
+            path="/control-tower/evidence/new"
             element={<EvidenceUploadPage />}
           />
           <Route
-            path="/merchant/ingestions/:ingestionId"
+            path="/control-tower/ingestions/:ingestionId"
             element={<IngestionReviewPage />}
           />
-          <Route path="/merchant/transactions" element={<TransactionsPage />} />
-          <Route path="/merchant/inventory" element={<InventoryPage />} />
+          <Route path="/control-tower/audit" element={<AuditCenterPage />} />
           <Route
-            path="/merchant/procurement"
-            element={<ProcurementListPage />}
+            path="/control-tower/audit/:findingId"
+            element={<AuditFindingDetailPage />}
+          />
+          <Route path="/control-tower/cash-flow" element={<CashFlowPage />} />
+          <Route
+            path="/control-tower/suppliers"
+            element={<SupplierIntelligencePage />}
           />
           <Route
-            path="/merchant/procurement/:needId"
-            element={<ProcurementCockpitPage />}
+            path="/control-tower/records"
+            element={<FinancialRecordsPage />}
           />
           <Route
-            path="/merchant/group-orders"
-            element={<GroupOrdersListPage />}
+            path="/merchant/*"
+            element={<Navigate replace to="/control-tower/overview" />}
           />
           <Route
-            path="/merchant/group-orders/:groupOrderId"
-            element={<GroupOrderDetailPage />}
+            path="/supplier/*"
+            element={<Navigate replace to="/control-tower/overview" />}
           />
-          <Route
-            path="/supplier/dashboard"
-            element={<SupplierDashboardPage />}
-          />
-          <Route
-            path="/supplier/opportunities"
-            element={<SupplierOpportunitiesPage />}
-          />
-          <Route
-            path="/supplier/opportunities/:opportunityId"
-            element={<SupplierOpportunityDetailPage />}
-          />
-          <Route path="/supplier/catalog" element={<SupplierCatalogPage />} />
           <Route path="/agent-runs/:agentRunId" element={<AgentRunPage />} />
           <Route path="/demo/impact" element={<ImpactPage />} />
           <Route path="/settings" element={<SettingsPage />} />

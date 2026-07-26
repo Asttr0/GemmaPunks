@@ -1,4 +1,12 @@
 import type { components } from "../../../../packages/contracts/generated-types/api";
+import type {
+  AuditFinding,
+  AuditRunResponse,
+  ControlTowerDashboard,
+  FinancialRecordList,
+  FindingDecisionResponse,
+  SupplierPortfolio,
+} from "../features/control-tower/types";
 
 export type AuthResponse = components["schemas"]["AuthResponse"];
 export type SignUpRequest = components["schemas"]["SignUpRequest"];
@@ -18,6 +26,8 @@ export type GroupOrderListResponse =
 export type GroupOrderResponse = components["schemas"]["GroupOrderResponse"];
 export type IngestionResponse = components["schemas"]["IngestionResponse"];
 export type InventoryResponse = components["schemas"]["InventoryResponse"];
+export type ProductOptionListResponse =
+  components["schemas"]["ProductOptionListResponse"];
 export type Offer = components["schemas"]["Offer"];
 export type OfferCompareRequest = components["schemas"]["OfferCompareRequest"];
 export type OfferCompareResponse =
@@ -124,6 +134,14 @@ export const getTransactions = (
 
 export const getInventory = (idToken: string): Promise<InventoryResponse> =>
   apiRequest<InventoryResponse>("/api/v1/inventory", idToken);
+
+export const getProductOptions = (
+  idToken: string,
+): Promise<ProductOptionListResponse> =>
+  apiRequest<ProductOptionListResponse>(
+    "/api/v1/inventory/product-options",
+    idToken,
+  );
 
 export const uploadEvidence = (
   file: File,
@@ -299,3 +317,51 @@ export const getAgentRun = (
     `/api/v1/agent-runs/${encodeURIComponent(agentRunId)}`,
     idToken,
   );
+
+export const getControlTowerDashboard = (
+  idToken: string,
+): Promise<ControlTowerDashboard> =>
+  apiRequest<ControlTowerDashboard>("/api/v1/control-tower/dashboard", idToken);
+
+export const getAuditFindings = (idToken: string): Promise<AuditFinding[]> =>
+  apiRequest<AuditFinding[]>("/api/v1/control-tower/audit-findings", idToken);
+
+export const getAuditFinding = (
+  findingId: string,
+  idToken: string,
+): Promise<AuditFinding> =>
+  apiRequest<AuditFinding>(
+    `/api/v1/control-tower/audit-findings/${encodeURIComponent(findingId)}`,
+    idToken,
+  );
+
+export const decideAuditFinding = (
+  findingId: string,
+  action: "PREPARE_DISPUTE" | "APPROVE_CORRECTED_AMOUNT" | "DISMISS",
+  idToken: string,
+  note?: string,
+): Promise<FindingDecisionResponse> =>
+  apiRequest<FindingDecisionResponse>(
+    `/api/v1/control-tower/audit-findings/${encodeURIComponent(findingId)}/decide`,
+    idToken,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action, note }),
+    },
+  );
+
+export const getSupplierPortfolio = (
+  idToken: string,
+): Promise<SupplierPortfolio> =>
+  apiRequest<SupplierPortfolio>("/api/v1/control-tower/suppliers", idToken);
+
+export const getFinancialRecords = (
+  idToken: string,
+): Promise<FinancialRecordList> =>
+  apiRequest<FinancialRecordList>("/api/v1/control-tower/records", idToken);
+
+export const runControlAudit = (idToken: string): Promise<AuditRunResponse> =>
+  apiRequest<AuditRunResponse>("/api/v1/control-tower/audit-runs", idToken, {
+    method: "POST",
+  });

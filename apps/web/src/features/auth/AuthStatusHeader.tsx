@@ -18,14 +18,14 @@ export const AuthStatusHeader: React.FC = () => {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-base font-bold tracking-tight text-white">
-                MIZAN Souq
+                MIZAN Control
               </span>
               <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-400 border border-emerald-500/30">
-                Darija-First Procurement
+                AI Financial Control
               </span>
             </div>
             <p className="text-[11px] text-slate-400">
-              Intelligent microbusiness network
+              Moroccan distribution intelligence
             </p>
           </div>
         </div>

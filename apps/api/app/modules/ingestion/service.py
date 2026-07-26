@@ -135,7 +135,9 @@ class IngestionService:
     def _normalize_draft(
         draft: ExtractionDraft,
         draft_id: str,
-        allowed_product_ids: set[str] | None = None,
+        product_context: dict[str, dict] | None = None,
+        *,
+        require_resolved_products: bool = False,
     ) -> ExtractionDraft:
         normalized = draft.model_copy(deep=True)
         normalized.id = draft_id
@@ -152,13 +154,41 @@ class IngestionService:
             if line.product_id is not None and not RESOURCE_ID_PATTERN.fullmatch(line.product_id):
                 raise ValueError(f"Invalid product ID '{line.product_id}'")
             if (
-                allowed_product_ids is not None
+                product_context is not None
                 and line.product_id is not None
-                and line.product_id not in allowed_product_ids
+                and line.product_id not in product_context
             ):
                 line.product_id = None
                 if "product_id" not in line.uncertain_fields:
                     line.uncertain_fields.append("product_id")
+
+            if require_resolved_products and line.product_id is None:
+                raise ValueError(f"Line {index + 1} needs an approved product before confirmation")
+
+            if product_context is not None and line.product_id is not None:
+                product = product_context[line.product_id]
+                units = {
+                    str(option["unit"]).upper(): option for option in product["purchase_units"]
+                }
+                selected_unit = line.unit.upper()
+                line.product_name = str(product["product_name"])
+                line.base_unit = str(product["base_unit"]).upper()
+                if selected_unit in units:
+                    selected_option = units[selected_unit]
+                    line.unit = str(selected_option["unit"]).upper()
+                    line.unit_multiplier = int(selected_option["conversion_to_base"])
+                    line.uncertain_fields = [
+                        field
+                        for field in line.uncertain_fields
+                        if field not in {"product_id", "unit"}
+                    ]
+                else:
+                    if "unit" not in line.uncertain_fields:
+                        line.uncertain_fields.append("unit")
+                    if require_resolved_products:
+                        raise ValueError(
+                            f"Line {index + 1} needs an approved unit for {product['product_name']}"
+                        )
             line.line_total_centimes = line.quantity * line.unit_price_centimes
             total_centimes += line.line_total_centimes
         normalized.total_centimes = total_centimes
@@ -167,6 +197,28 @@ class IngestionService:
     @staticmethod
     def _provider_name(provider: str) -> str:
         return "gemma" if provider.lower().startswith("gemma") else "fixture"
+
+    def _product_context(self) -> tuple[list[dict], dict[str, dict]]:
+        safe_context = []
+        by_id = {}
+        for product in self.business_repository.list_canonical_products():
+            purchase_units = [unit.model_dump(mode="json") for unit in product.purchase_units] or [
+                {
+                    "unit": product.base_unit,
+                    "label": product.base_unit.replace("_", " ").title(),
+                    "conversion_to_base": 1,
+                }
+            ]
+            item = {
+                "product_id": product.product_id,
+                "product_name": product.canonical_name,
+                "base_unit": product.base_unit,
+                "purchase_units": purchase_units,
+                "aliases": product.aliases,
+            }
+            safe_context.append(item)
+            by_id[product.product_id] = item
+        return safe_context, by_id
 
     @staticmethod
     def _build_agent_run(
@@ -256,14 +308,7 @@ class IngestionService:
             self.repository.start_ingestion(document, job)
 
             try:
-                safe_product_context = [
-                    {
-                        "product_id": product.product_id,
-                        "product_name": product.canonical_name,
-                        "unit": product.base_unit,
-                    }
-                    for product in self.business_repository.list_canonical_products()
-                ]
+                safe_product_context, product_context = self._product_context()
                 raw_result = await self.extraction_provider.extract_evidence(
                     file_bytes=file_bytes,
                     original_name=original_name,
@@ -279,7 +324,7 @@ class IngestionService:
                 draft = self._normalize_draft(
                     result.draft,
                     draft_id,
-                    allowed_product_ids={item["product_id"] for item in safe_product_context},
+                    product_context,
                 )
             except (ValidationError, ValueError) as exc:
                 self.repository.fail_ingestion(
@@ -399,10 +444,13 @@ class IngestionService:
             )
 
         source_draft = request.draft or ingestion.draft
+        _, product_context = self._product_context()
         try:
             target_draft = self._normalize_draft(
                 source_draft,
                 ingestion.draft.id,
+                product_context,
+                require_resolved_products=True,
             )
         except (ValidationError, ValueError) as exc:
             raise HTTPException(

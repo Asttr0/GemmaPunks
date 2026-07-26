@@ -12,6 +12,8 @@ class DraftLine(BaseModel):
     product_name: str = Field(min_length=1, max_length=160)
     original_product_name: str | None = Field(default=None, max_length=160)
     unit: str = Field(default="unit", min_length=1, max_length=32)
+    base_unit: str = Field(default="unit", min_length=1, max_length=32)
+    unit_multiplier: int = Field(default=1, ge=1, le=100_000)
     quantity: int = Field(gt=0)
     unit_price_centimes: int = Field(ge=0)
     line_total_centimes: int = Field(ge=0)

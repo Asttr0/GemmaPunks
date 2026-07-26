@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1900" viewBox="0 0 1400 1900">
+  <rect width="1400" height="1900" fill="#eef7fa"/>
+  <rect x="95" y="70" width="1210" height="1760" rx="24" fill="#fff" stroke="#90e0ef" stroke-width="4"/>
+  <rect x="95" y="70" width="1210" height="210" rx="24" fill="#03045e"/>
+  <rect x="95" y="250" width="1210" height="30" fill="#03045e"/>
+  <text x="155" y="150" font-family="Arial" font-size="48" font-weight="700" fill="#fff">ATLAS DISTRIBUTION MAROC</text>
+  <text x="155" y="210" font-family="Arial" font-size="27" fill="#caf0f8">Direction Achats · Casablanca</text>
+  <text x="910" y="215" font-family="Arial" font-size="40" font-weight="700" fill="#90e0ef">BON DE COMMANDE</text>
+  <text x="155" y="375" font-family="Arial" font-size="24" fill="#52647a">FOURNISSEUR</text>
+  <text x="155" y="425" font-family="Arial" font-size="34" font-weight="700" fill="#03045e">MAGHREB OILS &amp; FOODS SARL</text>
+  <text x="155" y="470" font-family="Arial" font-size="25" fill="#34465c">Casablanca · ICE 003184920000071</text>
+  <rect x="850" y="330" width="370" height="190" rx="14" fill="#f5fbfd" stroke="#90e0ef" stroke-width="2"/>
+  <text x="890" y="385" font-family="Arial" font-size="23" fill="#52647a">N° COMMANDE</text>
+  <text x="890" y="430" font-family="Arial" font-size="34" font-weight="700" fill="#03045e">PO-1042</text>
+  <text x="890" y="485" font-family="Arial" font-size="23" fill="#52647a">DATE : 18/07/2026</text>
+  <rect x="155" y="650" width="1090" height="75" rx="10" fill="#0077b6"/>
+  <text x="185" y="698" font-family="Arial" font-size="23" font-weight="700" fill="#fff">PRODUIT</text>
+  <text x="735" y="698" font-family="Arial" font-size="23" font-weight="700" fill="#fff">QTÉ</text>
+  <text x="850" y="698" font-family="Arial" font-size="23" font-weight="700" fill="#fff">PRIX HT</text>
+  <text x="1050" y="698" font-family="Arial" font-size="23" font-weight="700" fill="#fff">TOTAL</text>
+  <rect x="155" y="725" width="1090" height="160" fill="#f8fbfd" stroke="#d9e8ee" stroke-width="2"/>
+  <text x="185" y="795" font-family="Arial" font-size="29" font-weight="700" fill="#17243b">Huile de table 1L — cartons de 12</text>
+  <text x="185" y="840" font-family="Arial" font-size="22" fill="#52647a">Livraison : Entrepôt Casablanca</text>
+  <text x="750" y="810" font-family="Arial" font-size="29" font-weight="700" fill="#17243b">500</text>
+  <text x="850" y="810" font-family="Arial" font-size="29" font-weight="700" fill="#17243b">180.00</text>
+  <text x="1050" y="810" font-family="Arial" font-size="29" font-weight="700" fill="#17243b">90,000.00</text>
+  <rect x="760" y="1030" width="485" height="105" rx="14" fill="#03045e"/>
+  <text x="800" y="1097" font-family="Arial" font-size="30" font-weight="700" fill="#fff">TOTAL HT</text>
+  <text x="1030" y="1097" font-family="Arial" font-size="30" font-weight="700" fill="#90e0ef">90,000 MAD</text>
+  <rect x="155" y="1250" width="1090" height="230" rx="14" fill="#f5fbfd" stroke="#90e0ef" stroke-width="2"/>
+  <text x="190" y="1315" font-family="Arial" font-size="25" font-weight="700" fill="#0077b6">CONDITIONS</text>
+  <text x="190" y="1370" font-family="Arial" font-size="24" fill="#34465c">Prix contractuel : 180.00 MAD / carton</text>
+  <text x="190" y="1420" font-family="Arial" font-size="24" fill="#34465c">Paiement : 45 jours après réception conforme</text>
+  <text x="155" y="1730" font-family="Arial" font-size="21" fill="#6a788b">Document synthétique créé pour la démonstration MIZAN Control.</text>
+</svg>

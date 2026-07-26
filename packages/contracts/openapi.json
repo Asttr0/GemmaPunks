@@ -101,6 +101,306 @@
         "title": "AgentRunRecord",
         "type": "object"
       },
+      "AuditEvidence": {
+        "properties": {
+          "amount_centimes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount Centimes"
+          },
+          "document_type": {
+            "enum": [
+              "PURCHASE_ORDER",
+              "DELIVERY_NOTE",
+              "SUPPLIER_INVOICE",
+              "BANK_PAYMENT",
+              "SUPPLIER_CONTRACT"
+            ],
+            "title": "Document Type",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "quantity": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Quantity"
+          },
+          "reference": {
+            "title": "Reference",
+            "type": "string"
+          },
+          "status": {
+            "default": "SUPPORTING",
+            "enum": [
+              "MATCHED",
+              "MISMATCH",
+              "SUPPORTING"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "unit_price_centimes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unit Price Centimes"
+          }
+        },
+        "required": [
+          "document_type",
+          "reference",
+          "label"
+        ],
+        "title": "AuditEvidence",
+        "type": "object"
+      },
+      "AuditFinding": {
+        "properties": {
+          "calculation": {
+            "items": {
+              "$ref": "#/components/schemas/CalculationStep"
+            },
+            "title": "Calculation",
+            "type": "array"
+          },
+          "confidence": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence",
+            "type": "number"
+          },
+          "due_date": {
+            "format": "date",
+            "title": "Due Date",
+            "type": "string"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/AuditEvidence"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "expected_amount_centimes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Amount Centimes"
+          },
+          "financial_impact_centimes": {
+            "title": "Financial Impact Centimes",
+            "type": "integer"
+          },
+          "finding_id": {
+            "title": "Finding Id",
+            "type": "string"
+          },
+          "finding_type": {
+            "enum": [
+              "THREE_WAY_MISMATCH",
+              "DUPLICATE_PAYMENT",
+              "PRICE_DRIFT",
+              "MISSING_CREDIT_NOTE",
+              "SUPPLIER_CONCENTRATION"
+            ],
+            "title": "Finding Type",
+            "type": "string"
+          },
+          "observed_amount_centimes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observed Amount Centimes"
+          },
+          "owner": {
+            "title": "Owner",
+            "type": "string"
+          },
+          "recommended_action": {
+            "title": "Recommended Action",
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "CRITICAL",
+              "HIGH",
+              "MEDIUM",
+              "LOW"
+            ],
+            "title": "Severity",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "OPEN",
+              "READY_FOR_APPROVAL",
+              "APPROVED",
+              "RESOLVED"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "supplier_id": {
+            "title": "Supplier Id",
+            "type": "string"
+          },
+          "supplier_name": {
+            "title": "Supplier Name",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "finding_id",
+          "finding_type",
+          "severity",
+          "status",
+          "title",
+          "summary",
+          "supplier_id",
+          "supplier_name",
+          "financial_impact_centimes",
+          "confidence",
+          "recommended_action",
+          "owner",
+          "due_date"
+        ],
+        "title": "AuditFinding",
+        "type": "object"
+      },
+      "AuditRunResponse": {
+        "properties": {
+          "documents_analyzed": {
+            "title": "Documents Analyzed",
+            "type": "integer"
+          },
+          "findings_created": {
+            "title": "Findings Created",
+            "type": "integer"
+          },
+          "model": {
+            "title": "Model",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "run_id": {
+            "title": "Run Id",
+            "type": "string"
+          },
+          "status": {
+            "const": "SUCCEEDED",
+            "title": "Status",
+            "type": "string"
+          },
+          "tool_calls": {
+            "items": {
+              "$ref": "#/components/schemas/AuditRunToolCall"
+            },
+            "title": "Tool Calls",
+            "type": "array"
+          },
+          "total_impact_centimes": {
+            "title": "Total Impact Centimes",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "run_id",
+          "status",
+          "provider",
+          "model",
+          "documents_analyzed",
+          "findings_created",
+          "total_impact_centimes",
+          "tool_calls"
+        ],
+        "title": "AuditRunResponse",
+        "type": "object"
+      },
+      "AuditRunToolCall": {
+        "properties": {
+          "deterministic": {
+            "title": "Deterministic",
+            "type": "boolean"
+          },
+          "duration_ms": {
+            "title": "Duration Ms",
+            "type": "integer"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "output": {
+            "title": "Output",
+            "type": "string"
+          },
+          "sequence": {
+            "title": "Sequence",
+            "type": "integer"
+          },
+          "status": {
+            "const": "SUCCEEDED",
+            "default": "SUCCEEDED",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "sequence",
+          "name",
+          "label",
+          "duration_ms",
+          "output",
+          "deterministic"
+        ],
+        "title": "AuditRunToolCall",
+        "type": "object"
+      },
       "AuthResponse": {
         "properties": {
           "organization": {
@@ -152,6 +452,63 @@
         "title": "Body_upload_evidence_api_v1_ingestions_post",
         "type": "object"
       },
+      "CalculationStep": {
+        "properties": {
+          "expression": {
+            "title": "Expression",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "result_centimes": {
+            "title": "Result Centimes",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "label",
+          "expression",
+          "result_centimes"
+        ],
+        "title": "CalculationStep",
+        "type": "object"
+      },
+      "CashForecastPoint": {
+        "properties": {
+          "date": {
+            "format": "date",
+            "title": "Date",
+            "type": "string"
+          },
+          "inflows_centimes": {
+            "title": "Inflows Centimes",
+            "type": "integer"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "outflows_centimes": {
+            "title": "Outflows Centimes",
+            "type": "integer"
+          },
+          "projected_balance_centimes": {
+            "title": "Projected Balance Centimes",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "label",
+          "date",
+          "inflows_centimes",
+          "outflows_centimes",
+          "projected_balance_centimes"
+        ],
+        "title": "CashForecastPoint",
+        "type": "object"
+      },
       "ClarificationAnswer": {
         "additionalProperties": false,
         "properties": {
@@ -173,6 +530,49 @@
           "answer"
         ],
         "title": "ClarificationAnswer",
+        "type": "object"
+      },
+      "CompanyContext": {
+        "properties": {
+          "active_supplier_count": {
+            "title": "Active Supplier Count",
+            "type": "integer"
+          },
+          "city": {
+            "title": "City",
+            "type": "string"
+          },
+          "legal_name": {
+            "title": "Legal Name",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "reporting_period": {
+            "title": "Reporting Period",
+            "type": "string"
+          },
+          "sector": {
+            "title": "Sector",
+            "type": "string"
+          },
+          "warehouse_count": {
+            "title": "Warehouse Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name",
+          "legal_name",
+          "sector",
+          "city",
+          "warehouse_count",
+          "active_supplier_count",
+          "reporting_period"
+        ],
+        "title": "CompanyContext",
         "type": "object"
       },
       "ConfirmDraftRequest": {
@@ -246,6 +646,90 @@
           "total_centimes"
         ],
         "title": "ConfirmationResponse",
+        "type": "object"
+      },
+      "ControlTowerDashboard": {
+        "properties": {
+          "cash_forecast": {
+            "items": {
+              "$ref": "#/components/schemas/CashForecastPoint"
+            },
+            "title": "Cash Forecast",
+            "type": "array"
+          },
+          "company": {
+            "$ref": "#/components/schemas/CompanyContext"
+          },
+          "findings": {
+            "items": {
+              "$ref": "#/components/schemas/AuditFinding"
+            },
+            "title": "Findings",
+            "type": "array"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "kpis": {
+            "$ref": "#/components/schemas/ControlTowerKPIs"
+          },
+          "priority_actions": {
+            "items": {
+              "$ref": "#/components/schemas/PriorityAction"
+            },
+            "title": "Priority Actions",
+            "type": "array"
+          }
+        },
+        "required": [
+          "generated_at",
+          "company",
+          "kpis",
+          "cash_forecast",
+          "priority_actions",
+          "findings"
+        ],
+        "title": "ControlTowerDashboard",
+        "type": "object"
+      },
+      "ControlTowerKPIs": {
+        "properties": {
+          "cash_at_risk_centimes": {
+            "title": "Cash At Risk Centimes",
+            "type": "integer"
+          },
+          "critical_findings": {
+            "title": "Critical Findings",
+            "type": "integer"
+          },
+          "inventory_value_centimes": {
+            "title": "Inventory Value Centimes",
+            "type": "integer"
+          },
+          "monitored_spend_centimes": {
+            "title": "Monitored Spend Centimes",
+            "type": "integer"
+          },
+          "open_findings": {
+            "title": "Open Findings",
+            "type": "integer"
+          },
+          "preventable_leakage_centimes": {
+            "title": "Preventable Leakage Centimes",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "monitored_spend_centimes",
+          "preventable_leakage_centimes",
+          "cash_at_risk_centimes",
+          "inventory_value_centimes",
+          "open_findings",
+          "critical_findings"
+        ],
+        "title": "ControlTowerKPIs",
         "type": "object"
       },
       "CreateCatalogItemRequest": {
@@ -503,6 +987,13 @@
       "DraftLine": {
         "additionalProperties": false,
         "properties": {
+          "base_unit": {
+            "default": "unit",
+            "maxLength": 32,
+            "minLength": 1,
+            "title": "Base Unit",
+            "type": "string"
+          },
           "confidence": {
             "default": 1.0,
             "maximum": 1.0,
@@ -573,6 +1064,13 @@
             "minLength": 1,
             "title": "Unit",
             "type": "string"
+          },
+          "unit_multiplier": {
+            "default": 1,
+            "maximum": 100000.0,
+            "minimum": 1.0,
+            "title": "Unit Multiplier",
+            "type": "integer"
           },
           "unit_price_centimes": {
             "minimum": 0.0,
@@ -657,6 +1155,194 @@
           "total_centimes"
         ],
         "title": "ExtractionDraft",
+        "type": "object"
+      },
+      "FinancialRecord": {
+        "properties": {
+          "amount_centimes": {
+            "title": "Amount Centimes",
+            "type": "integer"
+          },
+          "counterparty": {
+            "title": "Counterparty",
+            "type": "string"
+          },
+          "due_on": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due On"
+          },
+          "issued_on": {
+            "format": "date",
+            "title": "Issued On",
+            "type": "string"
+          },
+          "linked_records": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Linked Records",
+            "type": "array"
+          },
+          "record_id": {
+            "title": "Record Id",
+            "type": "string"
+          },
+          "record_type": {
+            "enum": [
+              "PURCHASE_ORDER",
+              "DELIVERY_NOTE",
+              "SUPPLIER_INVOICE",
+              "BANK_PAYMENT",
+              "CUSTOMER_RECEIVABLE"
+            ],
+            "title": "Record Type",
+            "type": "string"
+          },
+          "reference": {
+            "title": "Reference",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "MATCHED",
+              "EXCEPTION",
+              "PENDING",
+              "PAID",
+              "EXPECTED"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "record_id",
+          "record_type",
+          "reference",
+          "counterparty",
+          "issued_on",
+          "amount_centimes",
+          "status"
+        ],
+        "title": "FinancialRecord",
+        "type": "object"
+      },
+      "FinancialRecordListResponse": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/FinancialRecord"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "FinancialRecordListResponse",
+        "type": "object"
+      },
+      "FindingDecisionRequest": {
+        "properties": {
+          "action": {
+            "enum": [
+              "PREPARE_DISPUTE",
+              "APPROVE_CORRECTED_AMOUNT",
+              "DISMISS"
+            ],
+            "title": "Action",
+            "type": "string"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          }
+        },
+        "required": [
+          "action"
+        ],
+        "title": "FindingDecisionRequest",
+        "type": "object"
+      },
+      "FindingDecisionResponse": {
+        "properties": {
+          "action": {
+            "title": "Action",
+            "type": "string"
+          },
+          "approved_amount_centimes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approved Amount Centimes"
+          },
+          "approved_at": {
+            "format": "date-time",
+            "title": "Approved At",
+            "type": "string"
+          },
+          "approved_by": {
+            "title": "Approved By",
+            "type": "string"
+          },
+          "dispute_reference": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dispute Reference"
+          },
+          "finding_id": {
+            "title": "Finding Id",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "APPROVED",
+              "RESOLVED"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "finding_id",
+          "status",
+          "action",
+          "message",
+          "approved_by",
+          "approved_at"
+        ],
+        "title": "FindingDecisionResponse",
         "type": "object"
       },
       "GenerateProcurementNeedRequest": {
@@ -1354,6 +2040,49 @@
         "title": "Organization",
         "type": "object"
       },
+      "PriorityAction": {
+        "properties": {
+          "action_id": {
+            "title": "Action Id",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "impact_centimes": {
+            "title": "Impact Centimes",
+            "type": "integer"
+          },
+          "target_path": {
+            "title": "Target Path",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "urgency": {
+            "enum": [
+              "NOW",
+              "THIS_WEEK",
+              "MONITOR"
+            ],
+            "title": "Urgency",
+            "type": "string"
+          }
+        },
+        "required": [
+          "action_id",
+          "title",
+          "description",
+          "impact_centimes",
+          "urgency",
+          "target_path"
+        ],
+        "title": "PriorityAction",
+        "type": "object"
+      },
       "ProcurementNeed": {
         "properties": {
           "average_daily_sales": {
@@ -1504,6 +2233,77 @@
           "quantity_needed"
         ],
         "title": "ProcurementNeed",
+        "type": "object"
+      },
+      "ProductOptionListResponse": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ProductOptionResponse"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "ProductOptionListResponse",
+        "type": "object"
+      },
+      "ProductOptionResponse": {
+        "properties": {
+          "base_unit": {
+            "title": "Base Unit",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "product_id": {
+            "title": "Product Id",
+            "type": "string"
+          },
+          "units": {
+            "items": {
+              "$ref": "#/components/schemas/ProductUnitOptionResponse"
+            },
+            "title": "Units",
+            "type": "array"
+          }
+        },
+        "required": [
+          "product_id",
+          "name",
+          "base_unit",
+          "units"
+        ],
+        "title": "ProductOptionResponse",
+        "type": "object"
+      },
+      "ProductUnitOptionResponse": {
+        "properties": {
+          "conversion_to_base": {
+            "minimum": 1.0,
+            "title": "Conversion To Base",
+            "type": "integer"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "unit": {
+            "title": "Unit",
+            "type": "string"
+          }
+        },
+        "required": [
+          "unit",
+          "label",
+          "conversion_to_base"
+        ],
+        "title": "ProductUnitOptionResponse",
         "type": "object"
       },
       "Profile": {
@@ -1874,6 +2674,120 @@
         "title": "SupplierOpportunityListResponse",
         "type": "object"
       },
+      "SupplierPortfolioResponse": {
+        "properties": {
+          "concentration_risk_percent": {
+            "title": "Concentration Risk Percent",
+            "type": "number"
+          },
+          "savings_opportunity_centimes": {
+            "title": "Savings Opportunity Centimes",
+            "type": "integer"
+          },
+          "scorecards": {
+            "items": {
+              "$ref": "#/components/schemas/SupplierScorecard"
+            },
+            "title": "Scorecards",
+            "type": "array"
+          },
+          "total_spend_centimes": {
+            "title": "Total Spend Centimes",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "total_spend_centimes",
+          "concentration_risk_percent",
+          "savings_opportunity_centimes",
+          "scorecards"
+        ],
+        "title": "SupplierPortfolioResponse",
+        "type": "object"
+      },
+      "SupplierScorecard": {
+        "properties": {
+          "annual_spend_centimes": {
+            "title": "Annual Spend Centimes",
+            "type": "integer"
+          },
+          "average_payment_terms_days": {
+            "title": "Average Payment Terms Days",
+            "type": "integer"
+          },
+          "category": {
+            "title": "Category",
+            "type": "string"
+          },
+          "city": {
+            "title": "City",
+            "type": "string"
+          },
+          "contract_compliance_percent": {
+            "title": "Contract Compliance Percent",
+            "type": "number"
+          },
+          "delivery_reliability_percent": {
+            "title": "Delivery Reliability Percent",
+            "type": "number"
+          },
+          "disputed_invoice_rate_percent": {
+            "title": "Disputed Invoice Rate Percent",
+            "type": "number"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "recommendation": {
+            "title": "Recommendation",
+            "type": "string"
+          },
+          "risk": {
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH"
+            ],
+            "title": "Risk",
+            "type": "string"
+          },
+          "spend_share_percent": {
+            "title": "Spend Share Percent",
+            "type": "number"
+          },
+          "supplier_id": {
+            "title": "Supplier Id",
+            "type": "string"
+          },
+          "trend": {
+            "enum": [
+              "IMPROVING",
+              "STABLE",
+              "DECLINING"
+            ],
+            "title": "Trend",
+            "type": "string"
+          }
+        },
+        "required": [
+          "supplier_id",
+          "name",
+          "city",
+          "category",
+          "annual_spend_centimes",
+          "spend_share_percent",
+          "delivery_reliability_percent",
+          "contract_compliance_percent",
+          "disputed_invoice_rate_percent",
+          "average_payment_terms_days",
+          "risk",
+          "trend",
+          "recommendation"
+        ],
+        "title": "SupplierScorecard",
+        "type": "object"
+      },
       "SupplierSearchResponse": {
         "properties": {
           "items": {
@@ -2027,6 +2941,23 @@
       },
       "TransactionLine": {
         "properties": {
+          "base_unit": {
+            "default": "UNIT",
+            "title": "Base Unit",
+            "type": "string"
+          },
+          "inventory_quantity": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inventory Quantity"
+          },
           "line_id": {
             "title": "Line Id",
             "type": "string"
@@ -2045,6 +2976,17 @@
           },
           "quantity": {
             "title": "Quantity",
+            "type": "integer"
+          },
+          "unit": {
+            "default": "UNIT",
+            "title": "Unit",
+            "type": "string"
+          },
+          "unit_multiplier": {
+            "default": 1,
+            "minimum": 1.0,
+            "title": "Unit Multiplier",
             "type": "integer"
           },
           "unit_price_centimes": {
@@ -2183,8 +3125,8 @@
     }
   },
   "info": {
-    "description": "MIZAN Souq - Modular FastAPI Backend for Darija-first business management and intelligent procurement.",
-    "title": "MIZAN Souq API",
+    "description": "MIZAN Control - AI financial control, supplier intelligence, and working-capital decision support for Moroccan distribution companies.",
+    "title": "MIZAN Control API",
     "version": "0.1.0"
   },
   "openapi": "3.1.0",
@@ -2648,6 +3590,849 @@
         "summary": "Signup",
         "tags": [
           "auth"
+        ]
+      }
+    },
+    "/api/v1/control-tower/audit-findings": {
+      "get": {
+        "operationId": "list_audit_findings_api_v1_control_tower_audit_findings_get",
+        "parameters": [
+          {
+            "example": "string",
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "example": "string",
+            "in": "header",
+            "name": "x-test-user-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Test-User-Id"
+            }
+          },
+          {
+            "example": "string",
+            "in": "header",
+            "name": "x-test-org-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Test-Org-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "calculation": [
+                      {
+                        "expression": "string",
+                        "label": "Review purchasing need",
+                        "result_centimes": 1
+                      }
+                    ],
+                    "confidence": 1.0,
+                    "due_date": "string",
+                    "evidence": [
+                      {
+                        "amount_centimes": 1,
+                        "document_type": "PURCHASE_ORDER",
+                        "label": "Review purchasing need",
+                        "quantity": 20,
+                        "reference": "string",
+                        "status": "SUPPORTING",
+                        "unit_price_centimes": 1850
+                      }
+                    ],
+                    "expected_amount_centimes": 1,
+                    "financial_impact_centimes": 1,
+                    "finding_id": "string",
+                    "finding_type": "THREE_WAY_MISMATCH",
+                    "observed_amount_centimes": 1,
+                    "owner": "string",
+                    "recommended_action": "string",
+                    "severity": "CRITICAL",
+                    "status": "OPEN",
+                    "summary": "string",
+                    "supplier_id": "string",
+                    "supplier_name": "string",
+                    "title": "string"
+                  }
+                ],
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/AuditFinding"
+                  },
+                  "title": "Response List Audit Findings Api V1 Control Tower Audit Findings Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Audit Findings",
+        "tags": [
+          "control-tower"
+        ]
+      }
+    },
+    "/api/v1/control-tower/audit-findings/{finding_id}": {
+      "get": {
+        "operationId": "get_audit_finding_api_v1_control_tower_audit_findings__finding_id__get",
+        "parameters": [
+          {
+            "example": "string",
+            "in": "path",
+            "name": "finding_id",
+            "required": true,
+            "schema": {
+              "title": "Finding Id",
+              "type": "string"
+            }
+          },
+          {
+            "example": "string",
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "example": "string",
+            "in": "header",
+            "name": "x-test-user-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Test-User-Id"
+            }
+          },
+          {
+            "example": "string",
+            "in": "header",
+            "name": "x-test-org-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Test-Org-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "calculation": [
+                    {
+                      "expression": "string",
+                      "label": "Review purchasing need",
+                      "result_centimes": 1
+                    }
+                  ],
+                  "confidence": 1.0,
+                  "due_date": "string",
+                  "evidence": [
+                    {
+                      "amount_centimes": 1,
+                      "document_type": "PURCHASE_ORDER",
+                      "label": "Review purchasing need",
+                      "quantity": 20,
+                      "reference": "string",
+                      "status": "SUPPORTING",
+                      "unit_price_centimes": 1850
+                    }
+                  ],
+                  "expected_amount_centimes": 1,
+                  "financial_impact_centimes": 1,
+                  "finding_id": "string",
+                  "finding_type": "THREE_WAY_MISMATCH",
+                  "observed_amount_centimes": 1,
+                  "owner": "string",
+                  "recommended_action": "string",
+                  "severity": "CRITICAL",
+                  "status": "OPEN",
+                  "summary": "string",
+                  "supplier_id": "string",
+                  "supplier_name": "string",
+                  "title": "string"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/AuditFinding"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Audit Finding",
+        "tags": [
+          "control-tower"
+        ]
+      }
+    },
+    "/api/v1/control-tower/audit-findings/{finding_id}/decide": {
+      "post": {
+        "operationId": "decide_audit_finding_api_v1_control_tower_audit_findings__finding_id__decide_post",
+        "parameters": [
+          {
+            "example": "string",
+            "in": "path",
+            "name": "finding_id",
+            "required": true,
+            "schema": {
+              "title": "Finding Id",
+              "type": "string"
+            }
+          },
+          {
+            "example": "string",
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "example": "string",
+            "in": "header",
+            "name": "x-test-user-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Test-User-Id"
+            }
+          },
+          {
+            "example": "string",
+            "in": "header",
+            "name": "x-test-org-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Test-Org-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "example": {
+                "action": "PREPARE_DISPUTE",
+                "note": "string"
+              },
+              "schema": {
+                "$ref": "#/components/schemas/FindingDecisionRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "action": "string",
+                  "approved_amount_centimes": 1,
+                  "approved_at": "2026-07-25T08:00:00Z",
+                  "approved_by": "string",
+                  "dispute_reference": "string",
+                  "finding_id": "string",
+                  "message": "Cooking oil may run out in four days.",
+                  "status": "APPROVED"
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/FindingDecisionResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Decide Audit Finding",
+        "tags": [
+          "control-tower"
+        ]
+      }
+    },
+    "/api/v1/control-tower/audit-runs": {
+      "post": {
+        "operationId": "run_control_audit_api_v1_control_tower_audit_runs_post",
+        "parameters": [
+          {
+            "example": "string",
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "example": "string",
+            "in": "header",
+            "name": "x-test-user-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Test-User-Id"
+            }
+          },
+          {
+            "example": "string",
+            "in": "header",
+            "name": "x-test-org-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Test-Org-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "documents_analyzed": 1,
+                  "findings_created": 1,
+                  "model": "string",
+                  "provider": "string",
+                  "run_id": "string",
+                  "status": "SUCCEEDED",
+                  "tool_calls": [
+                    {
+                      "deterministic": true,
+                      "duration_ms": 1,
+                      "label": "Review purchasing need",
+                      "name": "string",
+                      "output": "string",
+                      "sequence": 1,
+                      "status": "SUCCEEDED"
+                    }
+                  ],
+                  "total_impact_centimes": 1
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/AuditRunResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Run Control Audit",
+        "tags": [
+          "control-tower"
+        ]
+      }
+    },
+    "/api/v1/control-tower/dashboard": {
+      "get": {
+        "operationId": "get_dashboard_api_v1_control_tower_dashboard_get",
+        "parameters": [
+          {
+            "example": "string",
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "example": "string",
+            "in": "header",
+            "name": "x-test-user-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Test-User-Id"
+            }
+          },
+          {
+            "example": "string",
+            "in": "header",
+            "name": "x-test-org-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Test-Org-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "cash_forecast": [
+                    {
+                      "date": "string",
+                      "inflows_centimes": 1,
+                      "label": "Review purchasing need",
+                      "outflows_centimes": 1,
+                      "projected_balance_centimes": 1
+                    }
+                  ],
+                  "company": {
+                    "active_supplier_count": 1,
+                    "city": "Berrechid",
+                    "legal_name": "string",
+                    "name": "string",
+                    "reporting_period": "string",
+                    "sector": "string",
+                    "warehouse_count": 1
+                  },
+                  "findings": [
+                    {
+                      "calculation": [
+                        {
+                          "expression": "string",
+                          "label": "Review purchasing need",
+                          "result_centimes": 1
+                        }
+                      ],
+                      "confidence": 1.0,
+                      "due_date": "string",
+                      "evidence": [
+                        {
+                          "amount_centimes": 1,
+                          "document_type": "PURCHASE_ORDER",
+                          "label": "Review purchasing need",
+                          "quantity": 20,
+                          "reference": "string",
+                          "status": "SUPPORTING",
+                          "unit_price_centimes": 1850
+                        }
+                      ],
+                      "expected_amount_centimes": 1,
+                      "financial_impact_centimes": 1,
+                      "finding_id": "string",
+                      "finding_type": "THREE_WAY_MISMATCH",
+                      "observed_amount_centimes": 1,
+                      "owner": "string",
+                      "recommended_action": "string",
+                      "severity": "CRITICAL",
+                      "status": "OPEN",
+                      "summary": "string",
+                      "supplier_id": "string",
+                      "supplier_name": "string",
+                      "title": "string"
+                    }
+                  ],
+                  "generated_at": "2026-07-25T08:00:00Z",
+                  "kpis": {
+                    "cash_at_risk_centimes": 1,
+                    "critical_findings": 1,
+                    "inventory_value_centimes": 1,
+                    "monitored_spend_centimes": 1,
+                    "open_findings": 1,
+                    "preventable_leakage_centimes": 1
+                  },
+                  "priority_actions": [
+                    {
+                      "action_id": "string",
+                      "description": "string",
+                      "impact_centimes": 1,
+                      "target_path": "string",
+                      "title": "string",
+                      "urgency": "NOW"
+                    }
+                  ]
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ControlTowerDashboard"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Dashboard",
+        "tags": [
+          "control-tower"
+        ]
+      }
+    },
+    "/api/v1/control-tower/records": {
+      "get": {
+        "operationId": "get_financial_records_api_v1_control_tower_records_get",
+        "parameters": [
+          {
+            "example": "string",
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "example": "string",
+            "in": "header",
+            "name": "x-test-user-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Test-User-Id"
+            }
+          },
+          {
+            "example": "string",
+            "in": "header",
+            "name": "x-test-org-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Test-Org-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "items": [
+                    {
+                      "amount_centimes": 1,
+                      "counterparty": "string",
+                      "due_on": "string",
+                      "issued_on": "string",
+                      "linked_records": [
+                        "string"
+                      ],
+                      "record_id": "string",
+                      "record_type": "PURCHASE_ORDER",
+                      "reference": "string",
+                      "status": "MATCHED"
+                    }
+                  ]
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/FinancialRecordListResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Financial Records",
+        "tags": [
+          "control-tower"
+        ]
+      }
+    },
+    "/api/v1/control-tower/suppliers": {
+      "get": {
+        "operationId": "get_supplier_portfolio_api_v1_control_tower_suppliers_get",
+        "parameters": [
+          {
+            "example": "string",
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "example": "string",
+            "in": "header",
+            "name": "x-test-user-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Test-User-Id"
+            }
+          },
+          {
+            "example": "string",
+            "in": "header",
+            "name": "x-test-org-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Test-Org-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "concentration_risk_percent": 1.0,
+                  "savings_opportunity_centimes": 1,
+                  "scorecards": [
+                    {
+                      "annual_spend_centimes": 1,
+                      "average_payment_terms_days": 1,
+                      "category": "string",
+                      "city": "Berrechid",
+                      "contract_compliance_percent": 1.0,
+                      "delivery_reliability_percent": 1.0,
+                      "disputed_invoice_rate_percent": 1.0,
+                      "name": "string",
+                      "recommendation": "string",
+                      "risk": "LOW",
+                      "spend_share_percent": 1.0,
+                      "supplier_id": "string",
+                      "trend": "IMPROVING"
+                    }
+                  ],
+                  "total_spend_centimes": 1
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/SupplierPortfolioResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Supplier Portfolio",
+        "tags": [
+          "control-tower"
         ]
       }
     },
@@ -3286,6 +5071,7 @@
                     "id": "resource-001",
                     "lines": [
                       {
+                        "base_unit": "unit",
                         "confidence": 1.0,
                         "line_id": "string",
                         "line_total_centimes": 1,
@@ -3297,6 +5083,7 @@
                           "string"
                         ],
                         "unit": "unit",
+                        "unit_multiplier": 1,
                         "unit_price_centimes": 1850
                       }
                     ],
@@ -3418,6 +5205,7 @@
                     "id": "resource-001",
                     "lines": [
                       {
+                        "base_unit": "unit",
                         "confidence": 1.0,
                         "line_id": "string",
                         "line_total_centimes": 1,
@@ -3429,6 +5217,7 @@
                           "string"
                         ],
                         "unit": "unit",
+                        "unit_multiplier": 1,
                         "unit_price_centimes": 1850
                       }
                     ],
@@ -3560,6 +5349,7 @@
                   "id": "resource-001",
                   "lines": [
                     {
+                      "base_unit": "unit",
                       "confidence": 1.0,
                       "line_id": "string",
                       "line_total_centimes": 1,
@@ -3571,6 +5361,7 @@
                         "string"
                       ],
                       "unit": "unit",
+                      "unit_multiplier": 1,
                       "unit_price_centimes": 1850
                     }
                   ],
@@ -3719,6 +5510,107 @@
           }
         },
         "summary": "List Inventory",
+        "tags": [
+          "inventory"
+        ]
+      }
+    },
+    "/api/v1/inventory/product-options": {
+      "get": {
+        "description": "Return the approved products and purchasing units used during human review.",
+        "operationId": "list_product_options_api_v1_inventory_product_options_get",
+        "parameters": [
+          {
+            "example": "string",
+            "in": "header",
+            "name": "authorization",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "example": "string",
+            "in": "header",
+            "name": "x-test-user-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Test-User-Id"
+            }
+          },
+          {
+            "example": "string",
+            "in": "header",
+            "name": "x-test-org-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Test-Org-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "items": [
+                    {
+                      "base_unit": "string",
+                      "name": "string",
+                      "product_id": "cooking-oil-1l",
+                      "units": [
+                        {
+                          "conversion_to_base": 1,
+                          "label": "Review purchasing need",
+                          "unit": "BOTTLE"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ProductOptionListResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Product Options",
         "tags": [
           "inventory"
         ]
@@ -5018,11 +6910,15 @@
                       "kind": "purchase",
                       "lines": [
                         {
+                          "base_unit": "UNIT",
+                          "inventory_quantity": 1,
                           "line_id": "string",
                           "line_total_centimes": 1,
                           "product_id": "cooking-oil-1l",
                           "product_name": "string",
                           "quantity": 20,
+                          "unit": "UNIT",
+                          "unit_multiplier": 1,
                           "unit_price_centimes": 1850
                         }
                       ],

@@ -4,3182 +4,4276 @@
  */
 
 export interface paths {
-    "/api/v1/agent-runs/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get Agent Run Audit
-         * @description Read the agent run timeline and tool-call audit for demonstration and auditability.
-         */
-        get: operations["get_agent_run_audit_api_v1_agent_runs__id__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+  "/api/v1/agent-runs/{id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/v1/auth/login": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Login
-         * @description Authenticate user and return profile & organization context.
-         */
-        post: operations["login_api_v1_auth_login_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * Get Agent Run Audit
+     * @description Read the agent run timeline and tool-call audit for demonstration and auditability.
+     */
+    get: operations["get_agent_run_audit_api_v1_agent_runs__id__get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/auth/login": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/v1/auth/me": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get Me
-         * @description Get currently authenticated user context, profile, and organization.
-         */
-        get: operations["get_me_api_v1_auth_me_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /**
+     * Login
+     * @description Authenticate user and return profile & organization context.
+     */
+    post: operations["login_api_v1_auth_login_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/auth/me": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/v1/auth/signup": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Signup
-         * @description Create the server-owned organization records for a verified Firebase user.
-         */
-        post: operations["signup_api_v1_auth_signup_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * Get Me
+     * @description Get currently authenticated user context, profile, and organization.
+     */
+    get: operations["get_me_api_v1_auth_me_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/auth/signup": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/v1/group-orders": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List Group Orders
-         * @description List collective group orders participating by the authenticated merchant.
-         */
-        get: operations["list_group_orders_api_v1_group_orders_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /**
+     * Signup
+     * @description Create the server-owned organization records for a verified Firebase user.
+     */
+    post: operations["signup_api_v1_auth_signup_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/control-tower/audit-findings": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/v1/group-orders/propose": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Propose Group Order
-         * @description Propose combining compatible merchant demand into a collective order.
-         */
-        post: operations["propose_group_order_api_v1_group_orders_propose_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /** List Audit Findings */
+    get: operations["list_audit_findings_api_v1_control_tower_audit_findings_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/control-tower/audit-findings/{finding_id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/v1/group-orders/{id}/approve": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Approve Group Order
-         * @description Approve final participation in a collective group order.
-         */
-        post: operations["approve_group_order_api_v1_group_orders__id__approve_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /** Get Audit Finding */
+    get: operations["get_audit_finding_api_v1_control_tower_audit_findings__finding_id__get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/control-tower/audit-findings/{finding_id}/decide": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/v1/group-orders/{id}/join": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Join Group Order
-         * @description Join an open collective purchasing proposal.
-         */
-        post: operations["join_group_order_api_v1_group_orders__id__join_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /** Decide Audit Finding */
+    post: operations["decide_audit_finding_api_v1_control_tower_audit_findings__finding_id__decide_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/control-tower/audit-runs": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/v1/ingestions": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Upload Evidence
-         * @description Upload receipt or audio evidence to start ingestion and receive an unconfirmed draft.
-         */
-        post: operations["upload_evidence_api_v1_ingestions_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /** Run Control Audit */
+    post: operations["run_control_audit_api_v1_control_tower_audit_runs_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/control-tower/dashboard": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/v1/ingestions/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Read Ingestion
-         * @description Read ingestion status and extraction draft for the authenticated merchant organization.
-         */
-        get: operations["read_ingestion_api_v1_ingestions__id__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /** Get Dashboard */
+    get: operations["get_dashboard_api_v1_control_tower_dashboard_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/control-tower/records": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/v1/ingestions/{id}/confirm": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Confirm Draft
-         * @description Confirm corrected draft, creating official transactions and inventory movements.
-         */
-        post: operations["confirm_draft_api_v1_ingestions__id__confirm_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /** Get Financial Records */
+    get: operations["get_financial_records_api_v1_control_tower_records_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/control-tower/suppliers": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/v1/inventory": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List Inventory
-         * @description List authoritative stock snapshots updated by confirmed inventory movements.
-         */
-        get: operations["list_inventory_api_v1_inventory_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /** Get Supplier Portfolio */
+    get: operations["get_supplier_portfolio_api_v1_control_tower_suppliers_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/group-orders": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/v1/merchant/dashboard": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get Merchant Dashboard
-         * @description Return KPIs, stockout alerts, and recommended next actions for the authenticated merchant.
-         */
-        get: operations["get_merchant_dashboard_api_v1_merchant_dashboard_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * List Group Orders
+     * @description List collective group orders participating by the authenticated merchant.
+     */
+    get: operations["list_group_orders_api_v1_group_orders_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/group-orders/propose": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/v1/offers/compare": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Compare Offers
-         * @description Compare supplier offers and group order opportunities for a procurement need.
-         */
-        post: operations["compare_offers_api_v1_offers_compare_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /**
+     * Propose Group Order
+     * @description Propose combining compatible merchant demand into a collective order.
+     */
+    post: operations["propose_group_order_api_v1_group_orders_propose_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/group-orders/{id}/approve": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/v1/procurement-needs": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List Procurement Needs
-         * @description List open procurement needs owned by the merchant organization.
-         */
-        get: operations["list_procurement_needs_api_v1_procurement_needs_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /**
+     * Approve Group Order
+     * @description Approve final participation in a collective group order.
+     */
+    post: operations["approve_group_order_api_v1_group_orders__id__approve_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/group-orders/{id}/join": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/v1/procurement-needs/generate": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Generate Procurement Need
-         * @description Predict stockout and generate a procurement need for the merchant.
-         */
-        post: operations["generate_procurement_need_api_v1_procurement_needs_generate_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /**
+     * Join Group Order
+     * @description Join an open collective purchasing proposal.
+     */
+    post: operations["join_group_order_api_v1_group_orders__id__join_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/ingestions": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/v1/supplier/catalogs": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List Supplier Catalogs
-         * @description List catalog items published by the authenticated supplier.
-         */
-        get: operations["list_supplier_catalogs_api_v1_supplier_catalogs_get"];
-        put?: never;
-        /**
-         * Create Catalog Item
-         * @description Add a new product catalog item for the supplier organization.
-         */
-        post: operations["create_catalog_item_api_v1_supplier_catalogs_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /**
+     * Upload Evidence
+     * @description Upload receipt or audio evidence to start ingestion and receive an unconfirmed draft.
+     */
+    post: operations["upload_evidence_api_v1_ingestions_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/ingestions/{id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/v1/supplier/dashboard": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get Supplier Dashboard
-         * @description Return KPIs and active demand opportunities for the authenticated supplier.
-         */
-        get: operations["get_supplier_dashboard_api_v1_supplier_dashboard_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * Read Ingestion
+     * @description Read ingestion status and extraction draft for the authenticated merchant organization.
+     */
+    get: operations["read_ingestion_api_v1_ingestions__id__get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/ingestions/{id}/confirm": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/v1/supplier/offers": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Create Supplier Offer
-         * @description Submit a competitive supplier offer responding to an aggregated demand opportunity.
-         */
-        post: operations["create_supplier_offer_api_v1_supplier_offers_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /**
+     * Confirm Draft
+     * @description Confirm corrected draft, creating official transactions and inventory movements.
+     */
+    post: operations["confirm_draft_api_v1_ingestions__id__confirm_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/inventory": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/v1/supplier/opportunities": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List Supplier Opportunities
-         * @description Return safe aggregated supplier demand without exposing private merchant data.
-         */
-        get: operations["list_supplier_opportunities_api_v1_supplier_opportunities_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * List Inventory
+     * @description List authoritative stock snapshots updated by confirmed inventory movements.
+     */
+    get: operations["list_inventory_api_v1_inventory_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/inventory/product-options": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/v1/suppliers/search": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Search Suppliers
-         * @description Search supplier catalog items matching product criteria.
-         */
-        get: operations["search_suppliers_api_v1_suppliers_search_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * List Product Options
+     * @description Return the approved products and purchasing units used during human review.
+     */
+    get: operations["list_product_options_api_v1_inventory_product_options_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/merchant/dashboard": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/api/v1/transactions": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List Transactions
-         * @description List confirmed transactions owned by the authenticated merchant organization.
-         */
-        get: operations["list_transactions_api_v1_transactions_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    /**
+     * Get Merchant Dashboard
+     * @description Return KPIs, stockout alerts, and recommended next actions for the authenticated merchant.
+     */
+    get: operations["get_merchant_dashboard_api_v1_merchant_dashboard_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/offers/compare": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/health": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Health */
-        get: operations["health_health_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    get?: never;
+    put?: never;
+    /**
+     * Compare Offers
+     * @description Compare supplier offers and group order opportunities for a procurement need.
+     */
+    post: operations["compare_offers_api_v1_offers_compare_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/procurement-needs": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
+    /**
+     * List Procurement Needs
+     * @description List open procurement needs owned by the merchant organization.
+     */
+    get: operations["list_procurement_needs_api_v1_procurement_needs_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/procurement-needs/generate": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Generate Procurement Need
+     * @description Predict stockout and generate a procurement need for the merchant.
+     */
+    post: operations["generate_procurement_need_api_v1_procurement_needs_generate_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/supplier/catalogs": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * List Supplier Catalogs
+     * @description List catalog items published by the authenticated supplier.
+     */
+    get: operations["list_supplier_catalogs_api_v1_supplier_catalogs_get"];
+    put?: never;
+    /**
+     * Create Catalog Item
+     * @description Add a new product catalog item for the supplier organization.
+     */
+    post: operations["create_catalog_item_api_v1_supplier_catalogs_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/supplier/dashboard": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Get Supplier Dashboard
+     * @description Return KPIs and active demand opportunities for the authenticated supplier.
+     */
+    get: operations["get_supplier_dashboard_api_v1_supplier_dashboard_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/supplier/offers": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    /**
+     * Create Supplier Offer
+     * @description Submit a competitive supplier offer responding to an aggregated demand opportunity.
+     */
+    post: operations["create_supplier_offer_api_v1_supplier_offers_post"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/supplier/opportunities": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * List Supplier Opportunities
+     * @description Return safe aggregated supplier demand without exposing private merchant data.
+     */
+    get: operations["list_supplier_opportunities_api_v1_supplier_opportunities_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/suppliers/search": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * Search Suppliers
+     * @description Search supplier catalog items matching product criteria.
+     */
+    get: operations["search_suppliers_api_v1_suppliers_search_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/v1/transactions": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * List Transactions
+     * @description List confirmed transactions owned by the authenticated merchant organization.
+     */
+    get: operations["list_transactions_api_v1_transactions_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/health": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Health */
+    get: operations["health_health_get"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-    schemas: {
-        /** AgentRunRecord */
-        AgentRunRecord: {
-            /** Agent Run Id */
-            agent_run_id: string;
-            /** Completed At */
-            completed_at?: string | null;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at?: string;
-            /** Document Id */
-            document_id?: string | null;
-            /**
-             * Duration Ms
-             * @default 0
-             */
-            duration_ms: number;
-            /**
-             * Fallback Used
-             * @default false
-             */
-            fallback_used: boolean;
-            /** Ingestion Job Id */
-            ingestion_job_id?: string | null;
-            /** Model */
-            model?: string | null;
-            /** Organization Id */
-            organization_id: string;
-            /**
-             * Provider
-             * @default fixture
-             */
-            provider: string;
-            /**
-             * Status
-             * @default SUCCEEDED
-             * @enum {string}
-             */
-            status: "RUNNING" | "SUCCEEDED" | "FAILED";
-            /** Tool Calls */
-            tool_calls?: components["schemas"]["ToolCallRecord"][];
-        };
-        /** AuthResponse */
-        AuthResponse: {
-            organization?: components["schemas"]["Organization"] | null;
-            profile?: components["schemas"]["Profile"] | null;
-            user: components["schemas"]["UserContext"];
-        };
-        /** Body_upload_evidence_api_v1_ingestions_post */
-        Body_upload_evidence_api_v1_ingestions_post: {
-            /** File */
-            file: string;
-            /**
-             * Kind
-             * @default receipt
-             */
-            kind: string;
-        };
-        /** ClarificationAnswer */
-        ClarificationAnswer: {
-            /** Answer */
-            answer: string;
-            /** Field Path */
-            field_path: string;
-        };
-        /** ConfirmDraftRequest */
-        ConfirmDraftRequest: {
-            /** Clarification Answers */
-            clarification_answers?: components["schemas"]["ClarificationAnswer"][];
-            draft?: components["schemas"]["ExtractionDraft"] | null;
-            /**
-             * Draft Version
-             * @default 1
-             */
-            draft_version: number;
-        };
-        /** ConfirmationResponse */
-        ConfirmationResponse: {
-            /** Draft Id */
-            draft_id: string;
-            /** Ingestion Id */
-            ingestion_id: string;
-            /** Inventory Movement Ids */
-            inventory_movement_ids?: string[];
-            /**
-             * Status
-             * @default CONFIRMED
-             * @constant
-             */
-            status: "CONFIRMED";
-            /** Total Centimes */
-            total_centimes: number;
-            /** Transaction Id */
-            transaction_id: string;
-        };
-        /** CreateCatalogItemRequest */
-        CreateCatalogItemRequest: {
-            /**
-             * Available Quantity
-             * @default 1000
-             */
-            available_quantity: number;
-            /**
-             * Delivery Days
-             * @default 1
-             */
-            delivery_days: number;
-            /**
-             * Delivery Fee Centimes
-             * @default 3000
-             */
-            delivery_fee_centimes: number;
-            /**
-             * Minimum Quantity
-             * @default 1
-             */
-            minimum_quantity: number;
-            /** Product Id */
-            product_id: string;
-            /** Service Areas */
-            service_areas?: string[];
-            /** Supplier Sku */
-            supplier_sku: string;
-            /**
-             * Unit
-             * @default BOTTLE
-             */
-            unit: string;
-            /** Unit Price Centimes */
-            unit_price_centimes: number;
-        };
-        /** CreateSupplierOfferRequest */
-        CreateSupplierOfferRequest: {
-            /** Catalog Item Id */
-            catalog_item_id: string;
-            /**
-             * Minimum Quantity
-             * @default 50
-             */
-            minimum_quantity: number;
-            /** Opportunity Id */
-            opportunity_id: string;
-            /** Unit Price Centimes */
-            unit_price_centimes: number;
-        };
-        /** DashboardAlert */
-        DashboardAlert: {
-            /** Code */
-            code: string;
-            /** Message */
-            message: string;
-        };
-        /** DashboardKPIs */
-        DashboardKPIs: {
-            /** Available Cash Centimes */
-            available_cash_centimes: number;
-            /** Estimated Profit Centimes */
-            estimated_profit_centimes: number;
-            /** Expenses Centimes */
-            expenses_centimes: number;
-            /** Sales Centimes */
-            sales_centimes: number;
-        };
-        /** DashboardNextAction */
-        DashboardNextAction: {
-            /** Code */
-            code: string;
-            /** Label */
-            label: string;
-            /** Target Id */
-            target_id?: string | null;
-        };
-        /** DashboardResponse */
-        DashboardResponse: {
-            /** Alerts */
-            alerts?: components["schemas"]["DashboardAlert"][];
-            /**
-             * Generated At
-             * Format: date-time
-             */
-            generated_at: string;
-            inventory: components["schemas"]["InventorySummary"];
-            kpis: components["schemas"]["DashboardKPIs"];
-            next_action?: components["schemas"]["DashboardNextAction"] | null;
-        };
-        /** DocumentMetadata */
-        DocumentMetadata: {
-            /** Content Type */
-            content_type: string;
-            /** Id */
-            id: string;
-            /**
-             * Kind
-             * @default receipt
-             * @enum {string}
-             */
-            kind: "receipt" | "audio" | "ledger" | "screenshot";
-            /** Original Name */
-            original_name: string;
-            /** Size Bytes */
-            size_bytes: number;
-        };
-        /** DraftLine */
-        DraftLine: {
-            /**
-             * Confidence
-             * @default 1
-             */
-            confidence: number;
-            /** Line Id */
-            line_id?: string | null;
-            /** Line Total Centimes */
-            line_total_centimes: number;
-            /** Original Product Name */
-            original_product_name?: string | null;
-            /** Product Id */
-            product_id?: string | null;
-            /** Product Name */
-            product_name: string;
-            /** Quantity */
-            quantity: number;
-            /** Uncertain Fields */
-            uncertain_fields?: string[];
-            /**
-             * Unit
-             * @default unit
-             */
-            unit: string;
-            /** Unit Price Centimes */
-            unit_price_centimes: number;
-        };
-        /** ExtractionDraft */
-        ExtractionDraft: {
-            /** Clarification Question */
-            clarification_question?: string | null;
-            /**
-             * Currency
-             * @default MAD
-             * @constant
-             */
-            currency: "MAD";
-            /** Id */
-            id?: string | null;
-            /** Lines */
-            lines: components["schemas"]["DraftLine"][];
-            /** Total Centimes */
-            total_centimes: number;
-            /**
-             * Transaction Kind
-             * @default purchase
-             * @enum {string}
-             */
-            transaction_kind: "purchase" | "sale" | "expense";
-            /**
-             * Version
-             * @default 1
-             */
-            version: number;
-        };
-        /** GenerateProcurementNeedRequest */
-        GenerateProcurementNeedRequest: {
-            /**
-             * Product Id
-             * @default cooking-oil-1l
-             */
-            product_id: string;
-            /** Target Stock */
-            target_stock?: number | null;
-            /**
-             * Unit
-             * @default BOTTLE
-             */
-            unit: string;
-        };
-        /** GroupOrderListResponse */
-        GroupOrderListResponse: {
-            /** Items */
-            items: components["schemas"]["GroupOrderResponse"][];
-        };
-        /** GroupOrderMember */
-        GroupOrderMember: {
-            /** Approved At */
-            approved_at?: string | null;
-            /** Approved By */
-            approved_by?: string | null;
-            /** Collective Delivery Share Centimes */
-            collective_delivery_share_centimes: number;
-            /** Collective Unit Price Centimes */
-            collective_unit_price_centimes: number;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at?: string;
-            /** Delivery Saving Centimes */
-            delivery_saving_centimes: number;
-            /** Organization Id */
-            organization_id: string;
-            /** Original Delivery Centimes */
-            original_delivery_centimes: number;
-            /** Original Unit Price Centimes */
-            original_unit_price_centimes: number;
-            /** Procurement Need Id */
-            procurement_need_id: string;
-            /** Product Saving Centimes */
-            product_saving_centimes: number;
-            /** Quantity */
-            quantity: number;
-            /**
-             * Status
-             * @default JOINED
-             * @enum {string}
-             */
-            status: "PENDING" | "JOINED" | "APPROVED" | "DECLINED";
-            /** Total Saving Centimes */
-            total_saving_centimes: number;
-            /**
-             * Updated At
-             * Format: date-time
-             */
-            updated_at?: string;
-        };
-        /** GroupOrderResponse */
-        GroupOrderResponse: {
-            /** Collective Unit Price Centimes */
-            collective_unit_price_centimes: number;
-            group_order: components["schemas"]["GroupOrderSummary"];
-            member: components["schemas"]["GroupOrderMember"];
-            /** Original Unit Price Centimes */
-            original_unit_price_centimes: number;
-            /** Total Savings Centimes */
-            total_savings_centimes: number;
-        };
-        /** GroupOrderSummary */
-        GroupOrderSummary: {
-            /** Coarse Area */
-            coarse_area: string;
-            /** Delivery Total Centimes */
-            delivery_total_centimes: number;
-            /** Group Order Id */
-            group_order_id: string;
-            /**
-             * Join Deadline
-             * Format: date-time
-             */
-            join_deadline: string;
-            /** Minimum Quantity */
-            minimum_quantity: number;
-            /**
-             * Needed By
-             * Format: date-time
-             */
-            needed_by: string;
-            /** Participant Count */
-            participant_count: number;
-            /** Product Id */
-            product_id: string;
-            /** Status */
-            status: string;
-            /** Supplier Catalog Item Id */
-            supplier_catalog_item_id: string;
-            /** Supplier Organization Id */
-            supplier_organization_id: string;
-            /** Total Quantity */
-            total_quantity: number;
-            /** Unit */
-            unit: string;
-            /** Unit Price Centimes */
-            unit_price_centimes: number;
-        };
-        /** HTTPValidationError */
-        HTTPValidationError: {
-            /** Detail */
-            detail?: components["schemas"]["ValidationError"][];
-        };
-        /** IngestionResponse */
-        IngestionResponse: {
-            document: components["schemas"]["DocumentMetadata"];
-            draft?: components["schemas"]["ExtractionDraft"] | null;
-            /** Error Message */
-            error_message?: string | null;
-            /** Id */
-            id: string;
-            /** Organization Id */
-            organization_id: string;
-            /**
-             * Status
-             * @default NEEDS_REVIEW
-             * @enum {string}
-             */
-            status: "PROCESSING" | "NEEDS_REVIEW" | "CONFIRMED" | "REJECTED" | "FAILED";
-        };
-        /** InventoryItemResponse */
-        InventoryItemResponse: {
-            /**
-             * Low Stock
-             * @default false
-             */
-            low_stock: boolean;
-            /** Low Stock Threshold */
-            low_stock_threshold: number;
-            /** Name */
-            name: string;
-            /** Predicted Stockout At */
-            predicted_stockout_at?: string | null;
-            /** Product Id */
-            product_id: string;
-            /** Quantity On Hand */
-            quantity_on_hand: number;
-            /**
-             * Status
-             * @enum {string}
-             */
-            status: "HEALTHY" | "LOW_STOCK" | "OUT_OF_STOCK";
-            /** Unit */
-            unit: string;
-        };
-        /** InventoryResponse */
-        InventoryResponse: {
-            /** Items */
-            items: components["schemas"]["InventoryItemResponse"][];
-        };
-        /** InventorySummary */
-        InventorySummary: {
-            /** Low Stock Count */
-            low_stock_count: number;
-            /** Product Count */
-            product_count: number;
-        };
-        /** LoginRequest */
-        LoginRequest: {
-            /** Id Token */
-            id_token?: string | null;
-        };
-        /** Offer */
-        Offer: {
-            /**
-             * Affordable
-             * @default true
-             */
-            affordable: boolean;
-            /** Catalog Item Id */
-            catalog_item_id: string;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at?: string;
-            /**
-             * Delivery Days
-             * @default 1
-             */
-            delivery_days: number;
-            /** Delivery Fee Centimes */
-            delivery_fee_centimes: number;
-            /**
-             * Eligible Alone
-             * @default true
-             */
-            eligible_alone: boolean;
-            /** Expected Unit Margin Centimes */
-            expected_unit_margin_centimes?: number | null;
-            /**
-             * Explanation
-             * @default
-             */
-            explanation: string;
-            /** Landed Cost Centimes */
-            landed_cost_centimes: number;
-            /**
-             * Landed Unit Cost Centimes
-             * @default 0
-             */
-            landed_unit_cost_centimes: number;
-            /** Minimum Quantity */
-            minimum_quantity: number;
-            /** Offer Id */
-            offer_id: string;
-            /** Organization Id */
-            organization_id: string;
-            /** Procurement Need Id */
-            procurement_need_id: string;
-            /**
-             * Product Cost Centimes
-             * @default 0
-             */
-            product_cost_centimes: number;
-            /** Product Id */
-            product_id: string;
-            /** Rejection Reasons */
-            rejection_reasons?: string[];
-            /** Requested Quantity */
-            requested_quantity: number;
-            /**
-             * Status
-             * @default AVAILABLE_NOW
-             * @enum {string}
-             */
-            status: "AVAILABLE_NOW" | "GROUP_ONLY" | "REJECTED";
-            /** Supplier Organization Id */
-            supplier_organization_id: string;
-            /**
-             * Unit
-             * @default BOTTLE
-             */
-            unit: string;
-            /** Unit Price Centimes */
-            unit_price_centimes: number;
-            /**
-             * Updated At
-             * Format: date-time
-             */
-            updated_at?: string;
-        };
-        /** OfferCompareRequest */
-        OfferCompareRequest: {
-            /** Procurement Need Id */
-            procurement_need_id: string;
-            /** Quantity */
-            quantity?: number | null;
-        };
-        /** OfferCompareResponse */
-        OfferCompareResponse: {
-            /** Available Now */
-            available_now?: components["schemas"]["Offer"][];
-            group_opportunity?: components["schemas"]["Offer"] | null;
-            /** Rejected */
-            rejected?: components["schemas"]["Offer"][];
-        };
-        /** Organization */
-        Organization: {
-            /**
-             * City
-             * @default Berrechid
-             */
-            city: string;
-            /**
-             * Coarse Area
-             * @default Berrechid Center
-             */
-            coarse_area: string;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at?: string;
-            /**
-             * Currency
-             * @default MAD
-             */
-            currency: string;
-            /** Name */
-            name: string;
-            /**
-             * Opening Cash Centimes
-             * @default 0
-             */
-            opening_cash_centimes: number;
-            /** Organization Id */
-            organization_id: string;
-            /**
-             * Status
-             * @default ACTIVE
-             * @enum {string}
-             */
-            status: "ACTIVE" | "DISABLED";
-            /**
-             * Type
-             * @default MERCHANT
-             * @enum {string}
-             */
-            type: "MERCHANT" | "SUPPLIER";
-            /**
-             * Updated At
-             * Format: date-time
-             */
-            updated_at?: string;
-        };
-        /** ProcurementNeed */
-        ProcurementNeed: {
-            /** Average Daily Sales */
-            average_daily_sales?: number | null;
-            /**
-             * Coarse Area
-             * @default Berrechid Center
-             */
-            coarse_area: string;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at?: string;
-            /** Days Remaining */
-            days_remaining?: number | null;
-            /**
-             * Explanation
-             * @default
-             */
-            explanation: string;
-            /**
-             * Forecast Status
-             * @default FORECAST
-             * @enum {string}
-             */
-            forecast_status: "FORECAST" | "OUT_OF_STOCK" | "NO_DEMAND" | "INSUFFICIENT_HISTORY";
-            /** Need Id */
-            need_id: string;
-            /**
-             * Needed By
-             * Format: date-time
-             */
-            needed_by?: string;
-            /** Organization Id */
-            organization_id: string;
-            /** Product Id */
-            product_id: string;
-            /** Quantity Needed */
-            quantity_needed: number;
-            /**
-             * Sales History Days
-             * @default 0
-             */
-            sales_history_days: number;
-            /**
-             * Status
-             * @default OPEN
-             * @enum {string}
-             */
-            status: "OPEN" | "MATCHED" | "ORDERED" | "CANCELLED";
-            /** Stock On Hand */
-            stock_on_hand?: number | null;
-            /** Stockout At */
-            stockout_at?: string | null;
-            /** Target Stock Quantity */
-            target_stock_quantity?: number | null;
-            /** Uncertainty Note */
-            uncertainty_note?: string | null;
-            /**
-             * Unit
-             * @default BOTTLE
-             */
-            unit: string;
-            /**
-             * Updated At
-             * Format: date-time
-             */
-            updated_at?: string;
-        };
-        /** Profile */
-        Profile: {
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at?: string;
-            /** Display Name */
-            display_name: string;
-            /** Email */
-            email: string;
-            /**
-             * Locale
-             * @default en-MA
-             */
-            locale: string;
-            /** Primary Organization Id */
-            primary_organization_id: string;
-            /**
-             * Updated At
-             * Format: date-time
-             */
-            updated_at?: string;
-            /** User Id */
-            user_id: string;
-        };
-        /** ProposeGroupOrderRequest */
-        ProposeGroupOrderRequest: {
-            /** Procurement Need Id */
-            procurement_need_id: string;
-            /** Product Id */
-            product_id?: string | null;
-            /** Quantity */
-            quantity?: number | null;
-            /** Supplier Catalog Item Id */
-            supplier_catalog_item_id: string;
-            /** Supplier Organization Id */
-            supplier_organization_id: string;
-        };
-        /** SignUpRequest */
-        SignUpRequest: {
-            /** Display Name */
-            display_name: string;
-            /** Email */
-            email: string;
-            /** Organization Name */
-            organization_name: string;
-            /**
-             * Organization Type
-             * @default MERCHANT
-             * @enum {string}
-             */
-            organization_type: "MERCHANT" | "SUPPLIER";
-        };
-        /** SupplierCatalogItem */
-        SupplierCatalogItem: {
-            /**
-             * Available Quantity
-             * @default 1000
-             */
-            available_quantity: number;
-            /** Catalog Item Id */
-            catalog_item_id: string;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at?: string;
-            /**
-             * Delivery Days
-             * @default 1
-             */
-            delivery_days: number;
-            /**
-             * Delivery Fee Centimes
-             * @default 0
-             */
-            delivery_fee_centimes: number;
-            /**
-             * Minimum Quantity
-             * @default 1
-             */
-            minimum_quantity: number;
-            /** Organization Id */
-            organization_id: string;
-            /** Product Id */
-            product_id: string;
-            /** Service Areas */
-            service_areas?: string[];
-            /**
-             * Status
-             * @default ACTIVE
-             * @enum {string}
-             */
-            status: "ACTIVE" | "INACTIVE";
-            /** Supplier Sku */
-            supplier_sku: string;
-            /**
-             * Unit
-             * @default BOTTLE
-             */
-            unit: string;
-            /** Unit Price Centimes */
-            unit_price_centimes: number;
-            /**
-             * Updated At
-             * Format: date-time
-             */
-            updated_at?: string;
-        };
-        /** SupplierCatalogResponse */
-        SupplierCatalogResponse: {
-            /** Items */
-            items: components["schemas"]["SupplierCatalogItem"][];
-        };
-        /** SupplierDashboardKPIs */
-        SupplierDashboardKPIs: {
-            /**
-             * Active Catalog Items
-             * @default 5
-             */
-            active_catalog_items: number;
-            /**
-             * Active Demand Opportunities
-             * @default 2
-             */
-            active_demand_opportunities: number;
-            /**
-             * Estimated Revenue Centimes
-             * @default 101750
-             */
-            estimated_revenue_centimes: number;
-            /**
-             * Total Potential Volume
-             * @default 55
-             */
-            total_potential_volume: number;
-        };
-        /** SupplierDashboardResponse */
-        SupplierDashboardResponse: {
-            kpis: components["schemas"]["SupplierDashboardKPIs"];
-            /** Opportunities */
-            opportunities?: components["schemas"]["SupplierOpportunity"][];
-        };
-        /** SupplierOpportunity */
-        SupplierOpportunity: {
-            /**
-             * Coarse Area
-             * @default Berrechid Center
-             */
-            coarse_area: string;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at?: string;
-            /**
-             * Merchant Count
-             * @default 1
-             */
-            merchant_count: number;
-            /**
-             * Needed By
-             * Format: date-time
-             */
-            needed_by?: string;
-            /** Opportunity Id */
-            opportunity_id: string;
-            /** Product Id */
-            product_id: string;
-            /** Source Group Order Id */
-            source_group_order_id?: string | null;
-            /**
-             * Status
-             * @default ACTIVE
-             * @enum {string}
-             */
-            status: "ACTIVE" | "QUOTED" | "CLOSED" | "ARCHIVED";
-            /**
-             * Supplier Organization Id
-             * @default
-             */
-            supplier_organization_id: string;
-            /** Total Quantity */
-            total_quantity: number;
-            /**
-             * Unit
-             * @default BOTTLE
-             */
-            unit: string;
-            /**
-             * Updated At
-             * Format: date-time
-             */
-            updated_at?: string;
-        };
-        /** SupplierOpportunityListResponse */
-        SupplierOpportunityListResponse: {
-            /** Items */
-            items: components["schemas"]["SupplierOpportunity"][];
-        };
-        /** SupplierSearchResponse */
-        SupplierSearchResponse: {
-            /** Items */
-            items: components["schemas"]["SupplierCatalogItem"][];
-        };
-        /** ToolCallRecord */
-        ToolCallRecord: {
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at?: string;
-            /**
-             * Duration Ms
-             * @default 0
-             */
-            duration_ms: number;
-            /**
-             * Fallback Used
-             * @default false
-             */
-            fallback_used: boolean;
-            /** Input Summary */
-            input_summary: string;
-            /** Name */
-            name: string;
-            /** Organization Id */
-            organization_id: string;
-            /** Output Summary */
-            output_summary: string;
-            /** Sequence */
-            sequence: number;
-            /**
-             * Status
-             * @default SUCCEEDED
-             * @enum {string}
-             */
-            status: "STARTED" | "SUCCEEDED" | "FAILED";
-            /** Tool Call Id */
-            tool_call_id: string;
-        };
-        /** Transaction */
-        Transaction: {
-            /**
-             * Currency
-             * @default MAD
-             */
-            currency: string;
-            /** Draft Id */
-            draft_id?: string | null;
-            /** Id */
-            id: string;
-            /** Ingestion Id */
-            ingestion_id?: string | null;
-            /**
-             * Kind
-             * @enum {string}
-             */
-            kind: "purchase" | "sale" | "expense";
-            /** Lines */
-            lines?: components["schemas"]["TransactionLine"][];
-            /**
-             * Occurred At
-             * Format: date-time
-             */
-            occurred_at?: string;
-            /** Organization Id */
-            organization_id: string;
-            /** Total Centimes */
-            total_centimes: number;
-        };
-        /** TransactionLine */
-        TransactionLine: {
-            /** Line Id */
-            line_id: string;
-            /** Line Total Centimes */
-            line_total_centimes: number;
-            /** Product Id */
-            product_id: string;
-            /** Product Name */
-            product_name: string;
-            /** Quantity */
-            quantity: number;
-            /** Unit Price Centimes */
-            unit_price_centimes: number;
-        };
-        /** TransactionListResponse */
-        TransactionListResponse: {
-            /** Items */
-            items: components["schemas"]["Transaction"][];
-            /** Next Cursor */
-            next_cursor?: string | null;
-        };
-        /** UserContext */
-        UserContext: {
-            /** Display Name */
-            display_name?: string | null;
-            /** Email */
-            email?: string | null;
-            /** Organization Id */
-            organization_id: string;
-            /**
-             * Role
-             * @default owner
-             * @enum {string}
-             */
-            role: "owner" | "member" | "admin";
-            /** User Id */
-            user_id: string;
-        };
-        /** ValidationError */
-        ValidationError: {
-            /** Context */
-            ctx?: Record<string, never>;
-            /** Input */
-            input?: unknown;
-            /** Location */
-            loc: (string | number)[];
-            /** Message */
-            msg: string;
-            /** Error Type */
-            type: string;
-        };
+  schemas: {
+    /** AgentRunRecord */
+    AgentRunRecord: {
+      /** Agent Run Id */
+      agent_run_id: string;
+      /** Completed At */
+      completed_at?: string | null;
+      /**
+       * Created At
+       * Format: date-time
+       */
+      created_at?: string;
+      /** Document Id */
+      document_id?: string | null;
+      /**
+       * Duration Ms
+       * @default 0
+       */
+      duration_ms: number;
+      /**
+       * Fallback Used
+       * @default false
+       */
+      fallback_used: boolean;
+      /** Ingestion Job Id */
+      ingestion_job_id?: string | null;
+      /** Model */
+      model?: string | null;
+      /** Organization Id */
+      organization_id: string;
+      /**
+       * Provider
+       * @default fixture
+       */
+      provider: string;
+      /**
+       * Status
+       * @default SUCCEEDED
+       * @enum {string}
+       */
+      status: "RUNNING" | "SUCCEEDED" | "FAILED";
+      /** Tool Calls */
+      tool_calls?: components["schemas"]["ToolCallRecord"][];
     };
-    responses: never;
-    parameters: never;
-    requestBodies: never;
-    headers: never;
-    pathItems: never;
+    /** AuditEvidence */
+    AuditEvidence: {
+      /** Amount Centimes */
+      amount_centimes?: number | null;
+      /**
+       * Document Type
+       * @enum {string}
+       */
+      document_type:
+        | "PURCHASE_ORDER"
+        | "DELIVERY_NOTE"
+        | "SUPPLIER_INVOICE"
+        | "BANK_PAYMENT"
+        | "SUPPLIER_CONTRACT";
+      /** Label */
+      label: string;
+      /** Quantity */
+      quantity?: number | null;
+      /** Reference */
+      reference: string;
+      /**
+       * Status
+       * @default SUPPORTING
+       * @enum {string}
+       */
+      status: "MATCHED" | "MISMATCH" | "SUPPORTING";
+      /** Unit Price Centimes */
+      unit_price_centimes?: number | null;
+    };
+    /** AuditFinding */
+    AuditFinding: {
+      /** Calculation */
+      calculation?: components["schemas"]["CalculationStep"][];
+      /** Confidence */
+      confidence: number;
+      /**
+       * Due Date
+       * Format: date
+       */
+      due_date: string;
+      /** Evidence */
+      evidence?: components["schemas"]["AuditEvidence"][];
+      /** Expected Amount Centimes */
+      expected_amount_centimes?: number | null;
+      /** Financial Impact Centimes */
+      financial_impact_centimes: number;
+      /** Finding Id */
+      finding_id: string;
+      /**
+       * Finding Type
+       * @enum {string}
+       */
+      finding_type:
+        | "THREE_WAY_MISMATCH"
+        | "DUPLICATE_PAYMENT"
+        | "PRICE_DRIFT"
+        | "MISSING_CREDIT_NOTE"
+        | "SUPPLIER_CONCENTRATION";
+      /** Observed Amount Centimes */
+      observed_amount_centimes?: number | null;
+      /** Owner */
+      owner: string;
+      /** Recommended Action */
+      recommended_action: string;
+      /**
+       * Severity
+       * @enum {string}
+       */
+      severity: "CRITICAL" | "HIGH" | "MEDIUM" | "LOW";
+      /**
+       * Status
+       * @enum {string}
+       */
+      status: "OPEN" | "READY_FOR_APPROVAL" | "APPROVED" | "RESOLVED";
+      /** Summary */
+      summary: string;
+      /** Supplier Id */
+      supplier_id: string;
+      /** Supplier Name */
+      supplier_name: string;
+      /** Title */
+      title: string;
+    };
+    /** AuditRunResponse */
+    AuditRunResponse: {
+      /** Documents Analyzed */
+      documents_analyzed: number;
+      /** Findings Created */
+      findings_created: number;
+      /** Model */
+      model: string;
+      /** Provider */
+      provider: string;
+      /** Run Id */
+      run_id: string;
+      /**
+       * Status
+       * @constant
+       */
+      status: "SUCCEEDED";
+      /** Tool Calls */
+      tool_calls: components["schemas"]["AuditRunToolCall"][];
+      /** Total Impact Centimes */
+      total_impact_centimes: number;
+    };
+    /** AuditRunToolCall */
+    AuditRunToolCall: {
+      /** Deterministic */
+      deterministic: boolean;
+      /** Duration Ms */
+      duration_ms: number;
+      /** Label */
+      label: string;
+      /** Name */
+      name: string;
+      /** Output */
+      output: string;
+      /** Sequence */
+      sequence: number;
+      /**
+       * Status
+       * @default SUCCEEDED
+       * @constant
+       */
+      status: "SUCCEEDED";
+    };
+    /** AuthResponse */
+    AuthResponse: {
+      organization?: components["schemas"]["Organization"] | null;
+      profile?: components["schemas"]["Profile"] | null;
+      user: components["schemas"]["UserContext"];
+    };
+    /** Body_upload_evidence_api_v1_ingestions_post */
+    Body_upload_evidence_api_v1_ingestions_post: {
+      /** File */
+      file: string;
+      /**
+       * Kind
+       * @default receipt
+       */
+      kind: string;
+    };
+    /** CalculationStep */
+    CalculationStep: {
+      /** Expression */
+      expression: string;
+      /** Label */
+      label: string;
+      /** Result Centimes */
+      result_centimes: number;
+    };
+    /** CashForecastPoint */
+    CashForecastPoint: {
+      /**
+       * Date
+       * Format: date
+       */
+      date: string;
+      /** Inflows Centimes */
+      inflows_centimes: number;
+      /** Label */
+      label: string;
+      /** Outflows Centimes */
+      outflows_centimes: number;
+      /** Projected Balance Centimes */
+      projected_balance_centimes: number;
+    };
+    /** ClarificationAnswer */
+    ClarificationAnswer: {
+      /** Answer */
+      answer: string;
+      /** Field Path */
+      field_path: string;
+    };
+    /** CompanyContext */
+    CompanyContext: {
+      /** Active Supplier Count */
+      active_supplier_count: number;
+      /** City */
+      city: string;
+      /** Legal Name */
+      legal_name: string;
+      /** Name */
+      name: string;
+      /** Reporting Period */
+      reporting_period: string;
+      /** Sector */
+      sector: string;
+      /** Warehouse Count */
+      warehouse_count: number;
+    };
+    /** ConfirmDraftRequest */
+    ConfirmDraftRequest: {
+      /** Clarification Answers */
+      clarification_answers?: components["schemas"]["ClarificationAnswer"][];
+      draft?: components["schemas"]["ExtractionDraft"] | null;
+      /**
+       * Draft Version
+       * @default 1
+       */
+      draft_version: number;
+    };
+    /** ConfirmationResponse */
+    ConfirmationResponse: {
+      /** Draft Id */
+      draft_id: string;
+      /** Ingestion Id */
+      ingestion_id: string;
+      /** Inventory Movement Ids */
+      inventory_movement_ids?: string[];
+      /**
+       * Status
+       * @default CONFIRMED
+       * @constant
+       */
+      status: "CONFIRMED";
+      /** Total Centimes */
+      total_centimes: number;
+      /** Transaction Id */
+      transaction_id: string;
+    };
+    /** ControlTowerDashboard */
+    ControlTowerDashboard: {
+      /** Cash Forecast */
+      cash_forecast: components["schemas"]["CashForecastPoint"][];
+      company: components["schemas"]["CompanyContext"];
+      /** Findings */
+      findings: components["schemas"]["AuditFinding"][];
+      /**
+       * Generated At
+       * Format: date-time
+       */
+      generated_at: string;
+      kpis: components["schemas"]["ControlTowerKPIs"];
+      /** Priority Actions */
+      priority_actions: components["schemas"]["PriorityAction"][];
+    };
+    /** ControlTowerKPIs */
+    ControlTowerKPIs: {
+      /** Cash At Risk Centimes */
+      cash_at_risk_centimes: number;
+      /** Critical Findings */
+      critical_findings: number;
+      /** Inventory Value Centimes */
+      inventory_value_centimes: number;
+      /** Monitored Spend Centimes */
+      monitored_spend_centimes: number;
+      /** Open Findings */
+      open_findings: number;
+      /** Preventable Leakage Centimes */
+      preventable_leakage_centimes: number;
+    };
+    /** CreateCatalogItemRequest */
+    CreateCatalogItemRequest: {
+      /**
+       * Available Quantity
+       * @default 1000
+       */
+      available_quantity: number;
+      /**
+       * Delivery Days
+       * @default 1
+       */
+      delivery_days: number;
+      /**
+       * Delivery Fee Centimes
+       * @default 3000
+       */
+      delivery_fee_centimes: number;
+      /**
+       * Minimum Quantity
+       * @default 1
+       */
+      minimum_quantity: number;
+      /** Product Id */
+      product_id: string;
+      /** Service Areas */
+      service_areas?: string[];
+      /** Supplier Sku */
+      supplier_sku: string;
+      /**
+       * Unit
+       * @default BOTTLE
+       */
+      unit: string;
+      /** Unit Price Centimes */
+      unit_price_centimes: number;
+    };
+    /** CreateSupplierOfferRequest */
+    CreateSupplierOfferRequest: {
+      /** Catalog Item Id */
+      catalog_item_id: string;
+      /**
+       * Minimum Quantity
+       * @default 50
+       */
+      minimum_quantity: number;
+      /** Opportunity Id */
+      opportunity_id: string;
+      /** Unit Price Centimes */
+      unit_price_centimes: number;
+    };
+    /** DashboardAlert */
+    DashboardAlert: {
+      /** Code */
+      code: string;
+      /** Message */
+      message: string;
+    };
+    /** DashboardKPIs */
+    DashboardKPIs: {
+      /** Available Cash Centimes */
+      available_cash_centimes: number;
+      /** Estimated Profit Centimes */
+      estimated_profit_centimes: number;
+      /** Expenses Centimes */
+      expenses_centimes: number;
+      /** Sales Centimes */
+      sales_centimes: number;
+    };
+    /** DashboardNextAction */
+    DashboardNextAction: {
+      /** Code */
+      code: string;
+      /** Label */
+      label: string;
+      /** Target Id */
+      target_id?: string | null;
+    };
+    /** DashboardResponse */
+    DashboardResponse: {
+      /** Alerts */
+      alerts?: components["schemas"]["DashboardAlert"][];
+      /**
+       * Generated At
+       * Format: date-time
+       */
+      generated_at: string;
+      inventory: components["schemas"]["InventorySummary"];
+      kpis: components["schemas"]["DashboardKPIs"];
+      next_action?: components["schemas"]["DashboardNextAction"] | null;
+    };
+    /** DocumentMetadata */
+    DocumentMetadata: {
+      /** Content Type */
+      content_type: string;
+      /** Id */
+      id: string;
+      /**
+       * Kind
+       * @default receipt
+       * @enum {string}
+       */
+      kind: "receipt" | "audio" | "ledger" | "screenshot";
+      /** Original Name */
+      original_name: string;
+      /** Size Bytes */
+      size_bytes: number;
+    };
+    /** DraftLine */
+    DraftLine: {
+      /**
+       * Base Unit
+       * @default unit
+       */
+      base_unit: string;
+      /**
+       * Confidence
+       * @default 1
+       */
+      confidence: number;
+      /** Line Id */
+      line_id?: string | null;
+      /** Line Total Centimes */
+      line_total_centimes: number;
+      /** Original Product Name */
+      original_product_name?: string | null;
+      /** Product Id */
+      product_id?: string | null;
+      /** Product Name */
+      product_name: string;
+      /** Quantity */
+      quantity: number;
+      /** Uncertain Fields */
+      uncertain_fields?: string[];
+      /**
+       * Unit
+       * @default unit
+       */
+      unit: string;
+      /**
+       * Unit Multiplier
+       * @default 1
+       */
+      unit_multiplier: number;
+      /** Unit Price Centimes */
+      unit_price_centimes: number;
+    };
+    /** ExtractionDraft */
+    ExtractionDraft: {
+      /** Clarification Question */
+      clarification_question?: string | null;
+      /**
+       * Currency
+       * @default MAD
+       * @constant
+       */
+      currency: "MAD";
+      /** Id */
+      id?: string | null;
+      /** Lines */
+      lines: components["schemas"]["DraftLine"][];
+      /** Total Centimes */
+      total_centimes: number;
+      /**
+       * Transaction Kind
+       * @default purchase
+       * @enum {string}
+       */
+      transaction_kind: "purchase" | "sale" | "expense";
+      /**
+       * Version
+       * @default 1
+       */
+      version: number;
+    };
+    /** FinancialRecord */
+    FinancialRecord: {
+      /** Amount Centimes */
+      amount_centimes: number;
+      /** Counterparty */
+      counterparty: string;
+      /** Due On */
+      due_on?: string | null;
+      /**
+       * Issued On
+       * Format: date
+       */
+      issued_on: string;
+      /** Linked Records */
+      linked_records?: string[];
+      /** Record Id */
+      record_id: string;
+      /**
+       * Record Type
+       * @enum {string}
+       */
+      record_type:
+        | "PURCHASE_ORDER"
+        | "DELIVERY_NOTE"
+        | "SUPPLIER_INVOICE"
+        | "BANK_PAYMENT"
+        | "CUSTOMER_RECEIVABLE";
+      /** Reference */
+      reference: string;
+      /**
+       * Status
+       * @enum {string}
+       */
+      status: "MATCHED" | "EXCEPTION" | "PENDING" | "PAID" | "EXPECTED";
+    };
+    /** FinancialRecordListResponse */
+    FinancialRecordListResponse: {
+      /** Items */
+      items: components["schemas"]["FinancialRecord"][];
+    };
+    /** FindingDecisionRequest */
+    FindingDecisionRequest: {
+      /**
+       * Action
+       * @enum {string}
+       */
+      action: "PREPARE_DISPUTE" | "APPROVE_CORRECTED_AMOUNT" | "DISMISS";
+      /** Note */
+      note?: string | null;
+    };
+    /** FindingDecisionResponse */
+    FindingDecisionResponse: {
+      /** Action */
+      action: string;
+      /** Approved Amount Centimes */
+      approved_amount_centimes?: number | null;
+      /**
+       * Approved At
+       * Format: date-time
+       */
+      approved_at: string;
+      /** Approved By */
+      approved_by: string;
+      /** Dispute Reference */
+      dispute_reference?: string | null;
+      /** Finding Id */
+      finding_id: string;
+      /** Message */
+      message: string;
+      /**
+       * Status
+       * @enum {string}
+       */
+      status: "APPROVED" | "RESOLVED";
+    };
+    /** GenerateProcurementNeedRequest */
+    GenerateProcurementNeedRequest: {
+      /**
+       * Product Id
+       * @default cooking-oil-1l
+       */
+      product_id: string;
+      /** Target Stock */
+      target_stock?: number | null;
+      /**
+       * Unit
+       * @default BOTTLE
+       */
+      unit: string;
+    };
+    /** GroupOrderListResponse */
+    GroupOrderListResponse: {
+      /** Items */
+      items: components["schemas"]["GroupOrderResponse"][];
+    };
+    /** GroupOrderMember */
+    GroupOrderMember: {
+      /** Approved At */
+      approved_at?: string | null;
+      /** Approved By */
+      approved_by?: string | null;
+      /** Collective Delivery Share Centimes */
+      collective_delivery_share_centimes: number;
+      /** Collective Unit Price Centimes */
+      collective_unit_price_centimes: number;
+      /**
+       * Created At
+       * Format: date-time
+       */
+      created_at?: string;
+      /** Delivery Saving Centimes */
+      delivery_saving_centimes: number;
+      /** Organization Id */
+      organization_id: string;
+      /** Original Delivery Centimes */
+      original_delivery_centimes: number;
+      /** Original Unit Price Centimes */
+      original_unit_price_centimes: number;
+      /** Procurement Need Id */
+      procurement_need_id: string;
+      /** Product Saving Centimes */
+      product_saving_centimes: number;
+      /** Quantity */
+      quantity: number;
+      /**
+       * Status
+       * @default JOINED
+       * @enum {string}
+       */
+      status: "PENDING" | "JOINED" | "APPROVED" | "DECLINED";
+      /** Total Saving Centimes */
+      total_saving_centimes: number;
+      /**
+       * Updated At
+       * Format: date-time
+       */
+      updated_at?: string;
+    };
+    /** GroupOrderResponse */
+    GroupOrderResponse: {
+      /** Collective Unit Price Centimes */
+      collective_unit_price_centimes: number;
+      group_order: components["schemas"]["GroupOrderSummary"];
+      member: components["schemas"]["GroupOrderMember"];
+      /** Original Unit Price Centimes */
+      original_unit_price_centimes: number;
+      /** Total Savings Centimes */
+      total_savings_centimes: number;
+    };
+    /** GroupOrderSummary */
+    GroupOrderSummary: {
+      /** Coarse Area */
+      coarse_area: string;
+      /** Delivery Total Centimes */
+      delivery_total_centimes: number;
+      /** Group Order Id */
+      group_order_id: string;
+      /**
+       * Join Deadline
+       * Format: date-time
+       */
+      join_deadline: string;
+      /** Minimum Quantity */
+      minimum_quantity: number;
+      /**
+       * Needed By
+       * Format: date-time
+       */
+      needed_by: string;
+      /** Participant Count */
+      participant_count: number;
+      /** Product Id */
+      product_id: string;
+      /** Status */
+      status: string;
+      /** Supplier Catalog Item Id */
+      supplier_catalog_item_id: string;
+      /** Supplier Organization Id */
+      supplier_organization_id: string;
+      /** Total Quantity */
+      total_quantity: number;
+      /** Unit */
+      unit: string;
+      /** Unit Price Centimes */
+      unit_price_centimes: number;
+    };
+    /** HTTPValidationError */
+    HTTPValidationError: {
+      /** Detail */
+      detail?: components["schemas"]["ValidationError"][];
+    };
+    /** IngestionResponse */
+    IngestionResponse: {
+      document: components["schemas"]["DocumentMetadata"];
+      draft?: components["schemas"]["ExtractionDraft"] | null;
+      /** Error Message */
+      error_message?: string | null;
+      /** Id */
+      id: string;
+      /** Organization Id */
+      organization_id: string;
+      /**
+       * Status
+       * @default NEEDS_REVIEW
+       * @enum {string}
+       */
+      status:
+        "PROCESSING" | "NEEDS_REVIEW" | "CONFIRMED" | "REJECTED" | "FAILED";
+    };
+    /** InventoryItemResponse */
+    InventoryItemResponse: {
+      /**
+       * Low Stock
+       * @default false
+       */
+      low_stock: boolean;
+      /** Low Stock Threshold */
+      low_stock_threshold: number;
+      /** Name */
+      name: string;
+      /** Predicted Stockout At */
+      predicted_stockout_at?: string | null;
+      /** Product Id */
+      product_id: string;
+      /** Quantity On Hand */
+      quantity_on_hand: number;
+      /**
+       * Status
+       * @enum {string}
+       */
+      status: "HEALTHY" | "LOW_STOCK" | "OUT_OF_STOCK";
+      /** Unit */
+      unit: string;
+    };
+    /** InventoryResponse */
+    InventoryResponse: {
+      /** Items */
+      items: components["schemas"]["InventoryItemResponse"][];
+    };
+    /** InventorySummary */
+    InventorySummary: {
+      /** Low Stock Count */
+      low_stock_count: number;
+      /** Product Count */
+      product_count: number;
+    };
+    /** LoginRequest */
+    LoginRequest: {
+      /** Id Token */
+      id_token?: string | null;
+    };
+    /** Offer */
+    Offer: {
+      /**
+       * Affordable
+       * @default true
+       */
+      affordable: boolean;
+      /** Catalog Item Id */
+      catalog_item_id: string;
+      /**
+       * Created At
+       * Format: date-time
+       */
+      created_at?: string;
+      /**
+       * Delivery Days
+       * @default 1
+       */
+      delivery_days: number;
+      /** Delivery Fee Centimes */
+      delivery_fee_centimes: number;
+      /**
+       * Eligible Alone
+       * @default true
+       */
+      eligible_alone: boolean;
+      /** Expected Unit Margin Centimes */
+      expected_unit_margin_centimes?: number | null;
+      /**
+       * Explanation
+       * @default
+       */
+      explanation: string;
+      /** Landed Cost Centimes */
+      landed_cost_centimes: number;
+      /**
+       * Landed Unit Cost Centimes
+       * @default 0
+       */
+      landed_unit_cost_centimes: number;
+      /** Minimum Quantity */
+      minimum_quantity: number;
+      /** Offer Id */
+      offer_id: string;
+      /** Organization Id */
+      organization_id: string;
+      /** Procurement Need Id */
+      procurement_need_id: string;
+      /**
+       * Product Cost Centimes
+       * @default 0
+       */
+      product_cost_centimes: number;
+      /** Product Id */
+      product_id: string;
+      /** Rejection Reasons */
+      rejection_reasons?: string[];
+      /** Requested Quantity */
+      requested_quantity: number;
+      /**
+       * Status
+       * @default AVAILABLE_NOW
+       * @enum {string}
+       */
+      status: "AVAILABLE_NOW" | "GROUP_ONLY" | "REJECTED";
+      /** Supplier Organization Id */
+      supplier_organization_id: string;
+      /**
+       * Unit
+       * @default BOTTLE
+       */
+      unit: string;
+      /** Unit Price Centimes */
+      unit_price_centimes: number;
+      /**
+       * Updated At
+       * Format: date-time
+       */
+      updated_at?: string;
+    };
+    /** OfferCompareRequest */
+    OfferCompareRequest: {
+      /** Procurement Need Id */
+      procurement_need_id: string;
+      /** Quantity */
+      quantity?: number | null;
+    };
+    /** OfferCompareResponse */
+    OfferCompareResponse: {
+      /** Available Now */
+      available_now?: components["schemas"]["Offer"][];
+      group_opportunity?: components["schemas"]["Offer"] | null;
+      /** Rejected */
+      rejected?: components["schemas"]["Offer"][];
+    };
+    /** Organization */
+    Organization: {
+      /**
+       * City
+       * @default Berrechid
+       */
+      city: string;
+      /**
+       * Coarse Area
+       * @default Berrechid Center
+       */
+      coarse_area: string;
+      /**
+       * Created At
+       * Format: date-time
+       */
+      created_at?: string;
+      /**
+       * Currency
+       * @default MAD
+       */
+      currency: string;
+      /** Name */
+      name: string;
+      /**
+       * Opening Cash Centimes
+       * @default 0
+       */
+      opening_cash_centimes: number;
+      /** Organization Id */
+      organization_id: string;
+      /**
+       * Status
+       * @default ACTIVE
+       * @enum {string}
+       */
+      status: "ACTIVE" | "DISABLED";
+      /**
+       * Type
+       * @default MERCHANT
+       * @enum {string}
+       */
+      type: "MERCHANT" | "SUPPLIER";
+      /**
+       * Updated At
+       * Format: date-time
+       */
+      updated_at?: string;
+    };
+    /** PriorityAction */
+    PriorityAction: {
+      /** Action Id */
+      action_id: string;
+      /** Description */
+      description: string;
+      /** Impact Centimes */
+      impact_centimes: number;
+      /** Target Path */
+      target_path: string;
+      /** Title */
+      title: string;
+      /**
+       * Urgency
+       * @enum {string}
+       */
+      urgency: "NOW" | "THIS_WEEK" | "MONITOR";
+    };
+    /** ProcurementNeed */
+    ProcurementNeed: {
+      /** Average Daily Sales */
+      average_daily_sales?: number | null;
+      /**
+       * Coarse Area
+       * @default Berrechid Center
+       */
+      coarse_area: string;
+      /**
+       * Created At
+       * Format: date-time
+       */
+      created_at?: string;
+      /** Days Remaining */
+      days_remaining?: number | null;
+      /**
+       * Explanation
+       * @default
+       */
+      explanation: string;
+      /**
+       * Forecast Status
+       * @default FORECAST
+       * @enum {string}
+       */
+      forecast_status:
+        "FORECAST" | "OUT_OF_STOCK" | "NO_DEMAND" | "INSUFFICIENT_HISTORY";
+      /** Need Id */
+      need_id: string;
+      /**
+       * Needed By
+       * Format: date-time
+       */
+      needed_by?: string;
+      /** Organization Id */
+      organization_id: string;
+      /** Product Id */
+      product_id: string;
+      /** Quantity Needed */
+      quantity_needed: number;
+      /**
+       * Sales History Days
+       * @default 0
+       */
+      sales_history_days: number;
+      /**
+       * Status
+       * @default OPEN
+       * @enum {string}
+       */
+      status: "OPEN" | "MATCHED" | "ORDERED" | "CANCELLED";
+      /** Stock On Hand */
+      stock_on_hand?: number | null;
+      /** Stockout At */
+      stockout_at?: string | null;
+      /** Target Stock Quantity */
+      target_stock_quantity?: number | null;
+      /** Uncertainty Note */
+      uncertainty_note?: string | null;
+      /**
+       * Unit
+       * @default BOTTLE
+       */
+      unit: string;
+      /**
+       * Updated At
+       * Format: date-time
+       */
+      updated_at?: string;
+    };
+    /** ProductOptionListResponse */
+    ProductOptionListResponse: {
+      /** Items */
+      items: components["schemas"]["ProductOptionResponse"][];
+    };
+    /** ProductOptionResponse */
+    ProductOptionResponse: {
+      /** Base Unit */
+      base_unit: string;
+      /** Name */
+      name: string;
+      /** Product Id */
+      product_id: string;
+      /** Units */
+      units: components["schemas"]["ProductUnitOptionResponse"][];
+    };
+    /** ProductUnitOptionResponse */
+    ProductUnitOptionResponse: {
+      /** Conversion To Base */
+      conversion_to_base: number;
+      /** Label */
+      label: string;
+      /** Unit */
+      unit: string;
+    };
+    /** Profile */
+    Profile: {
+      /**
+       * Created At
+       * Format: date-time
+       */
+      created_at?: string;
+      /** Display Name */
+      display_name: string;
+      /** Email */
+      email: string;
+      /**
+       * Locale
+       * @default en-MA
+       */
+      locale: string;
+      /** Primary Organization Id */
+      primary_organization_id: string;
+      /**
+       * Updated At
+       * Format: date-time
+       */
+      updated_at?: string;
+      /** User Id */
+      user_id: string;
+    };
+    /** ProposeGroupOrderRequest */
+    ProposeGroupOrderRequest: {
+      /** Procurement Need Id */
+      procurement_need_id: string;
+      /** Product Id */
+      product_id?: string | null;
+      /** Quantity */
+      quantity?: number | null;
+      /** Supplier Catalog Item Id */
+      supplier_catalog_item_id: string;
+      /** Supplier Organization Id */
+      supplier_organization_id: string;
+    };
+    /** SignUpRequest */
+    SignUpRequest: {
+      /** Display Name */
+      display_name: string;
+      /** Email */
+      email: string;
+      /** Organization Name */
+      organization_name: string;
+      /**
+       * Organization Type
+       * @default MERCHANT
+       * @enum {string}
+       */
+      organization_type: "MERCHANT" | "SUPPLIER";
+    };
+    /** SupplierCatalogItem */
+    SupplierCatalogItem: {
+      /**
+       * Available Quantity
+       * @default 1000
+       */
+      available_quantity: number;
+      /** Catalog Item Id */
+      catalog_item_id: string;
+      /**
+       * Created At
+       * Format: date-time
+       */
+      created_at?: string;
+      /**
+       * Delivery Days
+       * @default 1
+       */
+      delivery_days: number;
+      /**
+       * Delivery Fee Centimes
+       * @default 0
+       */
+      delivery_fee_centimes: number;
+      /**
+       * Minimum Quantity
+       * @default 1
+       */
+      minimum_quantity: number;
+      /** Organization Id */
+      organization_id: string;
+      /** Product Id */
+      product_id: string;
+      /** Service Areas */
+      service_areas?: string[];
+      /**
+       * Status
+       * @default ACTIVE
+       * @enum {string}
+       */
+      status: "ACTIVE" | "INACTIVE";
+      /** Supplier Sku */
+      supplier_sku: string;
+      /**
+       * Unit
+       * @default BOTTLE
+       */
+      unit: string;
+      /** Unit Price Centimes */
+      unit_price_centimes: number;
+      /**
+       * Updated At
+       * Format: date-time
+       */
+      updated_at?: string;
+    };
+    /** SupplierCatalogResponse */
+    SupplierCatalogResponse: {
+      /** Items */
+      items: components["schemas"]["SupplierCatalogItem"][];
+    };
+    /** SupplierDashboardKPIs */
+    SupplierDashboardKPIs: {
+      /**
+       * Active Catalog Items
+       * @default 5
+       */
+      active_catalog_items: number;
+      /**
+       * Active Demand Opportunities
+       * @default 2
+       */
+      active_demand_opportunities: number;
+      /**
+       * Estimated Revenue Centimes
+       * @default 101750
+       */
+      estimated_revenue_centimes: number;
+      /**
+       * Total Potential Volume
+       * @default 55
+       */
+      total_potential_volume: number;
+    };
+    /** SupplierDashboardResponse */
+    SupplierDashboardResponse: {
+      kpis: components["schemas"]["SupplierDashboardKPIs"];
+      /** Opportunities */
+      opportunities?: components["schemas"]["SupplierOpportunity"][];
+    };
+    /** SupplierOpportunity */
+    SupplierOpportunity: {
+      /**
+       * Coarse Area
+       * @default Berrechid Center
+       */
+      coarse_area: string;
+      /**
+       * Created At
+       * Format: date-time
+       */
+      created_at?: string;
+      /**
+       * Merchant Count
+       * @default 1
+       */
+      merchant_count: number;
+      /**
+       * Needed By
+       * Format: date-time
+       */
+      needed_by?: string;
+      /** Opportunity Id */
+      opportunity_id: string;
+      /** Product Id */
+      product_id: string;
+      /** Source Group Order Id */
+      source_group_order_id?: string | null;
+      /**
+       * Status
+       * @default ACTIVE
+       * @enum {string}
+       */
+      status: "ACTIVE" | "QUOTED" | "CLOSED" | "ARCHIVED";
+      /**
+       * Supplier Organization Id
+       * @default
+       */
+      supplier_organization_id: string;
+      /** Total Quantity */
+      total_quantity: number;
+      /**
+       * Unit
+       * @default BOTTLE
+       */
+      unit: string;
+      /**
+       * Updated At
+       * Format: date-time
+       */
+      updated_at?: string;
+    };
+    /** SupplierOpportunityListResponse */
+    SupplierOpportunityListResponse: {
+      /** Items */
+      items: components["schemas"]["SupplierOpportunity"][];
+    };
+    /** SupplierPortfolioResponse */
+    SupplierPortfolioResponse: {
+      /** Concentration Risk Percent */
+      concentration_risk_percent: number;
+      /** Savings Opportunity Centimes */
+      savings_opportunity_centimes: number;
+      /** Scorecards */
+      scorecards: components["schemas"]["SupplierScorecard"][];
+      /** Total Spend Centimes */
+      total_spend_centimes: number;
+    };
+    /** SupplierScorecard */
+    SupplierScorecard: {
+      /** Annual Spend Centimes */
+      annual_spend_centimes: number;
+      /** Average Payment Terms Days */
+      average_payment_terms_days: number;
+      /** Category */
+      category: string;
+      /** City */
+      city: string;
+      /** Contract Compliance Percent */
+      contract_compliance_percent: number;
+      /** Delivery Reliability Percent */
+      delivery_reliability_percent: number;
+      /** Disputed Invoice Rate Percent */
+      disputed_invoice_rate_percent: number;
+      /** Name */
+      name: string;
+      /** Recommendation */
+      recommendation: string;
+      /**
+       * Risk
+       * @enum {string}
+       */
+      risk: "LOW" | "MEDIUM" | "HIGH";
+      /** Spend Share Percent */
+      spend_share_percent: number;
+      /** Supplier Id */
+      supplier_id: string;
+      /**
+       * Trend
+       * @enum {string}
+       */
+      trend: "IMPROVING" | "STABLE" | "DECLINING";
+    };
+    /** SupplierSearchResponse */
+    SupplierSearchResponse: {
+      /** Items */
+      items: components["schemas"]["SupplierCatalogItem"][];
+    };
+    /** ToolCallRecord */
+    ToolCallRecord: {
+      /**
+       * Created At
+       * Format: date-time
+       */
+      created_at?: string;
+      /**
+       * Duration Ms
+       * @default 0
+       */
+      duration_ms: number;
+      /**
+       * Fallback Used
+       * @default false
+       */
+      fallback_used: boolean;
+      /** Input Summary */
+      input_summary: string;
+      /** Name */
+      name: string;
+      /** Organization Id */
+      organization_id: string;
+      /** Output Summary */
+      output_summary: string;
+      /** Sequence */
+      sequence: number;
+      /**
+       * Status
+       * @default SUCCEEDED
+       * @enum {string}
+       */
+      status: "STARTED" | "SUCCEEDED" | "FAILED";
+      /** Tool Call Id */
+      tool_call_id: string;
+    };
+    /** Transaction */
+    Transaction: {
+      /**
+       * Currency
+       * @default MAD
+       */
+      currency: string;
+      /** Draft Id */
+      draft_id?: string | null;
+      /** Id */
+      id: string;
+      /** Ingestion Id */
+      ingestion_id?: string | null;
+      /**
+       * Kind
+       * @enum {string}
+       */
+      kind: "purchase" | "sale" | "expense";
+      /** Lines */
+      lines?: components["schemas"]["TransactionLine"][];
+      /**
+       * Occurred At
+       * Format: date-time
+       */
+      occurred_at?: string;
+      /** Organization Id */
+      organization_id: string;
+      /** Total Centimes */
+      total_centimes: number;
+    };
+    /** TransactionLine */
+    TransactionLine: {
+      /**
+       * Base Unit
+       * @default UNIT
+       */
+      base_unit: string;
+      /** Inventory Quantity */
+      inventory_quantity?: number | null;
+      /** Line Id */
+      line_id: string;
+      /** Line Total Centimes */
+      line_total_centimes: number;
+      /** Product Id */
+      product_id: string;
+      /** Product Name */
+      product_name: string;
+      /** Quantity */
+      quantity: number;
+      /**
+       * Unit
+       * @default UNIT
+       */
+      unit: string;
+      /**
+       * Unit Multiplier
+       * @default 1
+       */
+      unit_multiplier: number;
+      /** Unit Price Centimes */
+      unit_price_centimes: number;
+    };
+    /** TransactionListResponse */
+    TransactionListResponse: {
+      /** Items */
+      items: components["schemas"]["Transaction"][];
+      /** Next Cursor */
+      next_cursor?: string | null;
+    };
+    /** UserContext */
+    UserContext: {
+      /** Display Name */
+      display_name?: string | null;
+      /** Email */
+      email?: string | null;
+      /** Organization Id */
+      organization_id: string;
+      /**
+       * Role
+       * @default owner
+       * @enum {string}
+       */
+      role: "owner" | "member" | "admin";
+      /** User Id */
+      user_id: string;
+    };
+    /** ValidationError */
+    ValidationError: {
+      /** Context */
+      ctx?: Record<string, never>;
+      /** Input */
+      input?: unknown;
+      /** Location */
+      loc: (string | number)[];
+      /** Message */
+      msg: string;
+      /** Error Type */
+      type: string;
+    };
+  };
+  responses: never;
+  parameters: never;
+  requestBodies: never;
+  headers: never;
+  pathItems: never;
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    get_agent_run_audit_api_v1_agent_runs__id__get: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path: {
-                /** @example resource-001 */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "agent_run_id": "agent-run-001",
-                     *       "completed_at": "2026-07-25T08:00:00Z",
-                     *       "created_at": "2026-07-25T08:00:00Z",
-                     *       "document_id": "string",
-                     *       "duration_ms": 0,
-                     *       "fallback_used": false,
-                     *       "ingestion_job_id": "string",
-                     *       "model": "string",
-                     *       "organization_id": "merchant-berrechid",
-                     *       "provider": "fixture",
-                     *       "status": "SUCCEEDED",
-                     *       "tool_calls": [
-                     *         {
-                     *           "created_at": "2026-07-25T08:00:00Z",
-                     *           "duration_ms": 0,
-                     *           "fallback_used": false,
-                     *           "input_summary": "string",
-                     *           "name": "string",
-                     *           "organization_id": "merchant-berrechid",
-                     *           "output_summary": "string",
-                     *           "sequence": 1,
-                     *           "status": "SUCCEEDED",
-                     *           "tool_call_id": "string"
-                     *         }
-                     *       ]
-                     *     }
-                     */
-                    "application/json": components["schemas"]["AgentRunRecord"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
+  get_agent_run_audit_api_v1_agent_runs__id__get: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path: {
+        /** @example resource-001 */
+        id: string;
+      };
+      cookie?: never;
     };
-    login_api_v1_auth_login_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path?: never;
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody: {
-            content: {
-                /**
-                 * @example {
-                 *       "id_token": "string"
-                 *     }
-                 */
-                "application/json": components["schemas"]["LoginRequest"];
-            };
+        content: {
+          /**
+           * @example {
+           *       "agent_run_id": "agent-run-001",
+           *       "completed_at": "2026-07-25T08:00:00Z",
+           *       "created_at": "2026-07-25T08:00:00Z",
+           *       "document_id": "string",
+           *       "duration_ms": 0,
+           *       "fallback_used": false,
+           *       "ingestion_job_id": "string",
+           *       "model": "string",
+           *       "organization_id": "merchant-berrechid",
+           *       "provider": "fixture",
+           *       "status": "SUCCEEDED",
+           *       "tool_calls": [
+           *         {
+           *           "created_at": "2026-07-25T08:00:00Z",
+           *           "duration_ms": 0,
+           *           "fallback_used": false,
+           *           "input_summary": "string",
+           *           "name": "string",
+           *           "organization_id": "merchant-berrechid",
+           *           "output_summary": "string",
+           *           "sequence": 1,
+           *           "status": "SUCCEEDED",
+           *           "tool_call_id": "string"
+           *         }
+           *       ]
+           *     }
+           */
+          "application/json": components["schemas"]["AgentRunRecord"];
         };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "organization": {
-                     *         "city": "Berrechid",
-                     *         "coarse_area": "Berrechid Center",
-                     *         "created_at": "2026-07-25T08:00:00Z",
-                     *         "currency": "MAD",
-                     *         "name": "string",
-                     *         "opening_cash_centimes": 0,
-                     *         "organization_id": "merchant-berrechid",
-                     *         "status": "ACTIVE",
-                     *         "type": "MERCHANT",
-                     *         "updated_at": "2026-07-25T08:00:00Z"
-                     *       },
-                     *       "profile": {
-                     *         "created_at": "2026-07-25T08:00:00Z",
-                     *         "display_name": "Demo Merchant",
-                     *         "email": "merchant.demo@example.com",
-                     *         "locale": "en-MA",
-                     *         "primary_organization_id": "merchant-berrechid",
-                     *         "updated_at": "2026-07-25T08:00:00Z",
-                     *         "user_id": "demo-merchant"
-                     *       },
-                     *       "user": {
-                     *         "display_name": "Demo Merchant",
-                     *         "email": "merchant.demo@example.com",
-                     *         "organization_id": "merchant-berrechid",
-                     *         "role": "owner",
-                     *         "user_id": "demo-merchant"
-                     *       }
-                     *     }
-                     */
-                    "application/json": components["schemas"]["AuthResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
         };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
     };
-    get_me_api_v1_auth_me_get: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "organization": {
-                     *         "city": "Berrechid",
-                     *         "coarse_area": "Berrechid Center",
-                     *         "created_at": "2026-07-25T08:00:00Z",
-                     *         "currency": "MAD",
-                     *         "name": "string",
-                     *         "opening_cash_centimes": 0,
-                     *         "organization_id": "merchant-berrechid",
-                     *         "status": "ACTIVE",
-                     *         "type": "MERCHANT",
-                     *         "updated_at": "2026-07-25T08:00:00Z"
-                     *       },
-                     *       "profile": {
-                     *         "created_at": "2026-07-25T08:00:00Z",
-                     *         "display_name": "Demo Merchant",
-                     *         "email": "merchant.demo@example.com",
-                     *         "locale": "en-MA",
-                     *         "primary_organization_id": "merchant-berrechid",
-                     *         "updated_at": "2026-07-25T08:00:00Z",
-                     *         "user_id": "demo-merchant"
-                     *       },
-                     *       "user": {
-                     *         "display_name": "Demo Merchant",
-                     *         "email": "merchant.demo@example.com",
-                     *         "organization_id": "merchant-berrechid",
-                     *         "role": "owner",
-                     *         "user_id": "demo-merchant"
-                     *       }
-                     *     }
-                     */
-                    "application/json": components["schemas"]["AuthResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
+  };
+  login_api_v1_auth_login_post: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
     };
-    signup_api_v1_auth_signup_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @example string */
-                authorization?: string | null;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                /**
-                 * @example {
-                 *       "display_name": "Demo Merchant",
-                 *       "email": "merchant.demo@example.com",
-                 *       "organization_name": "Berrechid Demo Grocery",
-                 *       "organization_type": "MERCHANT"
-                 *     }
-                 */
-                "application/json": components["schemas"]["SignUpRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "organization": {
-                     *         "city": "Berrechid",
-                     *         "coarse_area": "Berrechid Center",
-                     *         "created_at": "2026-07-25T08:00:00Z",
-                     *         "currency": "MAD",
-                     *         "name": "string",
-                     *         "opening_cash_centimes": 0,
-                     *         "organization_id": "merchant-berrechid",
-                     *         "status": "ACTIVE",
-                     *         "type": "MERCHANT",
-                     *         "updated_at": "2026-07-25T08:00:00Z"
-                     *       },
-                     *       "profile": {
-                     *         "created_at": "2026-07-25T08:00:00Z",
-                     *         "display_name": "Demo Merchant",
-                     *         "email": "merchant.demo@example.com",
-                     *         "locale": "en-MA",
-                     *         "primary_organization_id": "merchant-berrechid",
-                     *         "updated_at": "2026-07-25T08:00:00Z",
-                     *         "user_id": "demo-merchant"
-                     *       },
-                     *       "user": {
-                     *         "display_name": "Demo Merchant",
-                     *         "email": "merchant.demo@example.com",
-                     *         "organization_id": "merchant-berrechid",
-                     *         "role": "owner",
-                     *         "user_id": "demo-merchant"
-                     *       }
-                     *     }
-                     */
-                    "application/json": components["schemas"]["AuthResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
+    requestBody: {
+      content: {
+        /**
+         * @example {
+         *       "id_token": "string"
+         *     }
+         */
+        "application/json": components["schemas"]["LoginRequest"];
+      };
     };
-    list_group_orders_api_v1_group_orders_get: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path?: never;
-            cookie?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "items": [
-                     *         {
-                     *           "collective_unit_price_centimes": 1850,
-                     *           "group_order": {
-                     *             "coarse_area": "Berrechid Center",
-                     *             "delivery_total_centimes": 3000,
-                     *             "group_order_id": "group-oil-001",
-                     *             "join_deadline": "2026-07-25T08:00:00Z",
-                     *             "minimum_quantity": 50,
-                     *             "needed_by": "2026-07-25T08:00:00Z",
-                     *             "participant_count": 1,
-                     *             "product_id": "cooking-oil-1l",
-                     *             "status": "string",
-                     *             "supplier_catalog_item_id": "cat-oil-bulk",
-                     *             "supplier_organization_id": "supplier-atlas",
-                     *             "total_quantity": 1,
-                     *             "unit": "BOTTLE",
-                     *             "unit_price_centimes": 1850
-                     *           },
-                     *           "member": {
-                     *             "approved_at": "2026-07-25T08:00:00Z",
-                     *             "approved_by": "string",
-                     *             "collective_delivery_share_centimes": 1,
-                     *             "collective_unit_price_centimes": 1850,
-                     *             "created_at": "2026-07-25T08:00:00Z",
-                     *             "delivery_saving_centimes": 1,
-                     *             "organization_id": "merchant-berrechid",
-                     *             "original_delivery_centimes": 1,
-                     *             "original_unit_price_centimes": 2200,
-                     *             "procurement_need_id": "need-oil-001",
-                     *             "product_saving_centimes": 1,
-                     *             "quantity": 20,
-                     *             "status": "JOINED",
-                     *             "total_saving_centimes": 1,
-                     *             "updated_at": "2026-07-25T08:00:00Z"
-                     *           },
-                     *           "original_unit_price_centimes": 2200,
-                     *           "total_savings_centimes": 10000
-                     *         }
-                     *       ]
-                     *     }
-                     */
-                    "application/json": components["schemas"]["GroupOrderListResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
+        content: {
+          /**
+           * @example {
+           *       "organization": {
+           *         "city": "Berrechid",
+           *         "coarse_area": "Berrechid Center",
+           *         "created_at": "2026-07-25T08:00:00Z",
+           *         "currency": "MAD",
+           *         "name": "string",
+           *         "opening_cash_centimes": 0,
+           *         "organization_id": "merchant-berrechid",
+           *         "status": "ACTIVE",
+           *         "type": "MERCHANT",
+           *         "updated_at": "2026-07-25T08:00:00Z"
+           *       },
+           *       "profile": {
+           *         "created_at": "2026-07-25T08:00:00Z",
+           *         "display_name": "Demo Merchant",
+           *         "email": "merchant.demo@example.com",
+           *         "locale": "en-MA",
+           *         "primary_organization_id": "merchant-berrechid",
+           *         "updated_at": "2026-07-25T08:00:00Z",
+           *         "user_id": "demo-merchant"
+           *       },
+           *       "user": {
+           *         "display_name": "Demo Merchant",
+           *         "email": "merchant.demo@example.com",
+           *         "organization_id": "merchant-berrechid",
+           *         "role": "owner",
+           *         "user_id": "demo-merchant"
+           *       }
+           *     }
+           */
+          "application/json": components["schemas"]["AuthResponse"];
         };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
     };
-    propose_group_order_api_v1_group_orders_propose_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                /**
-                 * @example {
-                 *       "procurement_need_id": "need-oil-001",
-                 *       "product_id": "cooking-oil-1l",
-                 *       "quantity": 20,
-                 *       "supplier_catalog_item_id": "cat-oil-bulk",
-                 *       "supplier_organization_id": "supplier-atlas"
-                 *     }
-                 */
-                "application/json": components["schemas"]["ProposeGroupOrderRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "collective_unit_price_centimes": 1850,
-                     *       "group_order": {
-                     *         "coarse_area": "Berrechid Center",
-                     *         "delivery_total_centimes": 3000,
-                     *         "group_order_id": "group-oil-001",
-                     *         "join_deadline": "2026-07-25T08:00:00Z",
-                     *         "minimum_quantity": 50,
-                     *         "needed_by": "2026-07-25T08:00:00Z",
-                     *         "participant_count": 1,
-                     *         "product_id": "cooking-oil-1l",
-                     *         "status": "string",
-                     *         "supplier_catalog_item_id": "cat-oil-bulk",
-                     *         "supplier_organization_id": "supplier-atlas",
-                     *         "total_quantity": 1,
-                     *         "unit": "BOTTLE",
-                     *         "unit_price_centimes": 1850
-                     *       },
-                     *       "member": {
-                     *         "approved_at": "2026-07-25T08:00:00Z",
-                     *         "approved_by": "string",
-                     *         "collective_delivery_share_centimes": 1,
-                     *         "collective_unit_price_centimes": 1850,
-                     *         "created_at": "2026-07-25T08:00:00Z",
-                     *         "delivery_saving_centimes": 1,
-                     *         "organization_id": "merchant-berrechid",
-                     *         "original_delivery_centimes": 1,
-                     *         "original_unit_price_centimes": 2200,
-                     *         "procurement_need_id": "need-oil-001",
-                     *         "product_saving_centimes": 1,
-                     *         "quantity": 20,
-                     *         "status": "JOINED",
-                     *         "total_saving_centimes": 1,
-                     *         "updated_at": "2026-07-25T08:00:00Z"
-                     *       },
-                     *       "original_unit_price_centimes": 2200,
-                     *       "total_savings_centimes": 10000
-                     *     }
-                     */
-                    "application/json": components["schemas"]["GroupOrderResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
+  };
+  get_me_api_v1_auth_me_get: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
     };
-    approve_group_order_api_v1_group_orders__id__approve_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @example demo-approval */
-                "Idempotency-Key"?: string;
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path: {
-                /** @example resource-001 */
-                id: string;
-            };
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "collective_unit_price_centimes": 1850,
-                     *       "group_order": {
-                     *         "coarse_area": "Berrechid Center",
-                     *         "delivery_total_centimes": 3000,
-                     *         "group_order_id": "group-oil-001",
-                     *         "join_deadline": "2026-07-25T08:00:00Z",
-                     *         "minimum_quantity": 50,
-                     *         "needed_by": "2026-07-25T08:00:00Z",
-                     *         "participant_count": 1,
-                     *         "product_id": "cooking-oil-1l",
-                     *         "status": "string",
-                     *         "supplier_catalog_item_id": "cat-oil-bulk",
-                     *         "supplier_organization_id": "supplier-atlas",
-                     *         "total_quantity": 1,
-                     *         "unit": "BOTTLE",
-                     *         "unit_price_centimes": 1850
-                     *       },
-                     *       "member": {
-                     *         "approved_at": "2026-07-25T08:00:00Z",
-                     *         "approved_by": "string",
-                     *         "collective_delivery_share_centimes": 1,
-                     *         "collective_unit_price_centimes": 1850,
-                     *         "created_at": "2026-07-25T08:00:00Z",
-                     *         "delivery_saving_centimes": 1,
-                     *         "organization_id": "merchant-berrechid",
-                     *         "original_delivery_centimes": 1,
-                     *         "original_unit_price_centimes": 2200,
-                     *         "procurement_need_id": "need-oil-001",
-                     *         "product_saving_centimes": 1,
-                     *         "quantity": 20,
-                     *         "status": "JOINED",
-                     *         "total_saving_centimes": 1,
-                     *         "updated_at": "2026-07-25T08:00:00Z"
-                     *       },
-                     *       "original_unit_price_centimes": 2200,
-                     *       "total_savings_centimes": 10000
-                     *     }
-                     */
-                    "application/json": components["schemas"]["GroupOrderResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
+        content: {
+          /**
+           * @example {
+           *       "organization": {
+           *         "city": "Berrechid",
+           *         "coarse_area": "Berrechid Center",
+           *         "created_at": "2026-07-25T08:00:00Z",
+           *         "currency": "MAD",
+           *         "name": "string",
+           *         "opening_cash_centimes": 0,
+           *         "organization_id": "merchant-berrechid",
+           *         "status": "ACTIVE",
+           *         "type": "MERCHANT",
+           *         "updated_at": "2026-07-25T08:00:00Z"
+           *       },
+           *       "profile": {
+           *         "created_at": "2026-07-25T08:00:00Z",
+           *         "display_name": "Demo Merchant",
+           *         "email": "merchant.demo@example.com",
+           *         "locale": "en-MA",
+           *         "primary_organization_id": "merchant-berrechid",
+           *         "updated_at": "2026-07-25T08:00:00Z",
+           *         "user_id": "demo-merchant"
+           *       },
+           *       "user": {
+           *         "display_name": "Demo Merchant",
+           *         "email": "merchant.demo@example.com",
+           *         "organization_id": "merchant-berrechid",
+           *         "role": "owner",
+           *         "user_id": "demo-merchant"
+           *       }
+           *     }
+           */
+          "application/json": components["schemas"]["AuthResponse"];
         };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
     };
-    join_group_order_api_v1_group_orders__id__join_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path: {
-                /** @example resource-001 */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "collective_unit_price_centimes": 1850,
-                     *       "group_order": {
-                     *         "coarse_area": "Berrechid Center",
-                     *         "delivery_total_centimes": 3000,
-                     *         "group_order_id": "group-oil-001",
-                     *         "join_deadline": "2026-07-25T08:00:00Z",
-                     *         "minimum_quantity": 50,
-                     *         "needed_by": "2026-07-25T08:00:00Z",
-                     *         "participant_count": 1,
-                     *         "product_id": "cooking-oil-1l",
-                     *         "status": "string",
-                     *         "supplier_catalog_item_id": "cat-oil-bulk",
-                     *         "supplier_organization_id": "supplier-atlas",
-                     *         "total_quantity": 1,
-                     *         "unit": "BOTTLE",
-                     *         "unit_price_centimes": 1850
-                     *       },
-                     *       "member": {
-                     *         "approved_at": "2026-07-25T08:00:00Z",
-                     *         "approved_by": "string",
-                     *         "collective_delivery_share_centimes": 1,
-                     *         "collective_unit_price_centimes": 1850,
-                     *         "created_at": "2026-07-25T08:00:00Z",
-                     *         "delivery_saving_centimes": 1,
-                     *         "organization_id": "merchant-berrechid",
-                     *         "original_delivery_centimes": 1,
-                     *         "original_unit_price_centimes": 2200,
-                     *         "procurement_need_id": "need-oil-001",
-                     *         "product_saving_centimes": 1,
-                     *         "quantity": 20,
-                     *         "status": "JOINED",
-                     *         "total_saving_centimes": 1,
-                     *         "updated_at": "2026-07-25T08:00:00Z"
-                     *       },
-                     *       "original_unit_price_centimes": 2200,
-                     *       "total_savings_centimes": 10000
-                     *     }
-                     */
-                    "application/json": components["schemas"]["GroupOrderResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
+  };
+  signup_api_v1_auth_signup_post: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+      };
+      path?: never;
+      cookie?: never;
     };
-    upload_evidence_api_v1_ingestions_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                /**
-                 * @example {
-                 *       "file": "string",
-                 *       "kind": "receipt"
-                 *     }
-                 */
-                "multipart/form-data": components["schemas"]["Body_upload_evidence_api_v1_ingestions_post"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "document": {
-                     *         "content_type": "image/jpeg",
-                     *         "id": "resource-001",
-                     *         "kind": "receipt",
-                     *         "original_name": "receipt-demo.jpg",
-                     *         "size_bytes": 1
-                     *       },
-                     *       "draft": {
-                     *         "clarification_question": "string",
-                     *         "currency": "MAD",
-                     *         "id": "resource-001",
-                     *         "lines": [
-                     *           {
-                     *             "confidence": 1,
-                     *             "line_id": "string",
-                     *             "line_total_centimes": 1,
-                     *             "original_product_name": "string",
-                     *             "product_id": "cooking-oil-1l",
-                     *             "product_name": "string",
-                     *             "quantity": 20,
-                     *             "uncertain_fields": [
-                     *               "string"
-                     *             ],
-                     *             "unit": "unit",
-                     *             "unit_price_centimes": 1850
-                     *           }
-                     *         ],
-                     *         "total_centimes": 1850,
-                     *         "transaction_kind": "purchase",
-                     *         "version": 1
-                     *       },
-                     *       "error_message": "string",
-                     *       "id": "resource-001",
-                     *       "organization_id": "merchant-berrechid",
-                     *       "status": "NEEDS_REVIEW"
-                     *     }
-                     */
-                    "application/json": components["schemas"]["IngestionResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
+    requestBody: {
+      content: {
+        /**
+         * @example {
+         *       "display_name": "Demo Merchant",
+         *       "email": "merchant.demo@example.com",
+         *       "organization_name": "Berrechid Demo Grocery",
+         *       "organization_type": "MERCHANT"
+         *     }
+         */
+        "application/json": components["schemas"]["SignUpRequest"];
+      };
     };
-    read_ingestion_api_v1_ingestions__id__get: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path: {
-                /** @example resource-001 */
-                id: string;
-            };
-            cookie?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "document": {
-                     *         "content_type": "image/jpeg",
-                     *         "id": "resource-001",
-                     *         "kind": "receipt",
-                     *         "original_name": "receipt-demo.jpg",
-                     *         "size_bytes": 1
-                     *       },
-                     *       "draft": {
-                     *         "clarification_question": "string",
-                     *         "currency": "MAD",
-                     *         "id": "resource-001",
-                     *         "lines": [
-                     *           {
-                     *             "confidence": 1,
-                     *             "line_id": "string",
-                     *             "line_total_centimes": 1,
-                     *             "original_product_name": "string",
-                     *             "product_id": "cooking-oil-1l",
-                     *             "product_name": "string",
-                     *             "quantity": 20,
-                     *             "uncertain_fields": [
-                     *               "string"
-                     *             ],
-                     *             "unit": "unit",
-                     *             "unit_price_centimes": 1850
-                     *           }
-                     *         ],
-                     *         "total_centimes": 1850,
-                     *         "transaction_kind": "purchase",
-                     *         "version": 1
-                     *       },
-                     *       "error_message": "string",
-                     *       "id": "resource-001",
-                     *       "organization_id": "merchant-berrechid",
-                     *       "status": "NEEDS_REVIEW"
-                     *     }
-                     */
-                    "application/json": components["schemas"]["IngestionResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
+        content: {
+          /**
+           * @example {
+           *       "organization": {
+           *         "city": "Berrechid",
+           *         "coarse_area": "Berrechid Center",
+           *         "created_at": "2026-07-25T08:00:00Z",
+           *         "currency": "MAD",
+           *         "name": "string",
+           *         "opening_cash_centimes": 0,
+           *         "organization_id": "merchant-berrechid",
+           *         "status": "ACTIVE",
+           *         "type": "MERCHANT",
+           *         "updated_at": "2026-07-25T08:00:00Z"
+           *       },
+           *       "profile": {
+           *         "created_at": "2026-07-25T08:00:00Z",
+           *         "display_name": "Demo Merchant",
+           *         "email": "merchant.demo@example.com",
+           *         "locale": "en-MA",
+           *         "primary_organization_id": "merchant-berrechid",
+           *         "updated_at": "2026-07-25T08:00:00Z",
+           *         "user_id": "demo-merchant"
+           *       },
+           *       "user": {
+           *         "display_name": "Demo Merchant",
+           *         "email": "merchant.demo@example.com",
+           *         "organization_id": "merchant-berrechid",
+           *         "role": "owner",
+           *         "user_id": "demo-merchant"
+           *       }
+           *     }
+           */
+          "application/json": components["schemas"]["AuthResponse"];
         };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
     };
-    confirm_draft_api_v1_ingestions__id__confirm_post: {
-        parameters: {
-            query?: never;
-            header: {
-                /** @example string */
-                "Idempotency-Key": string;
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path: {
-                /** @example resource-001 */
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                /**
-                 * @example {
-                 *       "clarification_answers": [
-                 *         {
-                 *           "answer": "20",
-                 *           "field_path": "lines[0].quantity"
-                 *         }
-                 *       ],
-                 *       "draft": {
-                 *         "clarification_question": "string",
-                 *         "currency": "MAD",
-                 *         "id": "resource-001",
-                 *         "lines": [
-                 *           {
-                 *             "confidence": 1,
-                 *             "line_id": "string",
-                 *             "line_total_centimes": 1,
-                 *             "original_product_name": "string",
-                 *             "product_id": "cooking-oil-1l",
-                 *             "product_name": "string",
-                 *             "quantity": 20,
-                 *             "uncertain_fields": [
-                 *               "string"
-                 *             ],
-                 *             "unit": "unit",
-                 *             "unit_price_centimes": 1850
-                 *           }
-                 *         ],
-                 *         "total_centimes": 1850,
-                 *         "transaction_kind": "purchase",
-                 *         "version": 1
-                 *       },
-                 *       "draft_version": 1
-                 *     }
-                 */
-                "application/json": components["schemas"]["ConfirmDraftRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "draft_id": "draft-001",
-                     *       "ingestion_id": "ingestion-001",
-                     *       "inventory_movement_ids": [
-                     *         "movement-001"
-                     *       ],
-                     *       "status": "CONFIRMED",
-                     *       "total_centimes": 1850,
-                     *       "transaction_id": "transaction-001"
-                     *     }
-                     */
-                    "application/json": components["schemas"]["ConfirmationResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
+  };
+  list_audit_findings_api_v1_control_tower_audit_findings_get: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
     };
-    list_inventory_api_v1_inventory_get: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path?: never;
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "items": [
-                     *         {
-                     *           "low_stock": false,
-                     *           "low_stock_threshold": 1,
-                     *           "name": "string",
-                     *           "predicted_stockout_at": "2026-07-25T08:00:00Z",
-                     *           "product_id": "cooking-oil-1l",
-                     *           "quantity_on_hand": 14,
-                     *           "status": "HEALTHY",
-                     *           "unit": "BOTTLE"
-                     *         }
-                     *       ]
-                     *     }
-                     */
-                    "application/json": components["schemas"]["InventoryResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
+        content: {
+          /**
+           * @example [
+           *       {
+           *         "calculation": [
+           *           {
+           *             "expression": "string",
+           *             "label": "Review purchasing need",
+           *             "result_centimes": 1
+           *           }
+           *         ],
+           *         "confidence": 1,
+           *         "due_date": "string",
+           *         "evidence": [
+           *           {
+           *             "amount_centimes": 1,
+           *             "document_type": "PURCHASE_ORDER",
+           *             "label": "Review purchasing need",
+           *             "quantity": 20,
+           *             "reference": "string",
+           *             "status": "SUPPORTING",
+           *             "unit_price_centimes": 1850
+           *           }
+           *         ],
+           *         "expected_amount_centimes": 1,
+           *         "financial_impact_centimes": 1,
+           *         "finding_id": "string",
+           *         "finding_type": "THREE_WAY_MISMATCH",
+           *         "observed_amount_centimes": 1,
+           *         "owner": "string",
+           *         "recommended_action": "string",
+           *         "severity": "CRITICAL",
+           *         "status": "OPEN",
+           *         "summary": "string",
+           *         "supplier_id": "string",
+           *         "supplier_name": "string",
+           *         "title": "string"
+           *       }
+           *     ]
+           */
+          "application/json": components["schemas"]["AuditFinding"][];
         };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
     };
-    get_merchant_dashboard_api_v1_merchant_dashboard_get: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "alerts": [
-                     *         {
-                     *           "code": "stockout_soon",
-                     *           "message": "Cooking oil may run out in four days."
-                     *         }
-                     *       ],
-                     *       "generated_at": "2026-07-25T08:00:00Z",
-                     *       "inventory": {
-                     *         "low_stock_count": 1,
-                     *         "product_count": 1
-                     *       },
-                     *       "kpis": {
-                     *         "available_cash_centimes": 610000,
-                     *         "estimated_profit_centimes": 420000,
-                     *         "expenses_centimes": 830000,
-                     *         "sales_centimes": 1250000
-                     *       },
-                     *       "next_action": {
-                     *         "code": "stockout_soon",
-                     *         "label": "Review purchasing need",
-                     *         "target_id": "string"
-                     *       }
-                     *     }
-                     */
-                    "application/json": components["schemas"]["DashboardResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
+  };
+  get_audit_finding_api_v1_control_tower_audit_findings__finding_id__get: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path: {
+        /** @example string */
+        finding_id: string;
+      };
+      cookie?: never;
     };
-    compare_offers_api_v1_offers_compare_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path?: never;
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody: {
-            content: {
-                /**
-                 * @example {
-                 *       "procurement_need_id": "need-oil-001",
-                 *       "quantity": 20
-                 *     }
-                 */
-                "application/json": components["schemas"]["OfferCompareRequest"];
-            };
+        content: {
+          /**
+           * @example {
+           *       "calculation": [
+           *         {
+           *           "expression": "string",
+           *           "label": "Review purchasing need",
+           *           "result_centimes": 1
+           *         }
+           *       ],
+           *       "confidence": 1,
+           *       "due_date": "string",
+           *       "evidence": [
+           *         {
+           *           "amount_centimes": 1,
+           *           "document_type": "PURCHASE_ORDER",
+           *           "label": "Review purchasing need",
+           *           "quantity": 20,
+           *           "reference": "string",
+           *           "status": "SUPPORTING",
+           *           "unit_price_centimes": 1850
+           *         }
+           *       ],
+           *       "expected_amount_centimes": 1,
+           *       "financial_impact_centimes": 1,
+           *       "finding_id": "string",
+           *       "finding_type": "THREE_WAY_MISMATCH",
+           *       "observed_amount_centimes": 1,
+           *       "owner": "string",
+           *       "recommended_action": "string",
+           *       "severity": "CRITICAL",
+           *       "status": "OPEN",
+           *       "summary": "string",
+           *       "supplier_id": "string",
+           *       "supplier_name": "string",
+           *       "title": "string"
+           *     }
+           */
+          "application/json": components["schemas"]["AuditFinding"];
         };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "available_now": [
-                     *         {
-                     *           "affordable": true,
-                     *           "catalog_item_id": "cat-oil-bulk",
-                     *           "created_at": "2026-07-25T08:00:00Z",
-                     *           "delivery_days": 1,
-                     *           "delivery_fee_centimes": 3000,
-                     *           "eligible_alone": true,
-                     *           "expected_unit_margin_centimes": 1,
-                     *           "explanation": "",
-                     *           "landed_cost_centimes": 40000,
-                     *           "landed_unit_cost_centimes": 0,
-                     *           "minimum_quantity": 50,
-                     *           "offer_id": "string",
-                     *           "organization_id": "merchant-berrechid",
-                     *           "procurement_need_id": "need-oil-001",
-                     *           "product_cost_centimes": 0,
-                     *           "product_id": "cooking-oil-1l",
-                     *           "rejection_reasons": [
-                     *             "string"
-                     *           ],
-                     *           "requested_quantity": 20,
-                     *           "status": "AVAILABLE_NOW",
-                     *           "supplier_organization_id": "supplier-atlas",
-                     *           "unit": "BOTTLE",
-                     *           "unit_price_centimes": 1850,
-                     *           "updated_at": "2026-07-25T08:00:00Z"
-                     *         }
-                     *       ],
-                     *       "group_opportunity": {
-                     *         "affordable": true,
-                     *         "catalog_item_id": "cat-oil-bulk",
-                     *         "created_at": "2026-07-25T08:00:00Z",
-                     *         "delivery_days": 1,
-                     *         "delivery_fee_centimes": 3000,
-                     *         "eligible_alone": true,
-                     *         "expected_unit_margin_centimes": 1,
-                     *         "explanation": "",
-                     *         "landed_cost_centimes": 40000,
-                     *         "landed_unit_cost_centimes": 0,
-                     *         "minimum_quantity": 50,
-                     *         "offer_id": "string",
-                     *         "organization_id": "merchant-berrechid",
-                     *         "procurement_need_id": "need-oil-001",
-                     *         "product_cost_centimes": 0,
-                     *         "product_id": "cooking-oil-1l",
-                     *         "rejection_reasons": [
-                     *           "string"
-                     *         ],
-                     *         "requested_quantity": 20,
-                     *         "status": "AVAILABLE_NOW",
-                     *         "supplier_organization_id": "supplier-atlas",
-                     *         "unit": "BOTTLE",
-                     *         "unit_price_centimes": 1850,
-                     *         "updated_at": "2026-07-25T08:00:00Z"
-                     *       },
-                     *       "rejected": [
-                     *         {
-                     *           "affordable": true,
-                     *           "catalog_item_id": "cat-oil-bulk",
-                     *           "created_at": "2026-07-25T08:00:00Z",
-                     *           "delivery_days": 1,
-                     *           "delivery_fee_centimes": 3000,
-                     *           "eligible_alone": true,
-                     *           "expected_unit_margin_centimes": 1,
-                     *           "explanation": "",
-                     *           "landed_cost_centimes": 40000,
-                     *           "landed_unit_cost_centimes": 0,
-                     *           "minimum_quantity": 50,
-                     *           "offer_id": "string",
-                     *           "organization_id": "merchant-berrechid",
-                     *           "procurement_need_id": "need-oil-001",
-                     *           "product_cost_centimes": 0,
-                     *           "product_id": "cooking-oil-1l",
-                     *           "rejection_reasons": [
-                     *             "string"
-                     *           ],
-                     *           "requested_quantity": 20,
-                     *           "status": "AVAILABLE_NOW",
-                     *           "supplier_organization_id": "supplier-atlas",
-                     *           "unit": "BOTTLE",
-                     *           "unit_price_centimes": 1850,
-                     *           "updated_at": "2026-07-25T08:00:00Z"
-                     *         }
-                     *       ]
-                     *     }
-                     */
-                    "application/json": components["schemas"]["OfferCompareResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
         };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
     };
-    list_procurement_needs_api_v1_procurement_needs_get: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example [
-                     *       {
-                     *         "average_daily_sales": 1,
-                     *         "coarse_area": "Berrechid Center",
-                     *         "created_at": "2026-07-25T08:00:00Z",
-                     *         "days_remaining": 1,
-                     *         "explanation": "",
-                     *         "forecast_status": "FORECAST",
-                     *         "need_id": "string",
-                     *         "needed_by": "2026-07-25T08:00:00Z",
-                     *         "organization_id": "merchant-berrechid",
-                     *         "product_id": "cooking-oil-1l",
-                     *         "quantity_needed": 20,
-                     *         "sales_history_days": 0,
-                     *         "status": "OPEN",
-                     *         "stock_on_hand": 1,
-                     *         "stockout_at": "2026-07-25T08:00:00Z",
-                     *         "target_stock_quantity": 34,
-                     *         "uncertainty_note": "string",
-                     *         "unit": "BOTTLE",
-                     *         "updated_at": "2026-07-25T08:00:00Z"
-                     *       }
-                     *     ]
-                     */
-                    "application/json": components["schemas"]["ProcurementNeed"][];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
+  };
+  decide_audit_finding_api_v1_control_tower_audit_findings__finding_id__decide_post: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path: {
+        /** @example string */
+        finding_id: string;
+      };
+      cookie?: never;
     };
-    generate_procurement_need_api_v1_procurement_needs_generate_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                /**
-                 * @example {
-                 *       "product_id": "cooking-oil-1l",
-                 *       "target_stock": 34,
-                 *       "unit": "BOTTLE"
-                 *     }
-                 */
-                "application/json": components["schemas"]["GenerateProcurementNeedRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "average_daily_sales": 1,
-                     *       "coarse_area": "Berrechid Center",
-                     *       "created_at": "2026-07-25T08:00:00Z",
-                     *       "days_remaining": 1,
-                     *       "explanation": "",
-                     *       "forecast_status": "FORECAST",
-                     *       "need_id": "string",
-                     *       "needed_by": "2026-07-25T08:00:00Z",
-                     *       "organization_id": "merchant-berrechid",
-                     *       "product_id": "cooking-oil-1l",
-                     *       "quantity_needed": 20,
-                     *       "sales_history_days": 0,
-                     *       "status": "OPEN",
-                     *       "stock_on_hand": 1,
-                     *       "stockout_at": "2026-07-25T08:00:00Z",
-                     *       "target_stock_quantity": 34,
-                     *       "uncertainty_note": "string",
-                     *       "unit": "BOTTLE",
-                     *       "updated_at": "2026-07-25T08:00:00Z"
-                     *     }
-                     */
-                    "application/json": components["schemas"]["ProcurementNeed"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
+    requestBody: {
+      content: {
+        /**
+         * @example {
+         *       "action": "PREPARE_DISPUTE",
+         *       "note": "string"
+         *     }
+         */
+        "application/json": components["schemas"]["FindingDecisionRequest"];
+      };
     };
-    list_supplier_catalogs_api_v1_supplier_catalogs_get: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path?: never;
-            cookie?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "items": [
-                     *         {
-                     *           "available_quantity": 1000,
-                     *           "catalog_item_id": "cat-oil-bulk",
-                     *           "created_at": "2026-07-25T08:00:00Z",
-                     *           "delivery_days": 1,
-                     *           "delivery_fee_centimes": 0,
-                     *           "minimum_quantity": 1,
-                     *           "organization_id": "merchant-berrechid",
-                     *           "product_id": "cooking-oil-1l",
-                     *           "service_areas": [
-                     *             "string"
-                     *           ],
-                     *           "status": "ACTIVE",
-                     *           "supplier_sku": "ATL-OIL-1L",
-                     *           "unit": "BOTTLE",
-                     *           "unit_price_centimes": 1850,
-                     *           "updated_at": "2026-07-25T08:00:00Z"
-                     *         }
-                     *       ]
-                     *     }
-                     */
-                    "application/json": components["schemas"]["SupplierCatalogResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
+        content: {
+          /**
+           * @example {
+           *       "action": "string",
+           *       "approved_amount_centimes": 1,
+           *       "approved_at": "2026-07-25T08:00:00Z",
+           *       "approved_by": "string",
+           *       "dispute_reference": "string",
+           *       "finding_id": "string",
+           *       "message": "Cooking oil may run out in four days.",
+           *       "status": "APPROVED"
+           *     }
+           */
+          "application/json": components["schemas"]["FindingDecisionResponse"];
         };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
     };
-    create_catalog_item_api_v1_supplier_catalogs_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                /**
-                 * @example {
-                 *       "available_quantity": 1000,
-                 *       "delivery_days": 1,
-                 *       "delivery_fee_centimes": 3000,
-                 *       "minimum_quantity": 1,
-                 *       "product_id": "cooking-oil-1l",
-                 *       "service_areas": [
-                 *         "string"
-                 *       ],
-                 *       "supplier_sku": "ATL-OIL-1L",
-                 *       "unit": "BOTTLE",
-                 *       "unit_price_centimes": 1850
-                 *     }
-                 */
-                "application/json": components["schemas"]["CreateCatalogItemRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "available_quantity": 1000,
-                     *       "catalog_item_id": "cat-oil-bulk",
-                     *       "created_at": "2026-07-25T08:00:00Z",
-                     *       "delivery_days": 1,
-                     *       "delivery_fee_centimes": 0,
-                     *       "minimum_quantity": 1,
-                     *       "organization_id": "merchant-berrechid",
-                     *       "product_id": "cooking-oil-1l",
-                     *       "service_areas": [
-                     *         "string"
-                     *       ],
-                     *       "status": "ACTIVE",
-                     *       "supplier_sku": "ATL-OIL-1L",
-                     *       "unit": "BOTTLE",
-                     *       "unit_price_centimes": 1850,
-                     *       "updated_at": "2026-07-25T08:00:00Z"
-                     *     }
-                     */
-                    "application/json": components["schemas"]["SupplierCatalogItem"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
+  };
+  run_control_audit_api_v1_control_tower_audit_runs_post: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
     };
-    get_supplier_dashboard_api_v1_supplier_dashboard_get: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path?: never;
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "kpis": {
-                     *         "active_catalog_items": 5,
-                     *         "active_demand_opportunities": 2,
-                     *         "estimated_revenue_centimes": 101750,
-                     *         "total_potential_volume": 55
-                     *       },
-                     *       "opportunities": [
-                     *         {
-                     *           "coarse_area": "Berrechid Center",
-                     *           "created_at": "2026-07-25T08:00:00Z",
-                     *           "merchant_count": 1,
-                     *           "needed_by": "2026-07-25T08:00:00Z",
-                     *           "opportunity_id": "opp-oil-001",
-                     *           "product_id": "cooking-oil-1l",
-                     *           "source_group_order_id": "string",
-                     *           "status": "ACTIVE",
-                     *           "supplier_organization_id": "",
-                     *           "total_quantity": 1,
-                     *           "unit": "BOTTLE",
-                     *           "updated_at": "2026-07-25T08:00:00Z"
-                     *         }
-                     *       ]
-                     *     }
-                     */
-                    "application/json": components["schemas"]["SupplierDashboardResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
+        content: {
+          /**
+           * @example {
+           *       "documents_analyzed": 1,
+           *       "findings_created": 1,
+           *       "model": "string",
+           *       "provider": "string",
+           *       "run_id": "string",
+           *       "status": "SUCCEEDED",
+           *       "tool_calls": [
+           *         {
+           *           "deterministic": true,
+           *           "duration_ms": 1,
+           *           "label": "Review purchasing need",
+           *           "name": "string",
+           *           "output": "string",
+           *           "sequence": 1,
+           *           "status": "SUCCEEDED"
+           *         }
+           *       ],
+           *       "total_impact_centimes": 1
+           *     }
+           */
+          "application/json": components["schemas"]["AuditRunResponse"];
         };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
     };
-    create_supplier_offer_api_v1_supplier_offers_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                /**
-                 * @example {
-                 *       "catalog_item_id": "cat-oil-bulk",
-                 *       "minimum_quantity": 50,
-                 *       "opportunity_id": "opp-oil-001",
-                 *       "unit_price_centimes": 1850
-                 *     }
-                 */
-                "application/json": components["schemas"]["CreateSupplierOfferRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "affordable": true,
-                     *       "catalog_item_id": "cat-oil-bulk",
-                     *       "created_at": "2026-07-25T08:00:00Z",
-                     *       "delivery_days": 1,
-                     *       "delivery_fee_centimes": 3000,
-                     *       "eligible_alone": true,
-                     *       "expected_unit_margin_centimes": 1,
-                     *       "explanation": "",
-                     *       "landed_cost_centimes": 40000,
-                     *       "landed_unit_cost_centimes": 0,
-                     *       "minimum_quantity": 50,
-                     *       "offer_id": "string",
-                     *       "organization_id": "merchant-berrechid",
-                     *       "procurement_need_id": "need-oil-001",
-                     *       "product_cost_centimes": 0,
-                     *       "product_id": "cooking-oil-1l",
-                     *       "rejection_reasons": [
-                     *         "string"
-                     *       ],
-                     *       "requested_quantity": 20,
-                     *       "status": "AVAILABLE_NOW",
-                     *       "supplier_organization_id": "supplier-atlas",
-                     *       "unit": "BOTTLE",
-                     *       "unit_price_centimes": 1850,
-                     *       "updated_at": "2026-07-25T08:00:00Z"
-                     *     }
-                     */
-                    "application/json": components["schemas"]["Offer"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
+  };
+  get_dashboard_api_v1_control_tower_dashboard_get: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
     };
-    list_supplier_opportunities_api_v1_supplier_opportunities_get: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path?: never;
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "items": [
-                     *         {
-                     *           "coarse_area": "Berrechid Center",
-                     *           "created_at": "2026-07-25T08:00:00Z",
-                     *           "merchant_count": 1,
-                     *           "needed_by": "2026-07-25T08:00:00Z",
-                     *           "opportunity_id": "opp-oil-001",
-                     *           "product_id": "cooking-oil-1l",
-                     *           "source_group_order_id": "string",
-                     *           "status": "ACTIVE",
-                     *           "supplier_organization_id": "",
-                     *           "total_quantity": 1,
-                     *           "unit": "BOTTLE",
-                     *           "updated_at": "2026-07-25T08:00:00Z"
-                     *         }
-                     *       ]
-                     *     }
-                     */
-                    "application/json": components["schemas"]["SupplierOpportunityListResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
+        content: {
+          /**
+           * @example {
+           *       "cash_forecast": [
+           *         {
+           *           "date": "string",
+           *           "inflows_centimes": 1,
+           *           "label": "Review purchasing need",
+           *           "outflows_centimes": 1,
+           *           "projected_balance_centimes": 1
+           *         }
+           *       ],
+           *       "company": {
+           *         "active_supplier_count": 1,
+           *         "city": "Berrechid",
+           *         "legal_name": "string",
+           *         "name": "string",
+           *         "reporting_period": "string",
+           *         "sector": "string",
+           *         "warehouse_count": 1
+           *       },
+           *       "findings": [
+           *         {
+           *           "calculation": [
+           *             {
+           *               "expression": "string",
+           *               "label": "Review purchasing need",
+           *               "result_centimes": 1
+           *             }
+           *           ],
+           *           "confidence": 1,
+           *           "due_date": "string",
+           *           "evidence": [
+           *             {
+           *               "amount_centimes": 1,
+           *               "document_type": "PURCHASE_ORDER",
+           *               "label": "Review purchasing need",
+           *               "quantity": 20,
+           *               "reference": "string",
+           *               "status": "SUPPORTING",
+           *               "unit_price_centimes": 1850
+           *             }
+           *           ],
+           *           "expected_amount_centimes": 1,
+           *           "financial_impact_centimes": 1,
+           *           "finding_id": "string",
+           *           "finding_type": "THREE_WAY_MISMATCH",
+           *           "observed_amount_centimes": 1,
+           *           "owner": "string",
+           *           "recommended_action": "string",
+           *           "severity": "CRITICAL",
+           *           "status": "OPEN",
+           *           "summary": "string",
+           *           "supplier_id": "string",
+           *           "supplier_name": "string",
+           *           "title": "string"
+           *         }
+           *       ],
+           *       "generated_at": "2026-07-25T08:00:00Z",
+           *       "kpis": {
+           *         "cash_at_risk_centimes": 1,
+           *         "critical_findings": 1,
+           *         "inventory_value_centimes": 1,
+           *         "monitored_spend_centimes": 1,
+           *         "open_findings": 1,
+           *         "preventable_leakage_centimes": 1
+           *       },
+           *       "priority_actions": [
+           *         {
+           *           "action_id": "string",
+           *           "description": "string",
+           *           "impact_centimes": 1,
+           *           "target_path": "string",
+           *           "title": "string",
+           *           "urgency": "NOW"
+           *         }
+           *       ]
+           *     }
+           */
+          "application/json": components["schemas"]["ControlTowerDashboard"];
         };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
     };
-    search_suppliers_api_v1_suppliers_search_get: {
-        parameters: {
-            query?: {
-                /** @example cooking-oil-1l */
-                product_id?: string | null;
-            };
-            header?: {
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "items": [
-                     *         {
-                     *           "available_quantity": 1000,
-                     *           "catalog_item_id": "cat-oil-bulk",
-                     *           "created_at": "2026-07-25T08:00:00Z",
-                     *           "delivery_days": 1,
-                     *           "delivery_fee_centimes": 0,
-                     *           "minimum_quantity": 1,
-                     *           "organization_id": "merchant-berrechid",
-                     *           "product_id": "cooking-oil-1l",
-                     *           "service_areas": [
-                     *             "string"
-                     *           ],
-                     *           "status": "ACTIVE",
-                     *           "supplier_sku": "ATL-OIL-1L",
-                     *           "unit": "BOTTLE",
-                     *           "unit_price_centimes": 1850,
-                     *           "updated_at": "2026-07-25T08:00:00Z"
-                     *         }
-                     *       ]
-                     *     }
-                     */
-                    "application/json": components["schemas"]["SupplierSearchResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
+  };
+  get_financial_records_api_v1_control_tower_records_get: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
     };
-    list_transactions_api_v1_transactions_get: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @example string */
-                authorization?: string | null;
-                /** @example string */
-                "x-test-user-id"?: string | null;
-                /** @example string */
-                "x-test-org-id"?: string | null;
-            };
-            path?: never;
-            cookie?: never;
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
         };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    /**
-                     * @example {
-                     *       "items": [
-                     *         {
-                     *           "currency": "MAD",
-                     *           "draft_id": "draft-001",
-                     *           "id": "resource-001",
-                     *           "ingestion_id": "ingestion-001",
-                     *           "kind": "purchase",
-                     *           "lines": [
-                     *             {
-                     *               "line_id": "string",
-                     *               "line_total_centimes": 1,
-                     *               "product_id": "cooking-oil-1l",
-                     *               "product_name": "string",
-                     *               "quantity": 20,
-                     *               "unit_price_centimes": 1850
-                     *             }
-                     *           ],
-                     *           "occurred_at": "2026-07-25T08:00:00Z",
-                     *           "organization_id": "merchant-berrechid",
-                     *           "total_centimes": 1850
-                     *         }
-                     *       ],
-                     *       "next_cursor": "string"
-                     *     }
-                     */
-                    "application/json": components["schemas"]["TransactionListResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
+        content: {
+          /**
+           * @example {
+           *       "items": [
+           *         {
+           *           "amount_centimes": 1,
+           *           "counterparty": "string",
+           *           "due_on": "string",
+           *           "issued_on": "string",
+           *           "linked_records": [
+           *             "string"
+           *           ],
+           *           "record_id": "string",
+           *           "record_type": "PURCHASE_ORDER",
+           *           "reference": "string",
+           *           "status": "MATCHED"
+           *         }
+           *       ]
+           *     }
+           */
+          "application/json": components["schemas"]["FinancialRecordListResponse"];
         };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
     };
-    health_health_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: string;
-                    };
-                };
-            };
-        };
+  };
+  get_supplier_portfolio_api_v1_control_tower_suppliers_get: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
     };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "concentration_risk_percent": 1,
+           *       "savings_opportunity_centimes": 1,
+           *       "scorecards": [
+           *         {
+           *           "annual_spend_centimes": 1,
+           *           "average_payment_terms_days": 1,
+           *           "category": "string",
+           *           "city": "Berrechid",
+           *           "contract_compliance_percent": 1,
+           *           "delivery_reliability_percent": 1,
+           *           "disputed_invoice_rate_percent": 1,
+           *           "name": "string",
+           *           "recommendation": "string",
+           *           "risk": "LOW",
+           *           "spend_share_percent": 1,
+           *           "supplier_id": "string",
+           *           "trend": "IMPROVING"
+           *         }
+           *       ],
+           *       "total_spend_centimes": 1
+           *     }
+           */
+          "application/json": components["schemas"]["SupplierPortfolioResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  list_group_orders_api_v1_group_orders_get: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "items": [
+           *         {
+           *           "collective_unit_price_centimes": 1850,
+           *           "group_order": {
+           *             "coarse_area": "Berrechid Center",
+           *             "delivery_total_centimes": 3000,
+           *             "group_order_id": "group-oil-001",
+           *             "join_deadline": "2026-07-25T08:00:00Z",
+           *             "minimum_quantity": 50,
+           *             "needed_by": "2026-07-25T08:00:00Z",
+           *             "participant_count": 1,
+           *             "product_id": "cooking-oil-1l",
+           *             "status": "string",
+           *             "supplier_catalog_item_id": "cat-oil-bulk",
+           *             "supplier_organization_id": "supplier-atlas",
+           *             "total_quantity": 1,
+           *             "unit": "BOTTLE",
+           *             "unit_price_centimes": 1850
+           *           },
+           *           "member": {
+           *             "approved_at": "2026-07-25T08:00:00Z",
+           *             "approved_by": "string",
+           *             "collective_delivery_share_centimes": 1,
+           *             "collective_unit_price_centimes": 1850,
+           *             "created_at": "2026-07-25T08:00:00Z",
+           *             "delivery_saving_centimes": 1,
+           *             "organization_id": "merchant-berrechid",
+           *             "original_delivery_centimes": 1,
+           *             "original_unit_price_centimes": 2200,
+           *             "procurement_need_id": "need-oil-001",
+           *             "product_saving_centimes": 1,
+           *             "quantity": 20,
+           *             "status": "JOINED",
+           *             "total_saving_centimes": 1,
+           *             "updated_at": "2026-07-25T08:00:00Z"
+           *           },
+           *           "original_unit_price_centimes": 2200,
+           *           "total_savings_centimes": 10000
+           *         }
+           *       ]
+           *     }
+           */
+          "application/json": components["schemas"]["GroupOrderListResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  propose_group_order_api_v1_group_orders_propose_post: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        /**
+         * @example {
+         *       "procurement_need_id": "need-oil-001",
+         *       "product_id": "cooking-oil-1l",
+         *       "quantity": 20,
+         *       "supplier_catalog_item_id": "cat-oil-bulk",
+         *       "supplier_organization_id": "supplier-atlas"
+         *     }
+         */
+        "application/json": components["schemas"]["ProposeGroupOrderRequest"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "collective_unit_price_centimes": 1850,
+           *       "group_order": {
+           *         "coarse_area": "Berrechid Center",
+           *         "delivery_total_centimes": 3000,
+           *         "group_order_id": "group-oil-001",
+           *         "join_deadline": "2026-07-25T08:00:00Z",
+           *         "minimum_quantity": 50,
+           *         "needed_by": "2026-07-25T08:00:00Z",
+           *         "participant_count": 1,
+           *         "product_id": "cooking-oil-1l",
+           *         "status": "string",
+           *         "supplier_catalog_item_id": "cat-oil-bulk",
+           *         "supplier_organization_id": "supplier-atlas",
+           *         "total_quantity": 1,
+           *         "unit": "BOTTLE",
+           *         "unit_price_centimes": 1850
+           *       },
+           *       "member": {
+           *         "approved_at": "2026-07-25T08:00:00Z",
+           *         "approved_by": "string",
+           *         "collective_delivery_share_centimes": 1,
+           *         "collective_unit_price_centimes": 1850,
+           *         "created_at": "2026-07-25T08:00:00Z",
+           *         "delivery_saving_centimes": 1,
+           *         "organization_id": "merchant-berrechid",
+           *         "original_delivery_centimes": 1,
+           *         "original_unit_price_centimes": 2200,
+           *         "procurement_need_id": "need-oil-001",
+           *         "product_saving_centimes": 1,
+           *         "quantity": 20,
+           *         "status": "JOINED",
+           *         "total_saving_centimes": 1,
+           *         "updated_at": "2026-07-25T08:00:00Z"
+           *       },
+           *       "original_unit_price_centimes": 2200,
+           *       "total_savings_centimes": 10000
+           *     }
+           */
+          "application/json": components["schemas"]["GroupOrderResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  approve_group_order_api_v1_group_orders__id__approve_post: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example demo-approval */
+        "Idempotency-Key"?: string;
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path: {
+        /** @example resource-001 */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "collective_unit_price_centimes": 1850,
+           *       "group_order": {
+           *         "coarse_area": "Berrechid Center",
+           *         "delivery_total_centimes": 3000,
+           *         "group_order_id": "group-oil-001",
+           *         "join_deadline": "2026-07-25T08:00:00Z",
+           *         "minimum_quantity": 50,
+           *         "needed_by": "2026-07-25T08:00:00Z",
+           *         "participant_count": 1,
+           *         "product_id": "cooking-oil-1l",
+           *         "status": "string",
+           *         "supplier_catalog_item_id": "cat-oil-bulk",
+           *         "supplier_organization_id": "supplier-atlas",
+           *         "total_quantity": 1,
+           *         "unit": "BOTTLE",
+           *         "unit_price_centimes": 1850
+           *       },
+           *       "member": {
+           *         "approved_at": "2026-07-25T08:00:00Z",
+           *         "approved_by": "string",
+           *         "collective_delivery_share_centimes": 1,
+           *         "collective_unit_price_centimes": 1850,
+           *         "created_at": "2026-07-25T08:00:00Z",
+           *         "delivery_saving_centimes": 1,
+           *         "organization_id": "merchant-berrechid",
+           *         "original_delivery_centimes": 1,
+           *         "original_unit_price_centimes": 2200,
+           *         "procurement_need_id": "need-oil-001",
+           *         "product_saving_centimes": 1,
+           *         "quantity": 20,
+           *         "status": "JOINED",
+           *         "total_saving_centimes": 1,
+           *         "updated_at": "2026-07-25T08:00:00Z"
+           *       },
+           *       "original_unit_price_centimes": 2200,
+           *       "total_savings_centimes": 10000
+           *     }
+           */
+          "application/json": components["schemas"]["GroupOrderResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  join_group_order_api_v1_group_orders__id__join_post: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path: {
+        /** @example resource-001 */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "collective_unit_price_centimes": 1850,
+           *       "group_order": {
+           *         "coarse_area": "Berrechid Center",
+           *         "delivery_total_centimes": 3000,
+           *         "group_order_id": "group-oil-001",
+           *         "join_deadline": "2026-07-25T08:00:00Z",
+           *         "minimum_quantity": 50,
+           *         "needed_by": "2026-07-25T08:00:00Z",
+           *         "participant_count": 1,
+           *         "product_id": "cooking-oil-1l",
+           *         "status": "string",
+           *         "supplier_catalog_item_id": "cat-oil-bulk",
+           *         "supplier_organization_id": "supplier-atlas",
+           *         "total_quantity": 1,
+           *         "unit": "BOTTLE",
+           *         "unit_price_centimes": 1850
+           *       },
+           *       "member": {
+           *         "approved_at": "2026-07-25T08:00:00Z",
+           *         "approved_by": "string",
+           *         "collective_delivery_share_centimes": 1,
+           *         "collective_unit_price_centimes": 1850,
+           *         "created_at": "2026-07-25T08:00:00Z",
+           *         "delivery_saving_centimes": 1,
+           *         "organization_id": "merchant-berrechid",
+           *         "original_delivery_centimes": 1,
+           *         "original_unit_price_centimes": 2200,
+           *         "procurement_need_id": "need-oil-001",
+           *         "product_saving_centimes": 1,
+           *         "quantity": 20,
+           *         "status": "JOINED",
+           *         "total_saving_centimes": 1,
+           *         "updated_at": "2026-07-25T08:00:00Z"
+           *       },
+           *       "original_unit_price_centimes": 2200,
+           *       "total_savings_centimes": 10000
+           *     }
+           */
+          "application/json": components["schemas"]["GroupOrderResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  upload_evidence_api_v1_ingestions_post: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        /**
+         * @example {
+         *       "file": "string",
+         *       "kind": "receipt"
+         *     }
+         */
+        "multipart/form-data": components["schemas"]["Body_upload_evidence_api_v1_ingestions_post"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "document": {
+           *         "content_type": "image/jpeg",
+           *         "id": "resource-001",
+           *         "kind": "receipt",
+           *         "original_name": "receipt-demo.jpg",
+           *         "size_bytes": 1
+           *       },
+           *       "draft": {
+           *         "clarification_question": "string",
+           *         "currency": "MAD",
+           *         "id": "resource-001",
+           *         "lines": [
+           *           {
+           *             "base_unit": "unit",
+           *             "confidence": 1,
+           *             "line_id": "string",
+           *             "line_total_centimes": 1,
+           *             "original_product_name": "string",
+           *             "product_id": "cooking-oil-1l",
+           *             "product_name": "string",
+           *             "quantity": 20,
+           *             "uncertain_fields": [
+           *               "string"
+           *             ],
+           *             "unit": "unit",
+           *             "unit_multiplier": 1,
+           *             "unit_price_centimes": 1850
+           *           }
+           *         ],
+           *         "total_centimes": 1850,
+           *         "transaction_kind": "purchase",
+           *         "version": 1
+           *       },
+           *       "error_message": "string",
+           *       "id": "resource-001",
+           *       "organization_id": "merchant-berrechid",
+           *       "status": "NEEDS_REVIEW"
+           *     }
+           */
+          "application/json": components["schemas"]["IngestionResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  read_ingestion_api_v1_ingestions__id__get: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path: {
+        /** @example resource-001 */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "document": {
+           *         "content_type": "image/jpeg",
+           *         "id": "resource-001",
+           *         "kind": "receipt",
+           *         "original_name": "receipt-demo.jpg",
+           *         "size_bytes": 1
+           *       },
+           *       "draft": {
+           *         "clarification_question": "string",
+           *         "currency": "MAD",
+           *         "id": "resource-001",
+           *         "lines": [
+           *           {
+           *             "base_unit": "unit",
+           *             "confidence": 1,
+           *             "line_id": "string",
+           *             "line_total_centimes": 1,
+           *             "original_product_name": "string",
+           *             "product_id": "cooking-oil-1l",
+           *             "product_name": "string",
+           *             "quantity": 20,
+           *             "uncertain_fields": [
+           *               "string"
+           *             ],
+           *             "unit": "unit",
+           *             "unit_multiplier": 1,
+           *             "unit_price_centimes": 1850
+           *           }
+           *         ],
+           *         "total_centimes": 1850,
+           *         "transaction_kind": "purchase",
+           *         "version": 1
+           *       },
+           *       "error_message": "string",
+           *       "id": "resource-001",
+           *       "organization_id": "merchant-berrechid",
+           *       "status": "NEEDS_REVIEW"
+           *     }
+           */
+          "application/json": components["schemas"]["IngestionResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  confirm_draft_api_v1_ingestions__id__confirm_post: {
+    parameters: {
+      query?: never;
+      header: {
+        /** @example string */
+        "Idempotency-Key": string;
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path: {
+        /** @example resource-001 */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        /**
+         * @example {
+         *       "clarification_answers": [
+         *         {
+         *           "answer": "20",
+         *           "field_path": "lines[0].quantity"
+         *         }
+         *       ],
+         *       "draft": {
+         *         "clarification_question": "string",
+         *         "currency": "MAD",
+         *         "id": "resource-001",
+         *         "lines": [
+         *           {
+         *             "base_unit": "unit",
+         *             "confidence": 1,
+         *             "line_id": "string",
+         *             "line_total_centimes": 1,
+         *             "original_product_name": "string",
+         *             "product_id": "cooking-oil-1l",
+         *             "product_name": "string",
+         *             "quantity": 20,
+         *             "uncertain_fields": [
+         *               "string"
+         *             ],
+         *             "unit": "unit",
+         *             "unit_multiplier": 1,
+         *             "unit_price_centimes": 1850
+         *           }
+         *         ],
+         *         "total_centimes": 1850,
+         *         "transaction_kind": "purchase",
+         *         "version": 1
+         *       },
+         *       "draft_version": 1
+         *     }
+         */
+        "application/json": components["schemas"]["ConfirmDraftRequest"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "draft_id": "draft-001",
+           *       "ingestion_id": "ingestion-001",
+           *       "inventory_movement_ids": [
+           *         "movement-001"
+           *       ],
+           *       "status": "CONFIRMED",
+           *       "total_centimes": 1850,
+           *       "transaction_id": "transaction-001"
+           *     }
+           */
+          "application/json": components["schemas"]["ConfirmationResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  list_inventory_api_v1_inventory_get: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "items": [
+           *         {
+           *           "low_stock": false,
+           *           "low_stock_threshold": 1,
+           *           "name": "string",
+           *           "predicted_stockout_at": "2026-07-25T08:00:00Z",
+           *           "product_id": "cooking-oil-1l",
+           *           "quantity_on_hand": 14,
+           *           "status": "HEALTHY",
+           *           "unit": "BOTTLE"
+           *         }
+           *       ]
+           *     }
+           */
+          "application/json": components["schemas"]["InventoryResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  list_product_options_api_v1_inventory_product_options_get: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "items": [
+           *         {
+           *           "base_unit": "string",
+           *           "name": "string",
+           *           "product_id": "cooking-oil-1l",
+           *           "units": [
+           *             {
+           *               "conversion_to_base": 1,
+           *               "label": "Review purchasing need",
+           *               "unit": "BOTTLE"
+           *             }
+           *           ]
+           *         }
+           *       ]
+           *     }
+           */
+          "application/json": components["schemas"]["ProductOptionListResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  get_merchant_dashboard_api_v1_merchant_dashboard_get: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "alerts": [
+           *         {
+           *           "code": "stockout_soon",
+           *           "message": "Cooking oil may run out in four days."
+           *         }
+           *       ],
+           *       "generated_at": "2026-07-25T08:00:00Z",
+           *       "inventory": {
+           *         "low_stock_count": 1,
+           *         "product_count": 1
+           *       },
+           *       "kpis": {
+           *         "available_cash_centimes": 610000,
+           *         "estimated_profit_centimes": 420000,
+           *         "expenses_centimes": 830000,
+           *         "sales_centimes": 1250000
+           *       },
+           *       "next_action": {
+           *         "code": "stockout_soon",
+           *         "label": "Review purchasing need",
+           *         "target_id": "string"
+           *       }
+           *     }
+           */
+          "application/json": components["schemas"]["DashboardResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  compare_offers_api_v1_offers_compare_post: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        /**
+         * @example {
+         *       "procurement_need_id": "need-oil-001",
+         *       "quantity": 20
+         *     }
+         */
+        "application/json": components["schemas"]["OfferCompareRequest"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "available_now": [
+           *         {
+           *           "affordable": true,
+           *           "catalog_item_id": "cat-oil-bulk",
+           *           "created_at": "2026-07-25T08:00:00Z",
+           *           "delivery_days": 1,
+           *           "delivery_fee_centimes": 3000,
+           *           "eligible_alone": true,
+           *           "expected_unit_margin_centimes": 1,
+           *           "explanation": "",
+           *           "landed_cost_centimes": 40000,
+           *           "landed_unit_cost_centimes": 0,
+           *           "minimum_quantity": 50,
+           *           "offer_id": "string",
+           *           "organization_id": "merchant-berrechid",
+           *           "procurement_need_id": "need-oil-001",
+           *           "product_cost_centimes": 0,
+           *           "product_id": "cooking-oil-1l",
+           *           "rejection_reasons": [
+           *             "string"
+           *           ],
+           *           "requested_quantity": 20,
+           *           "status": "AVAILABLE_NOW",
+           *           "supplier_organization_id": "supplier-atlas",
+           *           "unit": "BOTTLE",
+           *           "unit_price_centimes": 1850,
+           *           "updated_at": "2026-07-25T08:00:00Z"
+           *         }
+           *       ],
+           *       "group_opportunity": {
+           *         "affordable": true,
+           *         "catalog_item_id": "cat-oil-bulk",
+           *         "created_at": "2026-07-25T08:00:00Z",
+           *         "delivery_days": 1,
+           *         "delivery_fee_centimes": 3000,
+           *         "eligible_alone": true,
+           *         "expected_unit_margin_centimes": 1,
+           *         "explanation": "",
+           *         "landed_cost_centimes": 40000,
+           *         "landed_unit_cost_centimes": 0,
+           *         "minimum_quantity": 50,
+           *         "offer_id": "string",
+           *         "organization_id": "merchant-berrechid",
+           *         "procurement_need_id": "need-oil-001",
+           *         "product_cost_centimes": 0,
+           *         "product_id": "cooking-oil-1l",
+           *         "rejection_reasons": [
+           *           "string"
+           *         ],
+           *         "requested_quantity": 20,
+           *         "status": "AVAILABLE_NOW",
+           *         "supplier_organization_id": "supplier-atlas",
+           *         "unit": "BOTTLE",
+           *         "unit_price_centimes": 1850,
+           *         "updated_at": "2026-07-25T08:00:00Z"
+           *       },
+           *       "rejected": [
+           *         {
+           *           "affordable": true,
+           *           "catalog_item_id": "cat-oil-bulk",
+           *           "created_at": "2026-07-25T08:00:00Z",
+           *           "delivery_days": 1,
+           *           "delivery_fee_centimes": 3000,
+           *           "eligible_alone": true,
+           *           "expected_unit_margin_centimes": 1,
+           *           "explanation": "",
+           *           "landed_cost_centimes": 40000,
+           *           "landed_unit_cost_centimes": 0,
+           *           "minimum_quantity": 50,
+           *           "offer_id": "string",
+           *           "organization_id": "merchant-berrechid",
+           *           "procurement_need_id": "need-oil-001",
+           *           "product_cost_centimes": 0,
+           *           "product_id": "cooking-oil-1l",
+           *           "rejection_reasons": [
+           *             "string"
+           *           ],
+           *           "requested_quantity": 20,
+           *           "status": "AVAILABLE_NOW",
+           *           "supplier_organization_id": "supplier-atlas",
+           *           "unit": "BOTTLE",
+           *           "unit_price_centimes": 1850,
+           *           "updated_at": "2026-07-25T08:00:00Z"
+           *         }
+           *       ]
+           *     }
+           */
+          "application/json": components["schemas"]["OfferCompareResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  list_procurement_needs_api_v1_procurement_needs_get: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example [
+           *       {
+           *         "average_daily_sales": 1,
+           *         "coarse_area": "Berrechid Center",
+           *         "created_at": "2026-07-25T08:00:00Z",
+           *         "days_remaining": 1,
+           *         "explanation": "",
+           *         "forecast_status": "FORECAST",
+           *         "need_id": "string",
+           *         "needed_by": "2026-07-25T08:00:00Z",
+           *         "organization_id": "merchant-berrechid",
+           *         "product_id": "cooking-oil-1l",
+           *         "quantity_needed": 20,
+           *         "sales_history_days": 0,
+           *         "status": "OPEN",
+           *         "stock_on_hand": 1,
+           *         "stockout_at": "2026-07-25T08:00:00Z",
+           *         "target_stock_quantity": 34,
+           *         "uncertainty_note": "string",
+           *         "unit": "BOTTLE",
+           *         "updated_at": "2026-07-25T08:00:00Z"
+           *       }
+           *     ]
+           */
+          "application/json": components["schemas"]["ProcurementNeed"][];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  generate_procurement_need_api_v1_procurement_needs_generate_post: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        /**
+         * @example {
+         *       "product_id": "cooking-oil-1l",
+         *       "target_stock": 34,
+         *       "unit": "BOTTLE"
+         *     }
+         */
+        "application/json": components["schemas"]["GenerateProcurementNeedRequest"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "average_daily_sales": 1,
+           *       "coarse_area": "Berrechid Center",
+           *       "created_at": "2026-07-25T08:00:00Z",
+           *       "days_remaining": 1,
+           *       "explanation": "",
+           *       "forecast_status": "FORECAST",
+           *       "need_id": "string",
+           *       "needed_by": "2026-07-25T08:00:00Z",
+           *       "organization_id": "merchant-berrechid",
+           *       "product_id": "cooking-oil-1l",
+           *       "quantity_needed": 20,
+           *       "sales_history_days": 0,
+           *       "status": "OPEN",
+           *       "stock_on_hand": 1,
+           *       "stockout_at": "2026-07-25T08:00:00Z",
+           *       "target_stock_quantity": 34,
+           *       "uncertainty_note": "string",
+           *       "unit": "BOTTLE",
+           *       "updated_at": "2026-07-25T08:00:00Z"
+           *     }
+           */
+          "application/json": components["schemas"]["ProcurementNeed"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  list_supplier_catalogs_api_v1_supplier_catalogs_get: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "items": [
+           *         {
+           *           "available_quantity": 1000,
+           *           "catalog_item_id": "cat-oil-bulk",
+           *           "created_at": "2026-07-25T08:00:00Z",
+           *           "delivery_days": 1,
+           *           "delivery_fee_centimes": 0,
+           *           "minimum_quantity": 1,
+           *           "organization_id": "merchant-berrechid",
+           *           "product_id": "cooking-oil-1l",
+           *           "service_areas": [
+           *             "string"
+           *           ],
+           *           "status": "ACTIVE",
+           *           "supplier_sku": "ATL-OIL-1L",
+           *           "unit": "BOTTLE",
+           *           "unit_price_centimes": 1850,
+           *           "updated_at": "2026-07-25T08:00:00Z"
+           *         }
+           *       ]
+           *     }
+           */
+          "application/json": components["schemas"]["SupplierCatalogResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  create_catalog_item_api_v1_supplier_catalogs_post: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        /**
+         * @example {
+         *       "available_quantity": 1000,
+         *       "delivery_days": 1,
+         *       "delivery_fee_centimes": 3000,
+         *       "minimum_quantity": 1,
+         *       "product_id": "cooking-oil-1l",
+         *       "service_areas": [
+         *         "string"
+         *       ],
+         *       "supplier_sku": "ATL-OIL-1L",
+         *       "unit": "BOTTLE",
+         *       "unit_price_centimes": 1850
+         *     }
+         */
+        "application/json": components["schemas"]["CreateCatalogItemRequest"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "available_quantity": 1000,
+           *       "catalog_item_id": "cat-oil-bulk",
+           *       "created_at": "2026-07-25T08:00:00Z",
+           *       "delivery_days": 1,
+           *       "delivery_fee_centimes": 0,
+           *       "minimum_quantity": 1,
+           *       "organization_id": "merchant-berrechid",
+           *       "product_id": "cooking-oil-1l",
+           *       "service_areas": [
+           *         "string"
+           *       ],
+           *       "status": "ACTIVE",
+           *       "supplier_sku": "ATL-OIL-1L",
+           *       "unit": "BOTTLE",
+           *       "unit_price_centimes": 1850,
+           *       "updated_at": "2026-07-25T08:00:00Z"
+           *     }
+           */
+          "application/json": components["schemas"]["SupplierCatalogItem"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  get_supplier_dashboard_api_v1_supplier_dashboard_get: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "kpis": {
+           *         "active_catalog_items": 5,
+           *         "active_demand_opportunities": 2,
+           *         "estimated_revenue_centimes": 101750,
+           *         "total_potential_volume": 55
+           *       },
+           *       "opportunities": [
+           *         {
+           *           "coarse_area": "Berrechid Center",
+           *           "created_at": "2026-07-25T08:00:00Z",
+           *           "merchant_count": 1,
+           *           "needed_by": "2026-07-25T08:00:00Z",
+           *           "opportunity_id": "opp-oil-001",
+           *           "product_id": "cooking-oil-1l",
+           *           "source_group_order_id": "string",
+           *           "status": "ACTIVE",
+           *           "supplier_organization_id": "",
+           *           "total_quantity": 1,
+           *           "unit": "BOTTLE",
+           *           "updated_at": "2026-07-25T08:00:00Z"
+           *         }
+           *       ]
+           *     }
+           */
+          "application/json": components["schemas"]["SupplierDashboardResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  create_supplier_offer_api_v1_supplier_offers_post: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        /**
+         * @example {
+         *       "catalog_item_id": "cat-oil-bulk",
+         *       "minimum_quantity": 50,
+         *       "opportunity_id": "opp-oil-001",
+         *       "unit_price_centimes": 1850
+         *     }
+         */
+        "application/json": components["schemas"]["CreateSupplierOfferRequest"];
+      };
+    };
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "affordable": true,
+           *       "catalog_item_id": "cat-oil-bulk",
+           *       "created_at": "2026-07-25T08:00:00Z",
+           *       "delivery_days": 1,
+           *       "delivery_fee_centimes": 3000,
+           *       "eligible_alone": true,
+           *       "expected_unit_margin_centimes": 1,
+           *       "explanation": "",
+           *       "landed_cost_centimes": 40000,
+           *       "landed_unit_cost_centimes": 0,
+           *       "minimum_quantity": 50,
+           *       "offer_id": "string",
+           *       "organization_id": "merchant-berrechid",
+           *       "procurement_need_id": "need-oil-001",
+           *       "product_cost_centimes": 0,
+           *       "product_id": "cooking-oil-1l",
+           *       "rejection_reasons": [
+           *         "string"
+           *       ],
+           *       "requested_quantity": 20,
+           *       "status": "AVAILABLE_NOW",
+           *       "supplier_organization_id": "supplier-atlas",
+           *       "unit": "BOTTLE",
+           *       "unit_price_centimes": 1850,
+           *       "updated_at": "2026-07-25T08:00:00Z"
+           *     }
+           */
+          "application/json": components["schemas"]["Offer"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  list_supplier_opportunities_api_v1_supplier_opportunities_get: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "items": [
+           *         {
+           *           "coarse_area": "Berrechid Center",
+           *           "created_at": "2026-07-25T08:00:00Z",
+           *           "merchant_count": 1,
+           *           "needed_by": "2026-07-25T08:00:00Z",
+           *           "opportunity_id": "opp-oil-001",
+           *           "product_id": "cooking-oil-1l",
+           *           "source_group_order_id": "string",
+           *           "status": "ACTIVE",
+           *           "supplier_organization_id": "",
+           *           "total_quantity": 1,
+           *           "unit": "BOTTLE",
+           *           "updated_at": "2026-07-25T08:00:00Z"
+           *         }
+           *       ]
+           *     }
+           */
+          "application/json": components["schemas"]["SupplierOpportunityListResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  search_suppliers_api_v1_suppliers_search_get: {
+    parameters: {
+      query?: {
+        /** @example cooking-oil-1l */
+        product_id?: string | null;
+      };
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "items": [
+           *         {
+           *           "available_quantity": 1000,
+           *           "catalog_item_id": "cat-oil-bulk",
+           *           "created_at": "2026-07-25T08:00:00Z",
+           *           "delivery_days": 1,
+           *           "delivery_fee_centimes": 0,
+           *           "minimum_quantity": 1,
+           *           "organization_id": "merchant-berrechid",
+           *           "product_id": "cooking-oil-1l",
+           *           "service_areas": [
+           *             "string"
+           *           ],
+           *           "status": "ACTIVE",
+           *           "supplier_sku": "ATL-OIL-1L",
+           *           "unit": "BOTTLE",
+           *           "unit_price_centimes": 1850,
+           *           "updated_at": "2026-07-25T08:00:00Z"
+           *         }
+           *       ]
+           *     }
+           */
+          "application/json": components["schemas"]["SupplierSearchResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  list_transactions_api_v1_transactions_get: {
+    parameters: {
+      query?: never;
+      header?: {
+        /** @example string */
+        authorization?: string | null;
+        /** @example string */
+        "x-test-user-id"?: string | null;
+        /** @example string */
+        "x-test-org-id"?: string | null;
+      };
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          /**
+           * @example {
+           *       "items": [
+           *         {
+           *           "currency": "MAD",
+           *           "draft_id": "draft-001",
+           *           "id": "resource-001",
+           *           "ingestion_id": "ingestion-001",
+           *           "kind": "purchase",
+           *           "lines": [
+           *             {
+           *               "base_unit": "UNIT",
+           *               "inventory_quantity": 1,
+           *               "line_id": "string",
+           *               "line_total_centimes": 1,
+           *               "product_id": "cooking-oil-1l",
+           *               "product_name": "string",
+           *               "quantity": 20,
+           *               "unit": "UNIT",
+           *               "unit_multiplier": 1,
+           *               "unit_price_centimes": 1850
+           *             }
+           *           ],
+           *           "occurred_at": "2026-07-25T08:00:00Z",
+           *           "organization_id": "merchant-berrechid",
+           *           "total_centimes": 1850
+           *         }
+           *       ],
+           *       "next_cursor": "string"
+           *     }
+           */
+          "application/json": components["schemas"]["TransactionListResponse"];
+        };
+      };
+      /** @description Validation Error */
+      422: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
+  health_health_get: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description Successful Response */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            [key: string]: string;
+          };
+        };
+      };
+    };
+  };
 }

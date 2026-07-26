@@ -1,8 +1,8 @@
-"""Shared extraction provider contract.
+"""Shared financial-evidence extraction provider contract.
 
 The ingestion service calls this interface in both hosted-Gemma and deterministic
 fixture modes. Providers only return an unconfirmed draft; they never write
-financial records, update inventory, or approve an order.
+company records, release payments, or approve a supplier action.
 """
 
 from abc import ABC, abstractmethod
@@ -23,5 +23,5 @@ class ExtractionProvider(ABC):
         evidence_kind: EvidenceKind = "receipt",
         safe_product_context: list[dict] | None = None,
     ) -> ExtractionResult:
-        """Return a validated, reviewable draft from untrusted business evidence."""
+        """Return a validated, reviewable draft from untrusted company evidence."""
         raise NotImplementedError

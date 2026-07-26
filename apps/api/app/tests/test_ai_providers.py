@@ -6,6 +6,7 @@ import pytest
 
 from app.modules.ai.providers.fixture import (
     APPROVED_RECEIPT_FILENAME,
+    DISTRIBUTOR_INVOICE_FILENAME,
     FixtureProvider,
     UnsupportedFixtureError,
 )
@@ -24,6 +25,18 @@ async def test_fixture_provider_supports_only_approved_receipt_and_audio_files()
     assert receipt.draft.transaction_kind == "purchase"
     assert receipt.draft.clarification_question
     assert receipt.draft.lines[0].product_id == "cooking-oil-1l"
+
+    invoice = await provider.extract_evidence(
+        b"synthetic",
+        DISTRIBUTOR_INVOICE_FILENAME,
+        "image/png",
+        "receipt",
+    )
+    assert invoice.draft.total_centimes == 9_250_000
+    assert invoice.draft.lines[0].product_id == "cooking-oil-1l"
+    assert invoice.draft.lines[0].unit == "carton"
+    assert invoice.draft.lines[0].base_unit == "bottle"
+    assert invoice.draft.lines[0].unit_multiplier == 12
 
     audio = await provider.extract_evidence(
         b"synthetic",

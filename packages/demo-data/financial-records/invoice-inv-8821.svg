@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1900" viewBox="0 0 1400 1900">
+  <rect width="1400" height="1900" fill="#eef7fa"/>
+  <rect x="95" y="70" width="1210" height="1760" rx="24" fill="#ffffff" stroke="#90e0ef" stroke-width="4"/>
+  <rect x="95" y="70" width="1210" height="210" rx="24" fill="#03045e"/>
+  <rect x="95" y="250" width="1210" height="30" fill="#03045e"/>
+  <text x="155" y="150" font-family="Arial, sans-serif" font-size="48" font-weight="700" fill="#ffffff">MAGHREB OILS &amp; FOODS SARL</text>
+  <text x="155" y="210" font-family="Arial, sans-serif" font-size="27" fill="#caf0f8">Casablanca, Maroc · ICE 003184920000071</text>
+  <text x="1040" y="215" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#90e0ef">FACTURE</text>
+
+  <text x="155" y="355" font-family="Arial, sans-serif" font-size="24" fill="#52647a">FACTURÉ À</text>
+  <text x="155" y="405" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#03045e">ATLAS DISTRIBUTION MAROC SARL</text>
+  <text x="155" y="450" font-family="Arial, sans-serif" font-size="25" fill="#34465c">Zone industrielle Aïn Sebaâ, Casablanca</text>
+  <text x="155" y="490" font-family="Arial, sans-serif" font-size="25" fill="#34465c">ICE 002776410000038</text>
+
+  <rect x="835" y="320" width="400" height="205" rx="14" fill="#f5fbfd" stroke="#90e0ef" stroke-width="2"/>
+  <text x="875" y="370" font-family="Arial, sans-serif" font-size="23" fill="#52647a">N° FACTURE</text>
+  <text x="875" y="410" font-family="Arial, sans-serif" font-size="31" font-weight="700" fill="#03045e">INV-8821</text>
+  <text x="875" y="455" font-family="Arial, sans-serif" font-size="23" fill="#52647a">DATE</text>
+  <text x="1060" y="455" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#17243b">23/07/2026</text>
+  <text x="875" y="495" font-family="Arial, sans-serif" font-size="23" fill="#52647a">ÉCHÉANCE</text>
+  <text x="1060" y="495" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#17243b">28/07/2026</text>
+
+  <text x="155" y="610" font-family="Arial, sans-serif" font-size="24" fill="#52647a">RÉFÉRENCES</text>
+  <text x="155" y="658" font-family="Arial, sans-serif" font-size="26" fill="#17243b">Bon de commande : PO-1042</text>
+  <text x="155" y="700" font-family="Arial, sans-serif" font-size="26" fill="#17243b">Bon de livraison : BL-4478</text>
+  <text x="835" y="658" font-family="Arial, sans-serif" font-size="26" fill="#17243b">Conditions : 45 jours</text>
+  <text x="835" y="700" font-family="Arial, sans-serif" font-size="26" fill="#17243b">Devise : MAD</text>
+
+  <rect x="155" y="770" width="1090" height="75" rx="10" fill="#0077b6"/>
+  <text x="185" y="818" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#ffffff">DÉSIGNATION</text>
+  <text x="735" y="818" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#ffffff">QTÉ</text>
+  <text x="850" y="818" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#ffffff">P.U. HT</text>
+  <text x="1050" y="818" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#ffffff">TOTAL HT</text>
+
+  <rect x="155" y="845" width="1090" height="145" fill="#f8fbfd" stroke="#d9e8ee" stroke-width="2"/>
+  <text x="185" y="910" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#17243b">Huile de table 1L — cartons de 12</text>
+  <text x="185" y="952" font-family="Arial, sans-serif" font-size="22" fill="#52647a">Référence produit : HUILE-1L-CT12</text>
+  <text x="750" y="925" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#17243b">500</text>
+  <text x="850" y="925" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#17243b">185.00</text>
+  <text x="1050" y="925" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#17243b">92,500.00</text>
+
+  <line x1="760" y1="1110" x2="1245" y2="1110" stroke="#d9e8ee" stroke-width="3"/>
+  <text x="800" y="1170" font-family="Arial, sans-serif" font-size="27" fill="#52647a">Total HT</text>
+  <text x="1050" y="1170" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#17243b">92,500.00 MAD</text>
+  <text x="800" y="1230" font-family="Arial, sans-serif" font-size="27" fill="#52647a">TVA</text>
+  <text x="1050" y="1230" font-family="Arial, sans-serif" font-size="29" fill="#17243b">0.00 MAD</text>
+  <rect x="760" y="1270" width="485" height="105" rx="14" fill="#03045e"/>
+  <text x="800" y="1337" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#ffffff">NET À PAYER</text>
+  <text x="1025" y="1337" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#90e0ef">92,500.00</text>
+
+  <rect x="155" y="1460" width="1090" height="165" rx="14" fill="#f5fbfd" stroke="#90e0ef" stroke-width="2"/>
+  <text x="190" y="1515" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#0077b6">COORDONNÉES BANCAIRES</text>
+  <text x="190" y="1560" font-family="Arial, sans-serif" font-size="23" fill="#34465c">Banque : Banque du Maghreb · RIB : 007 810 0000182000000000 71</text>
+  <text x="190" y="1600" font-family="Arial, sans-serif" font-size="23" fill="#34465c">Merci d'indiquer la référence INV-8821 lors du règlement.</text>
+
+  <text x="155" y="1730" font-family="Arial, sans-serif" font-size="21" fill="#6a788b">Document synthétique créé pour la démonstration MIZAN Control. Aucune entreprise réelle.</text>
+  <text x="155" y="1770" font-family="Arial, sans-serif" font-size="21" fill="#6a788b">Capital social fictif : 2,000,000 MAD · RC Casablanca 456789 · IF 40299121</text>
+</svg>

@@ -77,7 +77,7 @@ class DataStore:
         # 1. Profiles & Organizations
         self.profiles["demo-merchant"] = Profile(
             user_id="demo-merchant",
-            display_name="Demo Merchant",
+            display_name="Nadia El Mansouri",
             email="merchant.demo@example.com",
             primary_organization_id=m_org,
         )
@@ -90,11 +90,11 @@ class DataStore:
 
         self.organizations[m_org] = Organization(
             organization_id=m_org,
-            name="Grocery Store Berrechid",
+            name="Atlas Distribution Maroc",
             type="MERCHANT",
-            city="Berrechid",
-            coarse_area="Berrechid Center",
-            opening_cash_centimes=600000,
+            city="Casablanca",
+            coarse_area="Casablanca-Settat",
+            opening_cash_centimes=31_500_000,
         )
         self.organizations[s_org] = Organization(
             organization_id=s_org,
@@ -142,6 +142,18 @@ class DataStore:
             canonical_name="Cooking oil 1L",
             category="GROCERY",
             base_unit="BOTTLE",
+            purchase_units=[
+                {
+                    "unit": "BOTTLE",
+                    "label": "Bottle",
+                    "conversion_to_base": 1,
+                },
+                {
+                    "unit": "CARTON",
+                    "label": "Carton (12 bottles)",
+                    "conversion_to_base": 12,
+                },
+            ],
             aliases=["huile 1l", "oil 1 litre", "زيت 1 لتر"],
         )
         sugar_prod = CanonicalProduct(
@@ -149,6 +161,13 @@ class DataStore:
             canonical_name="Sugar 1kg",
             category="GROCERY",
             base_unit="BAG",
+            purchase_units=[
+                {
+                    "unit": "BAG",
+                    "label": "Bag (1 kg)",
+                    "conversion_to_base": 1,
+                }
+            ],
             aliases=["sucre 1kg", "sugar 1 kilogram", "سكر 1 كلغ"],
         )
         self.products["cooking-oil-1l"] = oil_prod

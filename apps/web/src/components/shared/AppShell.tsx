@@ -6,7 +6,6 @@ import {
   LogOut,
   Menu,
   PanelLeftClose,
-  Store,
   X,
 } from "lucide-react";
 import { cn } from "../../lib/utils";
@@ -24,7 +23,6 @@ export interface AppShellProps {
   children: ReactNode;
   navigation: AppNavigationItem[];
   activePath: string;
-  portal: "merchant" | "supplier";
   organizationName: string;
   role: string;
   userName?: string | null;
@@ -45,7 +43,6 @@ export function AppShell({
   children,
   navigation,
   activePath,
-  portal,
   organizationName,
   role,
   userName,
@@ -53,9 +50,7 @@ export function AppShell({
   onSignOut,
 }: AppShellProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const PortalIcon = portal === "supplier" ? Building2 : Store;
-  const portalLabel =
-    portal === "supplier" ? "Supplier portal" : "Merchant portal";
+  const portalLabel = "Finance workspace";
   const accountLabel = userName || organizationName;
   const initials = useMemo(
     () => getInitials(accountLabel) || "MS",
@@ -94,13 +89,13 @@ export function AppShell({
           href="/"
           onClick={(event) => navigate(event, "/")}
           className="rounded-sm outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-4"
-          aria-label="MIZAN Souq home"
+          aria-label="MIZAN Control home"
         >
           <span className="block text-xl font-semibold tracking-tight text-brand-950">
-            MIZAN <span className="text-primary">Souq</span>
+            MIZAN <span className="text-primary">Control</span>
           </span>
           <span className="mt-0.5 block text-xs font-medium text-foreground-muted">
-            Business intelligence
+            Financial operations intelligence
           </span>
         </a>
         <Button
@@ -117,7 +112,7 @@ export function AppShell({
       <div className="border-b border-border px-4 py-4">
         <div className="flex items-center gap-3 rounded-control bg-primary-subtle px-3 py-3">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-control bg-surface text-primary shadow-sm">
-            <PortalIcon aria-hidden="true" className="h-5 w-5" />
+            <Building2 aria-hidden="true" className="h-5 w-5" />
           </span>
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold text-brand-950">
@@ -271,8 +266,8 @@ export function AppShell({
             </div>
 
             <div className="flex items-center gap-3">
-              <Badge variant={portal === "supplier" ? "info" : "primary"}>
-                <PortalIcon aria-hidden="true" className="h-3.5 w-3.5" />
+              <Badge variant="primary">
+                <Building2 aria-hidden="true" className="h-3.5 w-3.5" />
                 <span className="hidden sm:inline">{portalLabel}</span>
               </Badge>
               <span

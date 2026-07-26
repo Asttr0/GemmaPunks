@@ -127,6 +127,7 @@ def _build_confirmation_records(
 
         line_id = line.line_id or f"line-{index + 1:03d}"
         line_total = line.quantity * line.unit_price_centimes
+        inventory_quantity = line.quantity * line.unit_multiplier
         total_centimes += line_total
         transaction_lines.append(
             TransactionLine(
@@ -134,6 +135,10 @@ def _build_confirmation_records(
                 product_id=line.product_id,
                 product_name=line.product_name,
                 quantity=line.quantity,
+                unit=line.unit.upper(),
+                base_unit=line.base_unit.upper(),
+                unit_multiplier=line.unit_multiplier,
+                inventory_quantity=inventory_quantity,
                 unit_price_centimes=line.unit_price_centimes,
                 line_total_centimes=line_total,
             )
@@ -148,12 +153,14 @@ def _build_confirmation_records(
                 organization_id=command.organization_id,
                 product_id=line.product_id,
                 display_name=line.product_name,
-                unit=line.unit.upper(),
+                unit=line.base_unit.upper(),
                 quantity_on_hand=0,
             )
 
         quantity_delta = (
-            line.quantity if command.draft.transaction_kind == "purchase" else -line.quantity
+            inventory_quantity
+            if command.draft.transaction_kind == "purchase"
+            else -inventory_quantity
         )
         quantity_after = current.quantity_on_hand + quantity_delta
         if quantity_after < 0:
@@ -162,7 +169,7 @@ def _build_confirmation_records(
         updated_item = current.model_copy(
             update={
                 "display_name": line.product_name,
-                "unit": line.unit.upper(),
+                "unit": line.base_unit.upper(),
                 "quantity_on_hand": quantity_after,
                 "status": _status_for_quantity(
                     quantity_after,
@@ -180,7 +187,7 @@ def _build_confirmation_records(
                 product_id=line.product_id,
                 transaction_id=command.transaction_id,
                 kind=command.draft.transaction_kind.upper(),
-                unit=line.unit.upper(),
+                unit=line.base_unit.upper(),
                 quantity_delta=quantity_delta,
                 quantity_after=quantity_after,
                 occurred_at=now,

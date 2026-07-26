@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
   "scenario": "developer-baseline",
-  "description": "Synthetic data for local development. It is not a real merchant dataset or the final live-demo reset.",
+  "description": "Synthetic Moroccan distribution-company data for local development and the investor demo.",
   "auth_users": [
     {
       "uid": "demo-merchant",
       "email": "merchant.demo@example.com",
-      "display_name": "Demo Merchant",
+      "display_name": "Nadia El Mansouri",
       "emulator_password": "DemoMerchant123!",
       "shared_password_env": "DEMO_MERCHANT_PASSWORD",
       "claims": {
@@ -42,7 +42,7 @@
     {
       "path": "profiles/demo-merchant",
       "data": {
-        "display_name": "Demo Merchant",
+        "display_name": "Nadia El Mansouri",
         "email": "merchant.demo@example.com",
         "primary_organization_id": "merchant-berrechid",
         "locale": "en-MA",
@@ -75,6 +75,18 @@
         "canonical_name": "Cooking oil 1L",
         "category": "GROCERY",
         "base_unit": "BOTTLE",
+        "purchase_units": [
+          {
+            "unit": "BOTTLE",
+            "label": "Bottle",
+            "conversion_to_base": 1
+          },
+          {
+            "unit": "CARTON",
+            "label": "Carton (12 bottles)",
+            "conversion_to_base": 12
+          }
+        ],
         "aliases": ["huile 1l", "oil 1 litre", "زيت 1 لتر"],
         "active": true,
         "created_at": {
@@ -91,6 +103,13 @@
         "canonical_name": "Sugar 1kg",
         "category": "GROCERY",
         "base_unit": "BAG",
+        "purchase_units": [
+          {
+            "unit": "BAG",
+            "label": "Bag (1 kg)",
+            "conversion_to_base": 1
+          }
+        ],
         "aliases": ["sucre 1kg", "sugar 1 kilogram", "سكر 1 كلغ"],
         "active": true,
         "created_at": {
@@ -104,13 +123,13 @@
     {
       "path": "organizations/merchant-berrechid",
       "data": {
-        "name": "Berrechid Demo Grocery",
+        "name": "Atlas Distribution Maroc",
         "type": "MERCHANT",
         "status": "ACTIVE",
-        "city": "Berrechid",
-        "coarse_area": "Berrechid Centre",
+        "city": "Casablanca",
+        "coarse_area": "Casablanca-Settat",
         "currency": "MAD",
-        "opening_cash_centimes": 600000,
+        "opening_cash_centimes": 31500000,
         "created_at": {
           "__timestamp__": "2026-07-23T08:00:00Z"
         },

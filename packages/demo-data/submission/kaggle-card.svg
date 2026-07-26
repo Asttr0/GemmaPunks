@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="280" viewBox="0 0 560 280">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#03045E"/>
+      <stop offset="1" stop-color="#0077B6"/>
+    </linearGradient>
+  </defs>
+  <rect width="560" height="280" rx="20" fill="url(#bg)"/>
+  <circle cx="493" cy="52" r="92" fill="#00B4D8" opacity=".28"/>
+  <circle cx="520" cy="250" r="125" fill="#90E0EF" opacity=".13"/>
+  <text x="38" y="62" font-family="Arial" font-size="17" font-weight="700" fill="#90E0EF">GEMMA-POWERED FINANCIAL CONTROL</text>
+  <text x="38" y="116" font-family="Arial" font-size="40" font-weight="700" fill="#fff">MIZAN Control</text>
+  <text x="38" y="154" font-family="Arial" font-size="20" fill="#CAF0F8">From fragmented records to protected cash.</text>
+  <rect x="38" y="191" width="165" height="47" rx="12" fill="#fff"/>
+  <text x="57" y="221" font-family="Arial" font-size="17" font-weight="700" fill="#03045E">6,100 MAD protected</text>
+  <g transform="translate(410 93)">
+    <rect width="105" height="124" rx="15" fill="#fff" opacity=".96"/>
+    <rect x="17" y="19" width="71" height="10" rx="5" fill="#0077B6"/>
+    <rect x="17" y="45" width="52" height="7" rx="3.5" fill="#90E0EF"/>
+    <rect x="17" y="63" width="71" height="7" rx="3.5" fill="#CAF0F8"/>
+    <rect x="17" y="81" width="60" height="7" rx="3.5" fill="#CAF0F8"/>
+    <circle cx="78" cy="103" r="12" fill="#10B981"/>
+    <path d="M72 103l4 4 8-9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
