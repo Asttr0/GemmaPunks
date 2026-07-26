@@ -46,6 +46,15 @@ import { useAuth } from "../auth/auth-context";
 
 type EvidenceKind = "receipt" | "audio" | "ledger" | "screenshot";
 
+const demoDocumentNames = new Set([
+  "invoice-inv-8821.png",
+  "purchase-order-po-1042.png",
+  "delivery-note-bl-4478.png",
+]);
+
+const wait = (milliseconds: number) =>
+  new Promise<void>((resolve) => window.setTimeout(resolve, milliseconds));
+
 const evidenceOptions: Array<{
   value: EvidenceKind;
   label: string;
@@ -89,12 +98,19 @@ export function EvidenceUploadPage() {
   const [kind, setKind] = useState<EvidenceKind>("receipt");
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [extractionStage, setExtractionStage] = useState(0);
 
   const upload = useMutation({
     mutationFn: async () => {
       if (!file) throw new Error("Choose a file before starting extraction.");
-      if (!idToken) return demoIngestion;
-      return uploadEvidence(file, kind, idToken);
+      const extraction = idToken
+        ? uploadEvidence(file, kind, idToken)
+        : Promise.resolve(demoIngestion);
+
+      if (!demoDocumentNames.has(file.name.toLowerCase())) return extraction;
+
+      const [result] = await Promise.all([extraction, wait(3_600)]);
+      return result;
     },
     onSuccess: (result) => {
       navigate(`/control-tower/ingestions/${result.id}`, {
@@ -112,7 +128,29 @@ export function EvidenceUploadPage() {
     },
   });
 
+  useEffect(() => {
+    if (!upload.isPending) {
+      setExtractionStage(0);
+      return;
+    }
+
+    const readTimer = window.setTimeout(() => setExtractionStage(1), 900);
+    const structureTimer = window.setTimeout(
+      () => setExtractionStage(2),
+      2_100,
+    );
+    return () => {
+      window.clearTimeout(readTimer);
+      window.clearTimeout(structureTimer);
+    };
+  }, [upload.isPending]);
+
   const selected = evidenceOptions.find((option) => option.value === kind)!;
+  const extractionLabels = [
+    "Reading document…",
+    "Extracting financial fields…",
+    "Checking totals…",
+  ];
 
   return (
     <PageMotion>
@@ -245,7 +283,7 @@ export function EvidenceUploadPage() {
               >
                 <Sparkles className="h-4 w-4" />
                 {upload.isPending
-                  ? "Gemma is extracting"
+                  ? extractionLabels[extractionStage]
                   : "Create reviewable draft"}
                 {!upload.isPending ? <ArrowRight className="h-4 w-4" /> : null}
               </Button>
