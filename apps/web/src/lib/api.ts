@@ -1,7 +1,11 @@
 import type { components } from "../../../../packages/contracts/generated-types/api";
+import { getIdToken } from "firebase/auth";
+import { firebaseAuth } from "./firebase";
 
 export type AuthResponse = components["schemas"]["AuthResponse"];
 export type SignUpRequest = components["schemas"]["SignUpRequest"];
+
+const API_BASE = import.meta.env.VITE_API_BASE ?? "";
 
 const apiBaseUrl = (
   import.meta.env.VITE_API_URL ?? "http://localhost:8000"
@@ -76,3 +80,23 @@ export const registerBusiness = (
 
 export const getAuthSession = (idToken: string): Promise<AuthResponse> =>
   authRequest<AuthResponse>("/api/v1/auth/me", idToken);
+
+export async function apiPost<T>(endpoint: string, body: unknown): Promise<T> {
+  const token = await getIdToken(firebaseAuth.currentUser!);
+
+  const response = await fetch(`${API_BASE}${endpoint}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(error || response.statusText);
+  }
+
+  return response.json() as Promise<T>;
+}

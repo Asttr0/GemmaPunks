@@ -98,6 +98,16 @@ export function useCatalogItems(
   return { items: result.data, loading: result.loading, error: result.error };
 }
 
+export function useCatalog(
+  organizationId: string | null
+): { items: CatalogItem[]; loading: boolean; error: Error | null } {
+  const path = organizationId
+    ? `organizations/${organizationId}/supplier_catalog_items`
+    : null;
+  const result = useCollection<CatalogItem>(path);
+  return { items: result.data, loading: result.loading, error: result.error };
+}
+
 export function useOpportunities(): {
   opportunities: Opportunity[];
   loading: boolean;
@@ -129,4 +139,46 @@ export function useActiveOffers(
     loading: result.loading,
     error: result.error,
   };
+}
+
+export interface Product {
+  product_id: string;
+  canonical_name: string;
+  category: string;
+  base_unit: string;
+  aliases: string[];
+  active: boolean;
+}
+
+export function useProducts(): {
+  products: Product[];
+  loading: boolean;
+  error: Error | null;
+} {
+  const [data, setData] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    const q = query(collection(firestore, "products"));
+
+    const unsubscribe = onSnapshot(
+      q,
+      (snapshot: QuerySnapshot<DocumentData>) => {
+        const items = snapshot.docs.map((doc) => ({
+          ...doc.data(),
+        })) as Product[];
+        setData(items);
+        setLoading(false);
+      },
+      (err) => {
+        setError(err);
+        setLoading(false);
+      }
+    );
+
+    return () => unsubscribe();
+  }, []);
+
+  return { products: data, loading, error };
 }
