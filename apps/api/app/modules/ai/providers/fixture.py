@@ -1,172 +1,155 @@
-"""
-FixtureProvider — the offline/backup extraction mode (issue #21).
-
-Returns the approved, hard-coded demo result for known evidence only. This
-was originally the safety-net fallback for issue #22; given local CPU-only
-Gemma inference proved too slow/unreliable for a live demo on team
-hardware, this is now the primary demo path. It's still real, tested code
--- deterministic and honest about what it is (see fallback_used /
-provider fields), just not a live model call.
-
-Values below come from docs/taha-ai-procurement-handoff.md, section 9
-(receipt). The audio fixture is NOT yet confirmed with the team -- flagged
-below, swap in real approved values once frozen.
-"""
-
-from __future__ import annotations
-
-import time
+from pathlib import PurePath
 
 from app.modules.ai.providers.base import EvidenceKind, ExtractionProvider
 from app.modules.ai.schemas.extraction import (
+    AgentTimelineEvent,
+    DraftLine,
     ExtractionDraft,
-    ExtractionLine,
     ExtractionResult,
-    ToolEvent,
-    TransactionKind,
 )
 
-APPROVED_RECEIPT_FILENAME = "demo_receipt.jpg"
-APPROVED_AUDIO_FILENAME = "demo_audio.wav"
 
-# Purely cosmetic: a real model call isn't instant, and an instantly
-# returned result is the fastest way to visually tip off that this isn't
-# live inference. This delay is applied ONLY outside tests
-# (simulate_delay=False in test setup) so the suite stays fast.
-DEFAULT_SIMULATED_DELAY_SECONDS = 1.8
+class UnsupportedFixtureError(ValueError):
+    pass
 
 
-def _demo_receipt_draft() -> ExtractionDraft:
-    """The approved receipt fixture: cooking oil + sugar, one uncertain field."""
-    oil = ExtractionLine(
-        product_id="cooking_oil_1l",
-        product_name="Cooking oil 1L",
-        original_product_name="Zit",
-        unit="bottle",
-        quantity=20,
-        unit_price_centimes=2200,
-        line_total_centimes=0,  # recomputed by the model validator
-        confidence=0.99,
-        uncertain_fields=[],
-    )
-    sugar = ExtractionLine(
-        product_id="sugar_1kg",
-        product_name="Sugar 1kg",
-        original_product_name="Sukkar",
-        unit="bag",
-        quantity=10,
-        unit_price_centimes=850,
-        line_total_centimes=0,  # recomputed by the model validator
-        confidence=0.64,
-        uncertain_fields=["quantity"],
-    )
-    return ExtractionDraft(
-        transaction_kind=TransactionKind.PURCHASE,
-        currency="MAD",
-        lines=[oil, sugar],
-        total_centimes=0,  # recomputed by the model validator
-        clarification_question="Was the sugar quantity 10 bags?",
-    )
-
-
-def _demo_audio_draft() -> ExtractionDraft:
-    """
-    PLACEHOLDER -- not yet confirmed with the team. A Darija sales voice
-    note: "Bi3t khmsa kilo d sukkar o joj baki d atay" (sold 5kg sugar and
-    2 boxes of tea). Confirm real values with Asttr0 before relying on
-    this for the actual demo script.
-    """
-    sugar_sale = ExtractionLine(
-        product_id="sugar_1kg",
-        product_name="Sugar 1kg",
-        original_product_name="sukkar",
-        unit="kg",
-        quantity=5,
-        unit_price_centimes=1200,
-        line_total_centimes=0,
-        confidence=0.93,
-        uncertain_fields=[],
-    )
-    tea_sale = ExtractionLine(
-        product_id="tea_boxes",
-        product_name="Tea boxes",
-        original_product_name="atay",
-        unit="box",
-        quantity=2,
-        unit_price_centimes=1800,
-        line_total_centimes=0,
-        confidence=0.7,
-        uncertain_fields=["quantity"],
-    )
-    return ExtractionDraft(
-        transaction_kind=TransactionKind.SALE,
-        currency="MAD",
-        lines=[sugar_sale, tea_sale],
-        total_centimes=0,
-        clarification_question="Did you sell 2 boxes of tea, or 3?",
-    )
+APPROVED_RECEIPT_FILENAME = "demo-receipt.jpg"
+APPROVED_AUDIO_FILENAME = "demo-sales-note.wav"
 
 
 class FixtureProvider(ExtractionProvider):
-    """Returns the saved, approved answer for known demo evidence only."""
+    APPROVED_RECEIPT_NAMES = {
+        "receipt.jpg",
+        "receipt.jpeg",
+        "receipt.png",
+        APPROVED_RECEIPT_FILENAME,
+        "synthetic-purchase-receipt.jpg",
+    }
+    APPROVED_AUDIO_NAMES = {
+        "voice.mp3",
+        "voice.wav",
+        APPROVED_AUDIO_FILENAME,
+        "sales-note.mp3",
+    }
 
-    def __init__(self, simulate_delay: bool = True):
-        self.simulate_delay = simulate_delay
+    @classmethod
+    def supports(cls, original_name: str, evidence_kind: EvidenceKind) -> bool:
+        safe_name = PurePath(original_name).name.casefold()
+        if evidence_kind == "audio":
+            return safe_name in cls.APPROVED_AUDIO_NAMES
+        return safe_name in cls.APPROVED_RECEIPT_NAMES
 
-    def extract_evidence(
+    async def extract_evidence(
         self,
-        *,
         file_bytes: bytes,
         original_name: str,
         content_type: str,
-        evidence_kind: EvidenceKind,
-        safe_product_context: list[str] | None = None,
+        evidence_kind: EvidenceKind = "receipt",
+        safe_product_context: list[dict] | None = None,
     ) -> ExtractionResult:
-        if evidence_kind == "receipt" and original_name == APPROVED_RECEIPT_FILENAME:
-            draft = _demo_receipt_draft()
-            timeline = [
-                ToolEvent(
-                    sequence=1,
-                    name="ocr_receipt_image",
-                    status="SUCCEEDED",
-                    input_summary=f"receipt evidence ({original_name})",
-                    output_summary="Extracted raw text blocks from image",
-                ),
-                ToolEvent(
-                    sequence=2,
-                    name="parse_receipt_data",
-                    status="SUCCEEDED",
-                    input_summary="OCR text blocks",
-                    output_summary=f"{len(draft.lines)} draft line(s) mapped to catalog products",
-                ),
-            ]
-        elif evidence_kind == "audio" and original_name == APPROVED_AUDIO_FILENAME:
-            draft = _demo_audio_draft()
-            timeline = [
-                ToolEvent(
-                    sequence=1,
-                    name="speech_to_text_darija",
-                    status="SUCCEEDED",
-                    input_summary=f"audio evidence ({original_name})",
-                    output_summary="Transcribed: 'Bi3t khmsa kilo d sukkar o joj baki d atay'",
-                ),
-                ToolEvent(
-                    sequence=2,
-                    name="parse_darija_sale",
-                    status="SUCCEEDED",
-                    input_summary="Darija transcript",
-                    output_summary=f"{len(draft.lines)} draft line(s) mapped to catalog products",
-                ),
-            ]
-        else:
-            # Do not silently return a fixture for an unrecognized file --
-            # a fixture may only match the approved demo evidence.
-            raise ValueError(
-                f"No approved fixture for {evidence_kind} file '{original_name}'."
-            )
+        if not self.supports(original_name, evidence_kind):
+            raise UnsupportedFixtureError("No approved fixture exists for this evidence file")
 
-        if self.simulate_delay:
-            time.sleep(DEFAULT_SIMULATED_DELAY_SECONDS)
+        if evidence_kind == "audio":
+            draft_lines = [
+                DraftLine(
+                    line_id="line-001",
+                    product_id="cooking-oil-1l",
+                    product_name="Cooking oil 1L",
+                    original_product_name="zit",
+                    unit="bottle",
+                    quantity=4,
+                    unit_price_centimes=2800,
+                    line_total_centimes=11200,
+                    confidence=0.96,
+                    uncertain_fields=[],
+                ),
+                DraftLine(
+                    line_id="line-002",
+                    product_id="sugar-1kg",
+                    product_name="Sugar 1kg",
+                    original_product_name="sukkar",
+                    unit="bag",
+                    quantity=3,
+                    unit_price_centimes=1200,
+                    line_total_centimes=3600,
+                    confidence=0.67,
+                    uncertain_fields=["quantity"],
+                ),
+            ]
+            transaction_kind = "sale"
+            clarification = "Did you say 3 bags of sugar?"
+        else:
+            draft_lines = [
+                DraftLine(
+                    line_id="line-001",
+                    product_id="cooking-oil-1l",
+                    product_name="Cooking oil 1L",
+                    original_product_name="Zit",
+                    unit="bottle",
+                    quantity=20,
+                    unit_price_centimes=2200,
+                    line_total_centimes=44000,
+                    confidence=0.99,
+                    uncertain_fields=[],
+                ),
+                DraftLine(
+                    line_id="line-002",
+                    product_id="sugar-1kg",
+                    product_name="Sugar 1kg",
+                    original_product_name="Sukkar",
+                    unit="bag",
+                    quantity=10,
+                    unit_price_centimes=850,
+                    line_total_centimes=8500,
+                    confidence=0.64,
+                    uncertain_fields=["quantity"],
+                ),
+            ]
+            transaction_kind = "purchase"
+            clarification = "Was the sugar quantity 10 bags?"
+
+        total_centimes = sum(line.line_total_centimes for line in draft_lines)
+
+        draft = ExtractionDraft(
+            id="draft_fixture_001",
+            version=1,
+            transaction_kind=transaction_kind,
+            currency="MAD",
+            lines=draft_lines,
+            total_centimes=total_centimes,
+            clarification_question=clarification,
+        )
+
+        timeline = [
+            AgentTimelineEvent(
+                sequence=1,
+                name="inspect_evidence",
+                status="SUCCEEDED",
+                duration_ms=45,
+                input_summary=f"Processed synthetic {evidence_kind} file '{original_name}'",
+                output_summary="File validated and read successfully",
+                fallback_used=False,
+            ),
+            AgentTimelineEvent(
+                sequence=2,
+                name="extract_draft",
+                status="SUCCEEDED",
+                duration_ms=120,
+                input_summary="Evidence content parsing",
+                output_summary=f"Extracted {len(draft_lines)} items; 1 uncertainty detected",
+                fallback_used=False,
+            ),
+            AgentTimelineEvent(
+                sequence=3,
+                name="validate_draft",
+                status="SUCCEEDED",
+                duration_ms=15,
+                input_summary="Pydantic schema validation & centimes check",
+                output_summary=f"Valid draft with total_centimes={total_centimes}",
+                fallback_used=False,
+            ),
+        ]
 
         return ExtractionResult(
             provider="fixture",

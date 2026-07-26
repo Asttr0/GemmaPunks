@@ -1,20 +1,48 @@
 # Firebase setup
 
-MIZAN Souq uses Firebase Authentication, Cloud Firestore, and Cloud Storage.
-FastAPI uses the Firebase Admin SDK as the only authoritative business writer.
+MIZAN Souq uses Firebase Authentication and Cloud Firestore. FastAPI uses the
+Firebase Admin SDK as the only authoritative business writer.
+
+Read [the complete database guide](database-guide.md) for the collection tree,
+field contracts, relationships, permissions, indexes, seed scenario, and
+teammate handoff.
 
 ## Local setup
 
-1. Copy `.env.example` to `.env`.
-2. Run `npx firebase-tools emulators:start`.
-3. Keep `APP_ENV=development`; synthetic demo headers work only in this mode.
+The repository already contains `firebase.json`, `.firebaserc`, Firestore
+indexes, and security-rule files. Do not run `firebase init` again.
+
+1. Install Node.js 22+ and Java 21+.
+2. Run `npm install`.
+3. Copy `.env.example` to `.env`.
+4. Run `npm run firebase:emulators` or `make firebase`.
+5. Keep `APP_ENV=development`; synthetic demo headers work only in this mode.
+
+Local development uses the safe fictional project ID `demo-gemmapunks`.
+Emulator data never reaches a real Firebase project.
+
+| Service        | Local address           |
+| -------------- | ----------------------- |
+| Emulator UI    | <http://127.0.0.1:4000> |
+| Authentication | `127.0.0.1:9099`        |
+| Firestore      | `127.0.0.1:8082`        |
+
+Firestore uses port `8082` because port `8080` is already used by another local
+project on the team lead's machine.
+
+The root `.env.example` contains non-secret emulator defaults. Vite reads that
+root file through `apps/web/vite.config.ts`.
 
 ## Hosted setup
 
-1. Create a Firebase project and web app.
-2. Enable the authentication providers used by the demo.
-3. Create Firestore and Storage in the selected project.
-4. Deploy `firestore.rules`, `storage.rules`, and Firestore indexes.
+The shared project is `gemmapunks`. Its web app is `MIZAN Souq Web`.
+
+1. Use the repository's pinned Firebase CLI.
+2. Email/password Authentication is enabled.
+3. The standard `(default)` Firestore database is in `europe-southwest1`
+   (Madrid), with delete protection enabled and paid recovery disabled.
+4. Test locally, then deploy Authentication configuration, `firestore.rules`,
+   and Firestore indexes.
 5. Set all `VITE_FIREBASE_*` values in Vercel.
 6. Give FastAPI Application Default Credentials. On non-Google hosting, mount a
    service-account file as a secret and set `GOOGLE_APPLICATION_CREDENTIALS` to
@@ -23,13 +51,52 @@ FastAPI uses the Firebase Admin SDK as the only authoritative business writer.
 8. Set `APP_ENV=production`; FastAPI then rejects requests without a valid
    Firebase ID token.
 
+Never commit a service-account JSON file. The browser Firebase configuration is
+not an Admin credential; authorization still belongs in Firestore rules and
+FastAPI.
+
+## Evidence files on the free plan
+
+Cloud Storage for Firebase requires the Blaze billing plan. It is intentionally
+disabled. The deployed FastAPI service accepts a file, validates its type and
+size, passes it to extraction, and discards the temporary file afterward.
+Firestore stores document metadata and the extraction draft, not the original
+binary. Known demo evidence also remains in `packages/demo-data`.
+
 ## Data shape and isolation
 
 Private business data lives below `organizations/{organization_id}`. Every
 record also contains `organization_id` for audit and server validation. Only
 aggregated, privacy-filtered demand is copied to `supplier_opportunities`.
+Each opportunity includes `supplier_organization_id`; FastAPI and Firestore
+rules prevent a different supplier from reading it.
 
-The web client may upload evidence to its organization path subject to Storage
-Rules. It may read scoped records. Only FastAPI writes confirmed financial,
-inventory, procurement, approval, agent-run, and tool-call records.
+The web client sends evidence to FastAPI and may read scoped Firestore records.
+Only FastAPI writes confirmed financial, inventory, procurement, approval,
+agent-run, and tool-call records.
 
+Account setup follows the same server-owned rule:
+
+```text
+Firebase Auth creates the user
+→ React sends the Firebase ID token to POST /api/v1/auth/signup
+→ FastAPI creates the profile, organization, and membership
+→ FastAPI applies organization_id and role custom claims
+→ React refreshes the ID token
+```
+
+The browser must not create profile, organization, or membership documents
+directly.
+
+## Validate and seed
+
+```bash
+npm run firebase:validate-seed
+npm run firebase:test-rules
+npm run firebase:seed-emulator
+npm run firebase:reset-emulator
+```
+
+The seed command loads and verifies the synthetic developer baseline. The reset
+command first deletes emulator-only data, then reloads the same baseline. The
+script refuses `--reset` against a shared Firebase project.

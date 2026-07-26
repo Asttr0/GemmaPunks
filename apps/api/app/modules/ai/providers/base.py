@@ -1,12 +1,9 @@
-"""
-Provider contract for issue #21.
+"""Shared extraction provider contract.
 
-`extract_evidence` is the one function the rest of the app calls. Anas calls
-this exact method whether AI_PROVIDER=fixture or AI_PROVIDER=gemma — the
-caller never needs to know which implementation actually ran.
+The ingestion service calls this interface in both hosted-Gemma and deterministic
+fixture modes. Providers only return an unconfirmed draft; they never write
+financial records, update inventory, or approve an order.
 """
-
-from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from typing import Literal
@@ -17,28 +14,14 @@ EvidenceKind = Literal["receipt", "audio"]
 
 
 class ExtractionProvider(ABC):
-    """Base class every extraction provider (fixture or real Gemma) implements."""
-
     @abstractmethod
-    def extract_evidence(
+    async def extract_evidence(
         self,
-        *,
         file_bytes: bytes,
         original_name: str,
         content_type: str,
-        evidence_kind: EvidenceKind,
-        safe_product_context: list[str] | None = None,
+        evidence_kind: EvidenceKind = "receipt",
+        safe_product_context: list[dict] | None = None,
     ) -> ExtractionResult:
-        """
-        Turn raw evidence (a receipt image or short voice note) into a
-        validated ExtractionResult.
-
-        A provider must NEVER:
-          - save a confirmed transaction
-          - change inventory
-          - approve an order
-          - execute a tool name that isn't on the approved allow-list
-          - trust a number only because the model returned it
-          - include chain-of-thought or raw secrets in the timeline
-        """
+        """Return a validated, reviewable draft from untrusted business evidence."""
         raise NotImplementedError

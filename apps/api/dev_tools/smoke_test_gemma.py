@@ -1,27 +1,25 @@
-"""
-Real-model smoke test for GemmaProvider (issue #22) — no mocking, no
-server. Just points the actual code at a real image and prints what comes
-back, so you can eyeball extraction quality.
+"""Run one real hosted-Gemma extraction without starting FastAPI.
 
 Run:
     python apps/api/dev_tools/smoke_test_gemma.py path/to/receipt.jpg
-
-First run will be slow while Ollama loads the model into memory.
 """
 
 from __future__ import annotations
 
+import asyncio
 import json
+import mimetypes
 import sys
 import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from app.core.config import get_settings
 from app.modules.ai.providers.gemma import GemmaProvider
 
 
-def main() -> None:
+async def run() -> None:
     if len(sys.argv) != 2:
         print("Usage: python smoke_test_gemma.py path/to/receipt.jpg")
         sys.exit(1)
@@ -32,15 +30,26 @@ def main() -> None:
         sys.exit(1)
 
     file_bytes = image_path.read_bytes()
+    content_type = mimetypes.guess_type(image_path.name)[0]
+    if content_type not in {"image/jpeg", "image/png", "application/pdf"}:
+        print(f"Unsupported receipt content type: {content_type or 'unknown'}")
+        sys.exit(1)
 
-    print(f"Sending {image_path.name} ({len(file_bytes)} bytes) to gemma4:e4b...")
+    settings = get_settings()
+    print(
+        f"Sending {image_path.name} ({len(file_bytes)} bytes) to hosted {settings.gemma_model}..."
+    )
     start = time.monotonic()
 
-    provider = GemmaProvider()
-    result = provider.extract_evidence(
+    provider = GemmaProvider(
+        api_key=settings.gemini_api_key,
+        model_name=settings.gemma_model,
+        timeout_seconds=settings.ai_timeout_seconds,
+    )
+    result = await provider.extract_evidence(
         file_bytes=file_bytes,
         original_name=image_path.name,
-        content_type="image/jpeg",
+        content_type=content_type,
         evidence_kind="receipt",
     )
 
@@ -49,10 +58,11 @@ def main() -> None:
     print(json.dumps(result.model_dump(), indent=2, ensure_ascii=False))
 
     if result.fallback_used:
-        print("\n⚠️  fallback_used=True — the real model call failed, this is fixture data.")
+        print("\nFallback was used; this did not prove the hosted model path.")
+        sys.exit(2)
     else:
-        print("\n✅ Real Gemma output above — check line items, quantities, and confidence for quality.")
+        print("\nReal Gemma output received; verify every extracted field manually.")
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(run())

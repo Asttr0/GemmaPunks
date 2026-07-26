@@ -1,84 +1,69 @@
-"""
-Pydantic schemas for the evidence-extraction contract (issue #21).
-
-Both providers (FixtureProvider and GemmaProvider) build an ExtractionResult
-from these same models, so the rest of the app — Anas's FastAPI layer,
-Asttr0's merchant UI — never needs to know which provider actually ran.
-
-Money is always stored as integer centimes, never float. Totals are always
-recalculated in Python, never trusted from Gemma's output.
-"""
-
-from __future__ import annotations
-
-from enum import Enum
+from decimal import ROUND_HALF_UP, Decimal
 from typing import Literal
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
-class TransactionKind(str, Enum):
-    PURCHASE = "purchase"
-    SALE = "sale"
+class DraftLine(BaseModel):
+    model_config = ConfigDict(extra="forbid")
 
-
-class ToolEventStatus(str, Enum):
-    STARTED = "STARTED"
-    SUCCEEDED = "SUCCEEDED"
-    FAILED = "FAILED"
-
-
-class ExtractionLine(BaseModel):
-    """One product line extracted from a receipt or voice note."""
-
-    product_id: str
-    product_name: str
-    original_product_name: str | None = None
-    unit: str
-    quantity: float = Field(gt=0)
+    line_id: str | None = None
+    product_id: str | None = None
+    product_name: str = Field(min_length=1, max_length=160)
+    original_product_name: str | None = Field(default=None, max_length=160)
+    unit: str = Field(default="unit", min_length=1, max_length=32)
+    quantity: int = Field(gt=0)
     unit_price_centimes: int = Field(ge=0)
     line_total_centimes: int = Field(ge=0)
-    confidence: float = Field(ge=0.0, le=1.0)
+    confidence: float = Field(ge=0.0, le=1.0, default=1.0)
     uncertain_fields: list[str] = Field(default_factory=list)
 
     @model_validator(mode="after")
-    def recompute_line_total(self) -> "ExtractionLine":
-        """Never trust a line total Gemma proposes — always recalculate it."""
-        self.line_total_centimes = round(self.quantity * self.unit_price_centimes)
+    def recalculate_line_total(self) -> "DraftLine":
+        """Financial totals come from deterministic code, never model arithmetic."""
+        self.line_total_centimes = int(
+            (Decimal(str(self.quantity)) * Decimal(self.unit_price_centimes)).quantize(
+                Decimal("1"),
+                rounding=ROUND_HALF_UP,
+            )
+        )
         return self
 
 
 class ExtractionDraft(BaseModel):
-    transaction_kind: TransactionKind
+    model_config = ConfigDict(extra="forbid")
+
+    id: str | None = None
+    version: int = Field(default=1, ge=1)
+    transaction_kind: Literal["purchase", "sale", "expense"] = "purchase"
     currency: Literal["MAD"] = "MAD"
-    lines: list[ExtractionLine]
+    lines: list[DraftLine] = Field(min_length=1, max_length=100)
     total_centimes: int = Field(ge=0)
-    clarification_question: str | None = None
+    clarification_question: str | None = Field(default=None, max_length=500)
 
     @model_validator(mode="after")
-    def recompute_total(self) -> "ExtractionDraft":
-        """Never trust the draft total Gemma proposes — sum the lines."""
+    def recalculate_total(self) -> "ExtractionDraft":
         self.total_centimes = sum(line.line_total_centimes for line in self.lines)
         return self
 
 
-class ToolEvent(BaseModel):
-    """One entry in the tool-call/activity timeline shown in the demo UI."""
+class AgentTimelineEvent(BaseModel):
+    model_config = ConfigDict(extra="forbid")
 
     sequence: int
-    name: str
-    status: ToolEventStatus
-    input_summary: str
-    output_summary: str
-    duration_ms: int | None = None
+    name: str = Field(min_length=1, max_length=100)
+    status: Literal["STARTED", "SUCCEEDED", "FAILED"] = "SUCCEEDED"
+    duration_ms: int = Field(default=0, ge=0)
+    input_summary: str = Field(max_length=500)
+    output_summary: str = Field(max_length=500)
     fallback_used: bool = False
 
 
 class ExtractionResult(BaseModel):
-    """What extract_evidence() returns to Anas. Same shape for both providers."""
+    model_config = ConfigDict(extra="forbid")
 
-    provider: Literal["fixture", "gemma"]
-    model: str | None = None
+    provider: str = Field(default="fixture", min_length=1, max_length=50)
+    model: str | None = Field(default=None, max_length=100)
     fallback_used: bool = False
     draft: ExtractionDraft
-    timeline: list[ToolEvent] = Field(default_factory=list)
+    timeline: list[AgentTimelineEvent] = Field(default_factory=list)

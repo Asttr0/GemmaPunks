@@ -1,4 +1,4 @@
-.PHONY: dev web api install lint test format
+.PHONY: dev web api firebase firebase-test firebase-seed install lint test format
 
 install:
 	npm install
@@ -13,6 +13,16 @@ web:
 
 api:
 	.venv/bin/uvicorn app.main:app --reload --app-dir apps/api
+
+firebase:
+	npm run firebase:emulators
+
+firebase-test:
+	npm run firebase:validate-seed
+	npm run firebase:test-rules
+
+firebase-seed:
+	npm run firebase:seed-emulator
 
 lint:
 	npm run lint

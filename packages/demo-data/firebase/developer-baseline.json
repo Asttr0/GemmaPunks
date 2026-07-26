@@ -1,0 +1,787 @@
+{
+  "schema_version": 1,
+  "scenario": "developer-baseline",
+  "description": "Synthetic data for local development. It is not a real merchant dataset or the final live-demo reset.",
+  "auth_users": [
+    {
+      "uid": "demo-merchant",
+      "email": "merchant.demo@example.com",
+      "display_name": "Demo Merchant",
+      "emulator_password": "DemoMerchant123!",
+      "shared_password_env": "DEMO_MERCHANT_PASSWORD",
+      "claims": {
+        "organization_id": "merchant-berrechid",
+        "role": "OWNER"
+      }
+    },
+    {
+      "uid": "demo-supplier",
+      "email": "supplier.demo@example.com",
+      "display_name": "Demo Supplier",
+      "emulator_password": "DemoSupplier123!",
+      "shared_password_env": "DEMO_SUPPLIER_PASSWORD",
+      "claims": {
+        "organization_id": "supplier-atlas",
+        "role": "OWNER"
+      }
+    }
+  ],
+  "documents": [
+    {
+      "path": "system/schema",
+      "data": {
+        "schema_version": 1,
+        "scenario": "developer-baseline",
+        "currency": "MAD",
+        "money_storage": "INTEGER_CENTIMES",
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:00:00Z"
+        }
+      }
+    },
+    {
+      "path": "profiles/demo-merchant",
+      "data": {
+        "display_name": "Demo Merchant",
+        "email": "merchant.demo@example.com",
+        "primary_organization_id": "merchant-berrechid",
+        "locale": "en-MA",
+        "created_at": {
+          "__timestamp__": "2026-07-23T08:00:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:00:00Z"
+        }
+      }
+    },
+    {
+      "path": "profiles/demo-supplier",
+      "data": {
+        "display_name": "Demo Supplier",
+        "email": "supplier.demo@example.com",
+        "primary_organization_id": "supplier-atlas",
+        "locale": "en-MA",
+        "created_at": {
+          "__timestamp__": "2026-07-23T08:00:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:00:00Z"
+        }
+      }
+    },
+    {
+      "path": "products/cooking-oil-1l",
+      "data": {
+        "canonical_name": "Cooking oil 1L",
+        "category": "GROCERY",
+        "base_unit": "BOTTLE",
+        "aliases": ["huile 1l", "oil 1 litre", "زيت 1 لتر"],
+        "active": true,
+        "created_at": {
+          "__timestamp__": "2026-07-23T08:00:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:00:00Z"
+        }
+      }
+    },
+    {
+      "path": "products/sugar-1kg",
+      "data": {
+        "canonical_name": "Sugar 1kg",
+        "category": "GROCERY",
+        "base_unit": "BAG",
+        "aliases": ["sucre 1kg", "sugar 1 kilogram", "سكر 1 كلغ"],
+        "active": true,
+        "created_at": {
+          "__timestamp__": "2026-07-23T08:00:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:00:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/merchant-berrechid",
+      "data": {
+        "name": "Berrechid Demo Grocery",
+        "type": "MERCHANT",
+        "status": "ACTIVE",
+        "city": "Berrechid",
+        "coarse_area": "Berrechid Centre",
+        "currency": "MAD",
+        "opening_cash_centimes": 600000,
+        "created_at": {
+          "__timestamp__": "2026-07-23T08:00:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:00:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/merchant-partner-a",
+      "data": {
+        "name": "Anonymous Partner A",
+        "type": "MERCHANT",
+        "status": "ACTIVE",
+        "city": "Berrechid",
+        "coarse_area": "Berrechid Centre",
+        "currency": "MAD",
+        "created_at": {
+          "__timestamp__": "2026-07-23T08:00:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:00:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/merchant-partner-b",
+      "data": {
+        "name": "Anonymous Partner B",
+        "type": "MERCHANT",
+        "status": "ACTIVE",
+        "city": "Berrechid",
+        "coarse_area": "Berrechid Centre",
+        "currency": "MAD",
+        "created_at": {
+          "__timestamp__": "2026-07-23T08:00:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:00:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/supplier-atlas",
+      "data": {
+        "name": "Atlas Wholesale",
+        "type": "SUPPLIER",
+        "status": "ACTIVE",
+        "city": "Casablanca",
+        "coarse_area": "Casablanca-Settat",
+        "currency": "MAD",
+        "created_at": {
+          "__timestamp__": "2026-07-23T08:00:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:00:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/supplier-chaouia",
+      "data": {
+        "name": "Chaouia Distribution",
+        "type": "SUPPLIER",
+        "status": "ACTIVE",
+        "city": "Settat",
+        "coarse_area": "Casablanca-Settat",
+        "currency": "MAD",
+        "created_at": {
+          "__timestamp__": "2026-07-23T08:00:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:00:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/supplier-nour",
+      "data": {
+        "name": "Nour Supplies",
+        "type": "SUPPLIER",
+        "status": "ACTIVE",
+        "city": "Berrechid",
+        "coarse_area": "Casablanca-Settat",
+        "currency": "MAD",
+        "created_at": {
+          "__timestamp__": "2026-07-23T08:00:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:00:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/merchant-berrechid/memberships/demo-merchant",
+      "data": {
+        "organization_id": "merchant-berrechid",
+        "user_id": "demo-merchant",
+        "role": "OWNER",
+        "status": "ACTIVE",
+        "created_at": {
+          "__timestamp__": "2026-07-23T08:00:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:00:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/supplier-atlas/memberships/demo-supplier",
+      "data": {
+        "organization_id": "supplier-atlas",
+        "user_id": "demo-supplier",
+        "role": "OWNER",
+        "status": "ACTIVE",
+        "created_at": {
+          "__timestamp__": "2026-07-23T08:00:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:00:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/merchant-berrechid/inventory_items/cooking-oil-1l",
+      "data": {
+        "organization_id": "merchant-berrechid",
+        "product_id": "cooking-oil-1l",
+        "display_name": "Cooking oil 1L",
+        "unit": "BOTTLE",
+        "quantity_on_hand": 14,
+        "average_daily_sales": 3.5,
+        "sales_history_days": 7,
+        "selling_price_centimes": 2800,
+        "target_stock_quantity": 34,
+        "low_stock_threshold": 15,
+        "status": "LOW_STOCK",
+        "version": 1,
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:00:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/merchant-berrechid/inventory_items/sugar-1kg",
+      "data": {
+        "organization_id": "merchant-berrechid",
+        "product_id": "sugar-1kg",
+        "display_name": "Sugar 1kg",
+        "unit": "BAG",
+        "quantity_on_hand": 25,
+        "average_daily_sales": 2,
+        "sales_history_days": 7,
+        "selling_price_centimes": 1200,
+        "target_stock_quantity": 35,
+        "low_stock_threshold": 10,
+        "status": "HEALTHY",
+        "version": 1,
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:00:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/merchant-berrechid/documents/receipt-001",
+      "data": {
+        "organization_id": "merchant-berrechid",
+        "kind": "RECEIPT",
+        "original_name": "synthetic-purchase-receipt.jpg",
+        "content_type": "image/jpeg",
+        "size_bytes": 245821,
+        "evidence_retained": false,
+        "storage_provider": "NONE",
+        "created_by": "demo-merchant",
+        "created_at": {
+          "__timestamp__": "2026-07-25T08:05:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:05:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/merchant-berrechid/ingestion_jobs/ingestion-001",
+      "data": {
+        "organization_id": "merchant-berrechid",
+        "document_id": "receipt-001",
+        "draft_id": "draft-001",
+        "agent_run_id": "agent-run-001",
+        "status": "NEEDS_REVIEW",
+        "provider": "fixture",
+        "fallback_used": false,
+        "created_by": "demo-merchant",
+        "created_at": {
+          "__timestamp__": "2026-07-25T08:05:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:05:02Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/merchant-berrechid/extraction_drafts/draft-001",
+      "data": {
+        "organization_id": "merchant-berrechid",
+        "ingestion_job_id": "ingestion-001",
+        "document_id": "receipt-001",
+        "version": 1,
+        "status": "NEEDS_REVIEW",
+        "transaction_kind": "PURCHASE",
+        "currency": "MAD",
+        "lines": [
+          {
+            "line_id": "line-oil",
+            "product_id": "cooking-oil-1l",
+            "original_product_name": "Huile 1L",
+            "product_name": "Cooking oil 1L",
+            "unit": "BOTTLE",
+            "quantity": 20,
+            "unit_price_centimes": 2200,
+            "line_total_centimes": 44000,
+            "confidence": 0.99,
+            "uncertain_fields": []
+          },
+          {
+            "line_id": "line-sugar",
+            "product_id": "sugar-1kg",
+            "original_product_name": "Sucre 1kg",
+            "product_name": "Sugar 1kg",
+            "unit": "BAG",
+            "quantity": 10,
+            "unit_price_centimes": 850,
+            "line_total_centimes": 8500,
+            "confidence": 0.64,
+            "uncertain_fields": ["quantity"]
+          }
+        ],
+        "total_centimes": 52500,
+        "clarification_question": "Was the sugar quantity 10 bags?",
+        "created_at": {
+          "__timestamp__": "2026-07-25T08:05:02Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:05:02Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/merchant-berrechid/transactions/transaction-history-001",
+      "data": {
+        "organization_id": "merchant-berrechid",
+        "kind": "SALE",
+        "status": "CONFIRMED",
+        "currency": "MAD",
+        "lines": [
+          {
+            "line_id": "sale-line-oil",
+            "product_id": "cooking-oil-1l",
+            "unit": "BOTTLE",
+            "quantity": 4,
+            "unit_price_centimes": 2800,
+            "line_total_centimes": 11200
+          }
+        ],
+        "total_centimes": 11200,
+        "source_draft_id": null,
+        "confirmed_by": "demo-merchant",
+        "occurred_at": {
+          "__timestamp__": "2026-07-24T18:00:00Z"
+        },
+        "created_at": {
+          "__timestamp__": "2026-07-24T18:01:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-24T18:01:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/merchant-berrechid/inventory_movements/movement-history-001",
+      "data": {
+        "organization_id": "merchant-berrechid",
+        "product_id": "cooking-oil-1l",
+        "transaction_id": "transaction-history-001",
+        "kind": "SALE",
+        "unit": "BOTTLE",
+        "quantity_delta": -4,
+        "quantity_after": 14,
+        "occurred_at": {
+          "__timestamp__": "2026-07-24T18:00:00Z"
+        },
+        "created_at": {
+          "__timestamp__": "2026-07-24T18:01:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/merchant-berrechid/procurement_needs/need-oil-001",
+      "data": {
+        "organization_id": "merchant-berrechid",
+        "product_id": "cooking-oil-1l",
+        "unit": "BOTTLE",
+        "quantity_needed": 20,
+        "stock_on_hand": 14,
+        "average_daily_sales": 3.5,
+        "days_remaining": 4,
+        "target_stock_quantity": 34,
+        "status": "OPEN",
+        "coarse_area": "Berrechid Centre",
+        "stockout_at": {
+          "__timestamp__": "2026-07-29T08:00:00Z"
+        },
+        "needed_by": {
+          "__timestamp__": "2026-07-28T18:00:00Z"
+        },
+        "created_at": {
+          "__timestamp__": "2026-07-25T08:10:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:10:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/merchant-partner-a/procurement_needs/need-oil-partner-a",
+      "data": {
+        "organization_id": "merchant-partner-a",
+        "product_id": "cooking-oil-1l",
+        "unit": "BOTTLE",
+        "quantity_needed": 15,
+        "status": "OPEN",
+        "coarse_area": "Berrechid Centre",
+        "needed_by": {
+          "__timestamp__": "2026-07-28T18:00:00Z"
+        },
+        "created_at": {
+          "__timestamp__": "2026-07-25T08:10:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:10:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/merchant-partner-b/procurement_needs/need-oil-partner-b",
+      "data": {
+        "organization_id": "merchant-partner-b",
+        "product_id": "cooking-oil-1l",
+        "unit": "BOTTLE",
+        "quantity_needed": 20,
+        "status": "OPEN",
+        "coarse_area": "Berrechid Centre",
+        "needed_by": {
+          "__timestamp__": "2026-07-28T18:00:00Z"
+        },
+        "created_at": {
+          "__timestamp__": "2026-07-25T08:10:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:10:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/supplier-atlas/supplier_catalog_items/catalog-oil-atlas",
+      "data": {
+        "organization_id": "supplier-atlas",
+        "product_id": "cooking-oil-1l",
+        "supplier_sku": "ATLAS-OIL-1L",
+        "unit": "BOTTLE",
+        "unit_price_centimes": 1850,
+        "minimum_quantity": 50,
+        "available_quantity": 500,
+        "delivery_fee_centimes": 0,
+        "delivery_days": 1,
+        "service_areas": ["Berrechid Centre"],
+        "status": "ACTIVE",
+        "created_at": {
+          "__timestamp__": "2026-07-23T08:00:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:00:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/supplier-chaouia/supplier_catalog_items/catalog-oil-chaouia",
+      "data": {
+        "organization_id": "supplier-chaouia",
+        "product_id": "cooking-oil-1l",
+        "supplier_sku": "CHA-OIL-1L",
+        "unit": "BOTTLE",
+        "unit_price_centimes": 2050,
+        "minimum_quantity": 25,
+        "available_quantity": 250,
+        "delivery_fee_centimes": 1500,
+        "delivery_days": 1,
+        "service_areas": ["Berrechid Centre"],
+        "status": "ACTIVE",
+        "created_at": {
+          "__timestamp__": "2026-07-23T08:00:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:00:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/supplier-nour/supplier_catalog_items/catalog-oil-nour",
+      "data": {
+        "organization_id": "supplier-nour",
+        "product_id": "cooking-oil-1l",
+        "supplier_sku": "NOUR-OIL-1L",
+        "unit": "BOTTLE",
+        "unit_price_centimes": 2200,
+        "minimum_quantity": 10,
+        "available_quantity": 120,
+        "delivery_fee_centimes": 3000,
+        "delivery_days": 1,
+        "service_areas": ["Berrechid Centre"],
+        "status": "ACTIVE",
+        "created_at": {
+          "__timestamp__": "2026-07-23T08:00:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:00:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/merchant-berrechid/offers/offer-atlas",
+      "data": {
+        "organization_id": "merchant-berrechid",
+        "procurement_need_id": "need-oil-001",
+        "supplier_organization_id": "supplier-atlas",
+        "catalog_item_id": "catalog-oil-atlas",
+        "product_id": "cooking-oil-1l",
+        "unit": "BOTTLE",
+        "requested_quantity": 20,
+        "unit_price_centimes": 1850,
+        "minimum_quantity": 50,
+        "delivery_fee_centimes": 0,
+        "landed_cost_centimes": 37000,
+        "eligible_alone": false,
+        "affordable": true,
+        "status": "GROUP_ONLY",
+        "rejection_reasons": ["MINIMUM_QUANTITY_NOT_MET"],
+        "created_at": {
+          "__timestamp__": "2026-07-25T08:12:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:12:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/merchant-berrechid/offers/offer-chaouia",
+      "data": {
+        "organization_id": "merchant-berrechid",
+        "procurement_need_id": "need-oil-001",
+        "supplier_organization_id": "supplier-chaouia",
+        "catalog_item_id": "catalog-oil-chaouia",
+        "product_id": "cooking-oil-1l",
+        "unit": "BOTTLE",
+        "requested_quantity": 20,
+        "unit_price_centimes": 2050,
+        "minimum_quantity": 25,
+        "delivery_fee_centimes": 1500,
+        "landed_cost_centimes": 42500,
+        "eligible_alone": false,
+        "affordable": true,
+        "status": "GROUP_ONLY",
+        "rejection_reasons": [
+          "MINIMUM_QUANTITY_NOT_MET"
+        ],
+        "created_at": {
+          "__timestamp__": "2026-07-25T08:12:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:12:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/merchant-berrechid/offers/offer-nour",
+      "data": {
+        "organization_id": "merchant-berrechid",
+        "procurement_need_id": "need-oil-001",
+        "supplier_organization_id": "supplier-nour",
+        "catalog_item_id": "catalog-oil-nour",
+        "product_id": "cooking-oil-1l",
+        "unit": "BOTTLE",
+        "requested_quantity": 20,
+        "unit_price_centimes": 2200,
+        "minimum_quantity": 10,
+        "delivery_fee_centimes": 3000,
+        "landed_cost_centimes": 47000,
+        "eligible_alone": true,
+        "affordable": true,
+        "status": "AVAILABLE_NOW",
+        "rejection_reasons": [],
+        "created_at": {
+          "__timestamp__": "2026-07-25T08:12:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:12:00Z"
+        }
+      }
+    },
+    {
+      "path": "group_orders/group-oil-001",
+      "data": {
+        "product_id": "cooking-oil-1l",
+        "unit": "BOTTLE",
+        "supplier_organization_id": "supplier-atlas",
+        "supplier_catalog_item_id": "catalog-oil-atlas",
+        "status": "PROPOSED",
+        "total_quantity": 55,
+        "minimum_quantity": 50,
+        "unit_price_centimes": 1850,
+        "delivery_total_centimes": 0,
+        "participant_organization_ids": [
+          "merchant-berrechid",
+          "merchant-partner-a",
+          "merchant-partner-b"
+        ],
+        "coarse_area": "Berrechid Centre",
+        "join_deadline": {
+          "__timestamp__": "2026-07-26T18:00:00Z"
+        },
+        "needed_by": {
+          "__timestamp__": "2026-07-28T18:00:00Z"
+        },
+        "created_at": {
+          "__timestamp__": "2026-07-25T08:15:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:15:00Z"
+        }
+      }
+    },
+    {
+      "path": "group_orders/group-oil-001/members/merchant-berrechid",
+      "data": {
+        "organization_id": "merchant-berrechid",
+        "procurement_need_id": "need-oil-001",
+        "quantity": 20,
+        "status": "PENDING",
+        "original_unit_price_centimes": 2200,
+        "collective_unit_price_centimes": 1850,
+        "original_delivery_centimes": 6000,
+        "collective_delivery_share_centimes": 3000,
+        "product_saving_centimes": 7000,
+        "delivery_saving_centimes": 3000,
+        "total_saving_centimes": 10000,
+        "approved_by": null,
+        "approved_at": null,
+        "created_at": {
+          "__timestamp__": "2026-07-25T08:15:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:15:00Z"
+        }
+      }
+    },
+    {
+      "path": "group_orders/group-oil-001/members/merchant-partner-a",
+      "data": {
+        "organization_id": "merchant-partner-a",
+        "procurement_need_id": "need-oil-partner-a",
+        "quantity": 15,
+        "status": "PENDING",
+        "approved_by": null,
+        "approved_at": null,
+        "created_at": {
+          "__timestamp__": "2026-07-25T08:15:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:15:00Z"
+        }
+      }
+    },
+    {
+      "path": "group_orders/group-oil-001/members/merchant-partner-b",
+      "data": {
+        "organization_id": "merchant-partner-b",
+        "procurement_need_id": "need-oil-partner-b",
+        "quantity": 20,
+        "status": "PENDING",
+        "approved_by": null,
+        "approved_at": null,
+        "created_at": {
+          "__timestamp__": "2026-07-25T08:15:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-25T08:15:00Z"
+        }
+      }
+    },
+    {
+  "path": "supplier_opportunities/archived-shape-example",
+  "data": {
+    "supplier_organization_id": "supplier-atlas",
+        "product_id": "sugar-1kg",
+        "unit": "BAG",
+        "total_quantity": 60,
+        "coarse_area": "Berrechid Centre",
+        "merchant_count": 3,
+        "status": "ARCHIVED",
+        "needed_by": {
+          "__timestamp__": "2026-07-24T18:00:00Z"
+        },
+        "source_group_order_id": "archived-group-example",
+        "created_at": {
+          "__timestamp__": "2026-07-23T08:00:00Z"
+        },
+        "updated_at": {
+          "__timestamp__": "2026-07-24T18:00:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/merchant-berrechid/agent_runs/agent-run-001",
+      "data": {
+        "organization_id": "merchant-berrechid",
+        "document_id": "receipt-001",
+        "ingestion_job_id": "ingestion-001",
+        "provider": "fixture",
+        "model": null,
+        "status": "SUCCEEDED",
+        "fallback_used": false,
+        "duration_ms": 120,
+        "created_at": {
+          "__timestamp__": "2026-07-25T08:05:00Z"
+        },
+        "completed_at": {
+          "__timestamp__": "2026-07-25T08:05:02Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/merchant-berrechid/agent_runs/agent-run-001/tool_calls/tool-call-001",
+      "data": {
+        "organization_id": "merchant-berrechid",
+        "sequence": 1,
+        "name": "extract_receipt",
+        "status": "SUCCEEDED",
+        "duration_ms": 90,
+        "input_summary": "Synthetic receipt image",
+        "output_summary": "Two draft lines; one uncertain field",
+        "fallback_used": false,
+        "created_at": {
+          "__timestamp__": "2026-07-25T08:05:00Z"
+        }
+      }
+    },
+    {
+      "path": "organizations/merchant-berrechid/agent_runs/agent-run-001/tool_calls/tool-call-002",
+      "data": {
+        "organization_id": "merchant-berrechid",
+        "sequence": 2,
+        "name": "validate_draft",
+        "status": "SUCCEEDED",
+        "duration_ms": 30,
+        "input_summary": "Two proposed draft lines",
+        "output_summary": "Draft schema and centime totals valid",
+        "fallback_used": false,
+        "created_at": {
+          "__timestamp__": "2026-07-25T08:05:01Z"
+        }
+      }
+    }
+  ]
+}

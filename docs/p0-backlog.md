@@ -33,18 +33,21 @@ Owner: Lead and integration · Depends on: #1
 
 ### 4. Create Firebase project, emulators, and environment template
 
-Owner: Backend and Firebase · Depends on: #1
+Owner: Asttr0 — Firebase owner · Depends on: #1
 
-- Auth, Firestore, and Storage are enabled.
+- Auth and Firestore are enabled; Cloud Storage is intentionally disabled.
 - Local Emulator Suite starts from `firebase.json`.
 - Web and API connect through environment variables.
 
 ### 5. Implement Firestore model, rules, indexes, and seed baseline
 
-Owner: Backend and Firebase · Depends on: #4
+Owner: Asttr0 — Firebase owner · Depends on: #4
 
 - P0 collections and organization-scoped paths exist.
-- Firestore and Storage rules deny cross-organization access.
+- Firestore rules deny cross-organization access and Storage rules deny all
+  access.
+- Emulator rule tests cover same-organization reads, isolation, server-only
+  writes, and supplier opportunities.
 - Synthetic demo data loads into an empty emulator/project.
 
 ### 6. Freeze OpenAPI request and response examples
